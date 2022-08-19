@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect, ContextType } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ContextType,
+} from "react";
 import {
   sendEmailVerification,
   updateProfile,
@@ -15,6 +21,7 @@ import { auth, ref } from "../config/firebase";
 interface AuthContextType {
   currUser: User | undefined;
   register: (email: string, password: string, username: string) => Promise<any>;
+  login: (email: string, password: string) => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,8 +45,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       }
     });
     return unsubscribe;
-  }, [])
-  const value: AuthContextType = {currUser, register};
+  }, []);
+  const value: AuthContextType = { currUser, register, login };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
@@ -55,4 +62,6 @@ function register(
   });
 }
 
- 
+function login(email: string, password: string): Promise<any> {
+  return signInWithEmailAndPassword(auth, email, password);
+}
