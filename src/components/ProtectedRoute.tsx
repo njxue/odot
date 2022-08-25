@@ -4,10 +4,9 @@ import { Banner } from "./Banner";
 import { Login } from "./Login";
 
 export const ProtectedRoute: React.FC<{}> = () => {
-  let isLoggedIn: boolean = useAuth().isLoggedIn;
+  let isLoggedIn: boolean | undefined = useAuth().isLoggedIn;
   const navigate = useNavigate();
-
-  console.log(isLoggedIn);
+ 
 
   if (isLoggedIn == undefined) {
     return <div>loading......</div>;

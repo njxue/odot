@@ -23,7 +23,7 @@ interface AuthContextType {
   register: (email: string, password: string, username: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => Promise<any>;
-  isLoggedIn: boolean;
+  isLoggedIn: boolean | undefined;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,7 +42,7 @@ interface Props {
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [currUser, setCurrUser] = useState<User | undefined>();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const unsubscribe: Unsubscribe = onAuthStateChanged(auth, (user) => {
