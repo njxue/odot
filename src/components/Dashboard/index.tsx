@@ -20,6 +20,7 @@ export const Dashboard: React.FC<Props> = (props) => {
       const data = snapshot.val();
       for (const todoId in data) {
         const todo: Todo = {
+          id: todoId,
           name: data[todoId].name,
           tasks: data[todoId].tasks,
         };
