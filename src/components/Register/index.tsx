@@ -12,8 +12,6 @@ import useAuth from "../../contexts/AuthContext";
 
 interface Props {}
 export const Register: React.FC<Props> = () => {
-  let auth = useAuth();
-  let currUser: User;
   let register: (
     email: string,
     password: string,
@@ -24,13 +22,8 @@ export const Register: React.FC<Props> = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordCfRef = useRef<HTMLInputElement>(null);
 
-  if (auth) {
-    if (auth.currUser) {
-      currUser = auth.currUser;
-    }
-    register = auth.register;
+  register = useAuth().register;
     
-  }
 
   function handleRegister() {
     // TODO: enforce all input fields are filled
