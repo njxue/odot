@@ -6,7 +6,7 @@ export const AddModule: React.FC<{}> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const currUser  = useAuth().getCurrUser();
   
-  const userTodosRef = ref.child(`${currUser.uid}/todos`);
+  const userTodosRef = ref.child(`users/${currUser.uid}/todos`);
 
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
