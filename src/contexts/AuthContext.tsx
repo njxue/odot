@@ -19,7 +19,7 @@ import {
 import { auth, ref } from "../config/firebase";
 
 interface AuthContextType {
-  currUser: User | undefined;
+  getCurrUser: () => User;
   register: (email: string, password: string, username: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => Promise<any>;
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     });
     return unsubscribe;
   }, []);
-  const value: AuthContextType = { currUser, register, login, isLoggedIn, logout };
+  const value: AuthContextType = { getCurrUser, register, login, isLoggedIn, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
@@ -78,4 +78,11 @@ function login(email: string, password: string): Promise<any> {
 
 function logout(): Promise<any> {
   return signOut(auth).then((err) => console.log(err));
+}
+
+function getCurrUser(): User {
+  if (auth.currentUser == null) {
+    throw new Error("Not logged in!")
+  }
+  return auth.currentUser;
 }
