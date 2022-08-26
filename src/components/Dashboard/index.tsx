@@ -3,17 +3,10 @@ import { ref } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
+import Todo from "../../interface/Todo";
+import { TodoMenu } from "../Todo";
 
 interface Props {}
-
-interface Todo {
-  name: string;
-  tasks?: Task[];
-}
-
-interface Task {
-  name: string;
-}
 
 export const Dashboard: React.FC<Props> = (props) => {
   const currUser: User = useAuth().getCurrUser();
@@ -46,7 +39,7 @@ export const Dashboard: React.FC<Props> = (props) => {
       <AddModule />
       <div>
         {todos.map((todo) => (
-          <p>{todo.name}</p>
+          <TodoMenu todo={todo} />
         ))}
       </div>
     </div>
