@@ -1,0 +1,13 @@
+.task {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    background-color:lightcyan
+}
+
+.removeBtn {
+    background-color: red;
+    color: white;
+    padding: 2px;
+    border-radius: 10px;
+}
