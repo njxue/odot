@@ -51,7 +51,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
           </AccordionButton>
         </h2>
         <AccordionPanel>
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} todoId={todo.id}/>
           <AddTask todoId={todo.id}/>
         </AccordionPanel>
       </AccordionItem>
