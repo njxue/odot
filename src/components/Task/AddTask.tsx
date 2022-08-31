@@ -18,10 +18,14 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
 
     const taskName = taskRef.current?.value;
     const taskId = tasksRef.push().key;
-    if (taskName == undefined || taskId == undefined) {
-      // handle error
+    if (
+      taskName == undefined ||
+      taskId == undefined ||
+      taskName.trim().length == 0
+    ) {
+      console.log("ERRORRRR");
     } else {
-      tasksRef.child(taskId).update({ name: taskName });
+      tasksRef.child(taskId).update({ name: taskName.trim() });
     }
   }
 

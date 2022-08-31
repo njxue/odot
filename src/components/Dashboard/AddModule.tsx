@@ -12,16 +12,16 @@ export const AddModule: React.FC<{}> = () => {
     e.preventDefault();
     const todoId: string | null = userTodosRef.push().key;
     const todoName: string | undefined = inputRef.current?.value;
-    if (todoId == null || todoName == undefined) {
-      // handle error
+    if (todoId == null || todoName == undefined || todoName.trim().length == 0) {
+      console.log("ERROR");
     } else {
-      userTodosRef.child(todoId).update({"name": todoName});
+      userTodosRef.child(todoId).update({"name": todoName.trim()});
     }
   }
   return (
     <>
       <form onSubmit={handleAdd}>
-        <input ref={inputRef} type="text" placeholder="Module" />
+        <input required ref={inputRef} type="text" placeholder="Module" />
         <button type="submit">Add</button>
       </form>
     </>
