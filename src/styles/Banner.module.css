@@ -1,0 +1,12 @@
+.banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgb(5, 0, 42);
+}
+
+.banner > h1 {
+    color: white;
+    font-size: x-large;
+}

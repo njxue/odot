@@ -1,17 +1,22 @@
 import ITask from "../../interface/ITask";
 import { Task } from "../Task";
+import styles from "../../styles/Task.module.css";
 
 interface TaskListProps {
   tasks: ITask[];
-  todoId: string
+  todoId: string;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
   return (
-    <div>
-      {props.tasks.map((task) => (
-        <Task task={task} todoId={props.todoId}/>
-      ))}
+    <div className={styles.taskList}>
+      <ol>
+        {props.tasks.map((task) => (
+          <li key={task.id}>
+            <Task task={task} todoId={props.todoId} />
+          </li>
+        ))}
+      </ol>
     </div>
   );
 };

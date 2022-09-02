@@ -1,21 +1,23 @@
 import { AddModule } from "./AddModule";
-import { ref } from "../../config/firebase";
+import { ref, onValue } from "firebase/database";
+import {db} from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import Todo from "../../interface/Todo";
 import { TodoMenu } from "../Todo";
+import dashboardStyles from "../../styles/Dashboard.module.css";
 
 interface Props {}
 
 export const Dashboard: React.FC<Props> = (props) => {
   const currUser: User = useAuth().getCurrUser();
-  const todosRef = ref.child(`users/${currUser.uid}/todos`);
+  const todosRef = ref(db, `users/${currUser.uid}/todos`);
 
   const [todos, setTodos] = useState<Todo[] | undefined>(undefined);
 
   useEffect(() => {
-    todosRef.on("value", (snapshot) => {
+    onValue(todosRef, (snapshot) => {
       const tmp: Todo[] = [];
       const data = snapshot.val();
       for (const todoId in data) {
@@ -36,8 +38,10 @@ export const Dashboard: React.FC<Props> = (props) => {
     <div>loading......</div>
   ) : (
     <div>
-      <h1>Welcome back!</h1>
-      <AddModule />
+      <div className={dashboardStyles.addTodo}>
+        <h1>Add a Todo: </h1>
+        <AddModule />
+      </div>
       <div>
         {todos.map((todo) => (
           <TodoMenu todo={todo} />

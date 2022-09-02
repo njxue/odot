@@ -1,0 +1,20 @@
+.addBtn {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.removeBtn {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.logoutBtn {
+  background-color: teal;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}

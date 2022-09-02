@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
-import { ref } from "../../config/firebase";
+import { ref, child, push, update } from "firebase/database";
+import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
+import buttonStyles from "../../styles/Button.module.css";
+import formStyles from "../../styles/Form.module.css";
 
 interface AddTaskProps {
   todoId: string;
@@ -11,13 +14,13 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   const taskRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
 
-  const tasksRef = ref.child(`users/${currUser.uid}/todos/${todoId}/tasks`);
+  const tasksRef = ref(db, `users/${currUser.uid}/todos/${todoId}/tasks`);
 
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
 
     const taskName = taskRef.current?.value;
-    const taskId = tasksRef.push().key;
+    const taskId = push(tasksRef).key;
     if (
       taskName == undefined ||
       taskId == undefined ||
@@ -25,14 +28,16 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     ) {
       console.log("ERRORRRR");
     } else {
-      tasksRef.child(taskId).update({ name: taskName.trim() });
+      update(child(tasksRef, taskId), { name: taskName.trim() });
     }
   }
 
   return (
-    <form onSubmit={handleAdd}>
+    <form onSubmit={handleAdd} className={formStyles.form}>
       <input ref={taskRef} type="text" placeholder="Task" />
-      <button>Add task</button>
+      <button className={buttonStyles.addBtn} type="submit">
+        Add task
+      </button>
     </form>
   );
 };
