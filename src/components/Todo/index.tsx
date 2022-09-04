@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   Divider,
   HStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
@@ -16,6 +17,7 @@ import { useEffect, useState } from "react";
 import TaskList from "../TaskList";
 import AddTask from "../Task/AddTask";
 import todoStyles from "../../styles/Todo.module.css";
+import SettingsModal from "./SettingsModal";
 
 interface TodoProps {
   todo: Todo;
@@ -25,7 +27,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   const todo: Todo = props.todo;
   const currUser = useAuth().getCurrUser();
   const tasksRef = ref(db, `users/${currUser.uid}/todos/${todo.id}/tasks`);
-
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const [tasks, setTasks] = useState<ITask[] | undefined>();
 
   useEffect(() => {
@@ -59,6 +61,8 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
           </AccordionButton>
         </h2>
         <AccordionPanel>
+          <button onClick={onOpen}>settings</button>
+          <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
           <Divider borderColor="black" />
           <TaskList tasks={tasks} todoId={todo.id} />
           <AddTask todoId={todo.id} />

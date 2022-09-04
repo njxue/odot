@@ -8,9 +8,8 @@ import Todo from "../../interface/Todo";
 import { TodoMenu } from "../Todo";
 import dashboardStyles from "../../styles/Dashboard.module.css";
 
-interface Props {}
 
-export const Dashboard: React.FC<Props> = (props) => {
+export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
   const todosRef = ref(db, `users/${currUser.uid}/todos`);
 
