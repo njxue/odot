@@ -4,6 +4,7 @@ import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import buttonStyles from "../../styles/Button.module.css";
 import formStyles from "../../styles/Form.module.css";
+import addManualTask from "../../helpers/addManualTask";
 
 interface AddTaskProps {
   todoId: string;
@@ -14,21 +15,15 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   const taskRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
 
-  const tasksRef = ref(db, `users/${currUser.uid}/todos/${todoId}/tasks`);
-
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
 
     const taskName = taskRef.current?.value;
-    const taskId = push(tasksRef).key;
-    if (
-      taskName == undefined ||
-      taskId == undefined ||
-      taskName.trim().length == 0
-    ) {
+
+    if (taskName == undefined || taskName.trim().length == 0) {
       console.log("ERRORRRR");
     } else {
-      update(child(tasksRef, taskId), { name: taskName.trim() });
+      addManualTask(currUser, todoId, taskName);
     }
   }
 

@@ -16,58 +16,65 @@ import formStyles from "../../styles/Form.module.css";
 import React, { useEffect, useRef, useState } from "react";
 import TimeInterval from "../../helpers/TimeInterval";
 import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
+import AutomatedTasks from "./AutomatedTasks";
+import ITask from "../../interface/ITask";
+import addAutoTask from "../../helpers/addAutoTask";
 
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  todoId: String;
+  todoId: string;
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   const isOpen: boolean = props.isOpen;
   const onClose: () => void = props.onClose;
+
   const currUser: User = useAuth().getCurrUser();
   const todoRef = ref(db, `users/${currUser.uid}/todos/${props.todoId}`);
   const autosRef = child(todoRef, "autos");
+
   const [freq, setFreq] = useState<TimeInterval>(TimeInterval.DAY);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [autos, setAutos] = useState([]);
+  const [autos, setAutos] = useState<ITask[] | undefined>();
+  const intervals: TimeInterval[] = [
+    TimeInterval.DAY,
+    TimeInterval.WEEK,
+    TimeInterval.MONTH,
+  ];
 
   useEffect(() => {
     onValue(autosRef, (snapshot) => {
       const value = snapshot.val();
-      console.log(value);
+      const tmp: ITask[] = [];
+      for (const key in value) {
+        const task = value[key];
+        tmp.push({ id: key, ...task });
+      }
+      setAutos(tmp);
     });
   }, []);
-  
+
   function addAutomaticTask(e: React.FormEvent): void {
     e.preventDefault();
     const taskName = inputRef.current?.value;
-    const nextUpdateTime: Date = calculateNextUpdateTime(freq);
-    let autoKey = push(autosRef).key;
-    if (autoKey == null) {
+
+    if (taskName == undefined) {
       // error
-    } else {
-      const autoRef = child(autosRef, autoKey);
-      update(autoRef, {
-        name: taskName,
-        nextUpdate: nextUpdateTime,
-        freq: freq,
-      });
+      return;
     }
+    addAutoTask(currUser, props.todoId, taskName, freq);
   }
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value: number = parseInt(e.target.value);
-    const intervals: TimeInterval[] = [
-      TimeInterval.DAY,
-      TimeInterval.WEEK,
-      TimeInterval.MONTH,
-    ];
+
     setFreq(intervals[value]);
   }
 
-  return (
+  return autos == undefined ? (
+    <div>loading......</div>
+  ) : (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
@@ -76,6 +83,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
           <ModalHeader>Configure</ModalHeader>
           <Divider />
           <div>Automatic Additions:</div>
+          <AutomatedTasks tasks={autos} todoId={props.todoId} />
           <form className={formStyles.form} onSubmit={addAutomaticTask}>
             <input ref={inputRef} type="text" placeholder="Foo" />
             <select name="updateFreq" onChange={handleChange}>

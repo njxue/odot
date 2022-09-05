@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2px;
+}
+
+.auto {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px;
+  background-color: rgb(236, 236, 236);
+  padding: 5px;
+}
+
+.auto > button {
+  border: solid black 1px;
+  padding: 2px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+}

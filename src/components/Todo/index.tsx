@@ -35,10 +35,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
       const tmp: ITask[] = [];
       const data = snapshot.val();
       for (const taskId in data) {
-        const task: ITask = {
-          name: data[taskId].name,
-          id: taskId,
-        };
+        const task: ITask = data[taskId];
         tmp.push(task);
       }
       setTasks(tmp);
