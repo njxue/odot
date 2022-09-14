@@ -22,15 +22,15 @@ function addAutoTask(
     // error
     return;
   }
+
   const task: ITask = {
     id: taskId,
     todoId: todoId,
     name: taskName,
     isAuto: true,
     nextUpdate: calculateNextUpdateTime(freq),
+    freq: freq,
   };
-
-  update(tasksRef, { [`${taskId}`]: task });
   update(autosRef, { [`${taskId}`]: task });
 }
 

@@ -11,13 +11,23 @@ import {
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
 import { db } from "../../config/firebase";
-import { ref, onValue } from "firebase/database";
+import {
+  ref,
+  onValue,
+  DataSnapshot,
+  get,
+  onChildAdded,
+  onChildRemoved,
+  limitToLast,
+  query,
+} from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TaskList from "../TaskList";
 import AddTask from "../Task/AddTask";
 import todoStyles from "../../styles/Todo.module.css";
 import SettingsModal from "./SettingsModal";
+import { isAfter } from "../../helpers/DateTimeCalculations";
 
 interface TodoProps {
   todo: Todo;
@@ -27,19 +37,40 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   const todo: Todo = props.todo;
   const currUser = useAuth().getCurrUser();
   const tasksRef = ref(db, `users/${currUser.uid}/todos/${todo.id}/tasks`);
+  const todoRef = ref(db, `users/${currUser.uid}/todos/${todo.id}`);
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const [tasks, setTasks] = useState<ITask[] | undefined>();
+  const [tasks, setTasks] = useState<ITask[]>([]);
+
+  // idea: update nextUpdate only on remove?
+  function loadTasks(): void {
+    onValue(todoRef, (snapshot) => {
+      const manualTasks: ITask[] = [];
+      const autoTasks: ITask[] = [];
+
+      const data = snapshot.val();
+      const autos = data.autos;
+      const manuals = data.tasks;
+
+      for (const taskId in manuals) {
+        const task: ITask = manuals[taskId];
+        manualTasks.push(task);
+      }
+
+      for (const taskId in autos) {
+        const task: ITask = autos[taskId];
+        if (task.isAuto && !isAfter(task.nextUpdate, new Date())) {
+          autoTasks.push(task);
+        }
+      }
+
+      const allTasks: ITask[] = [...manualTasks, ...autoTasks];
+
+      setTasks(allTasks);
+    });
+  }
 
   useEffect(() => {
-    onValue(tasksRef, (snapshot) => {
-      const tmp: ITask[] = [];
-      const data = snapshot.val();
-      for (const taskId in data) {
-        const task: ITask = data[taskId];
-        tmp.push(task);
-      }
-      setTasks(tmp);
-    });
+    loadTasks();
   }, []);
 
   return tasks == undefined ? (

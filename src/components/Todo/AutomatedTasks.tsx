@@ -21,14 +21,15 @@ const AutomatedTasks: React.FC<AutomatedTasksProps> = (props) => {
     remove(taskRef);
   }
 
-
   const tasks = props.tasks;
   return (
     <div className={autoStyles.container}>
       {tasks.map((task) => (
-        <div className={autoStyles.auto}>
-          <p>{task.name}</p>
-          <button onClick={() => handleDelete(task.id)}>delete</button>
+        <div key={task.id}>
+          <div className={autoStyles.auto}>
+            <p>{task.name}</p>
+            <button onClick={() => handleDelete(task.id)}>delete</button>
+          </div>
         </div>
       ))}
     </div>

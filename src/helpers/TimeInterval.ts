@@ -1,7 +1,8 @@
 enum TimeInterval {
   DAY,
   WEEK,
-  MONTH
+  MONTH,
+  SECONDS
 }
 
 export default TimeInterval;

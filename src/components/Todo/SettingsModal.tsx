@@ -27,8 +27,7 @@ interface SettingsModalProps {
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = (props) => {
-  const isOpen: boolean = props.isOpen;
-  const onClose: () => void = props.onClose;
+  const { todoId, isOpen, onClose } = props;
 
   const currUser: User = useAuth().getCurrUser();
   const todoRef = ref(db, `users/${currUser.uid}/todos/${props.todoId}`);
@@ -41,6 +40,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
     TimeInterval.DAY,
     TimeInterval.WEEK,
     TimeInterval.MONTH,
+    TimeInterval.SECONDS,
   ];
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
       // error
       return;
     }
-    addAutoTask(currUser, props.todoId, taskName, freq);
+    addAutoTask(currUser, todoId, taskName, freq);
   }
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -90,6 +90,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
               <option value="0">Day</option>
               <option value="1">Week</option>
               <option value="2">Month</option>
+              <option value="3">5 seconds</option>
             </select>
             <button type="submit">Add</button>
           </form>

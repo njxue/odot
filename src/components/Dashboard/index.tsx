@@ -1,13 +1,12 @@
 import { AddModule } from "./AddModule";
 import { ref, onValue } from "firebase/database";
-import {db} from "../../config/firebase";
+import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import Todo from "../../interface/Todo";
 import { TodoMenu } from "../Todo";
 import dashboardStyles from "../../styles/Dashboard.module.css";
-
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -43,7 +42,7 @@ export const Dashboard: React.FC<{}> = () => {
       </div>
       <div>
         {todos.map((todo) => (
-          <TodoMenu todo={todo} />
+          <TodoMenu todo={todo} key={todo.id} />
         ))}
       </div>
     </div>

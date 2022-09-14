@@ -11,7 +11,7 @@ export const Task: React.FC<TaskProps> = (props) => {
   return (
     <div className={styles.task}>
       <p>{props.task.name}</p>
-      <RemoveTaskButton taskId={props.task.id} todoId={props.todoId}/>
+      <RemoveTaskButton task={props.task} todoId={props.todoId}/>
     </div>
   );
 };
