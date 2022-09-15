@@ -1,12 +1,10 @@
-import { child, DatabaseReference, push, update, ref } from "firebase/database";
-import TaskList from "../components/TaskList";
-import { db } from "../config/firebase";
-import useAuth from "../contexts/AuthContext";
+import { update } from "firebase/database";
 import ITask from "../interface/ITask";
 import { User } from "firebase/auth";
 import TimeInterval from "./TimeInterval";
 import { calculateNextUpdateTime } from "./DateTimeCalculations";
 import { getAutosRef, getTasksRef } from "./refs";
+import getDatabaseKey from "./getDatabaseKey";
 
 function addAutoTask(
   user: User,
@@ -17,12 +15,7 @@ function addAutoTask(
   const currUser = user;
   const tasksRef = getTasksRef(currUser.uid, todoId);
   const autosRef = getAutosRef(currUser.uid, todoId);
-  const taskId = push(tasksRef).key;
-
-  if (!taskId) {
-    // error
-    return;
-  }
+  const taskId = getDatabaseKey(tasksRef);
 
   const task: ITask = {
     id: taskId,
