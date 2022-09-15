@@ -11,23 +11,15 @@ import {
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
 import { db } from "../../config/firebase";
-import {
-  ref,
-  onValue,
-  DataSnapshot,
-  get,
-  onChildAdded,
-  onChildRemoved,
-  limitToLast,
-  query,
-} from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import TaskList from "../TaskList";
 import AddTask from "../Task/AddTask";
 import todoStyles from "../../styles/Todo.module.css";
 import SettingsModal from "./SettingsModal";
 import { isAfter } from "../../helpers/DateTimeCalculations";
+import { getTaskRef, getTodoRef } from "../../helpers/refs";
 
 interface TodoProps {
   todo: Todo;
@@ -36,12 +28,10 @@ interface TodoProps {
 export const TodoMenu: React.FC<TodoProps> = (props) => {
   const todo: Todo = props.todo;
   const currUser = useAuth().getCurrUser();
-  const tasksRef = ref(db, `users/${currUser.uid}/todos/${todo.id}/tasks`);
-  const todoRef = ref(db, `users/${currUser.uid}/todos/${todo.id}`);
+  const todoRef = getTodoRef(currUser.uid, todo.id);
   const { onOpen, isOpen, onClose } = useDisclosure();
   const [tasks, setTasks] = useState<ITask[]>([]);
 
-  // idea: update nextUpdate only on remove?
   function loadTasks(): void {
     onValue(todoRef, (snapshot) => {
       const manualTasks: ITask[] = [];

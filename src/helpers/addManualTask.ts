@@ -4,10 +4,11 @@ import { db } from "../config/firebase";
 import useAuth from "../contexts/AuthContext";
 import ITask from "../interface/ITask";
 import { User } from "firebase/auth";
+import { getTasksRef } from "./refs";
 
 function addManualTask(user: User, todoId: string, taskName: string) {
   const currUser = user;
-  const tasksRef = ref(db, `/users/${currUser.uid}/todos/${todoId}/tasks`);
+  const tasksRef = getTasksRef(currUser.uid, todoId);
   const taskId = push(tasksRef).key;
 
   if (!taskId) {
@@ -20,7 +21,7 @@ function addManualTask(user: User, todoId: string, taskName: string) {
     name: taskName,
     isAuto: false,
   };
-  
+
   update(tasksRef, { [`${taskId}`]: task });
 }
 

@@ -4,26 +4,25 @@ import { ref, push, child, update } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import styles from "../../styles/Button.module.css";
 import formStyles from "../../styles/Form.module.css";
+import { getTodoRef, getTodosRef } from "../../helpers/refs";
 
 export const AddModule: React.FC<{}> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
 
-  const userTodosRef = ref(db, `users/${currUser.uid}/todos`);
-
+  const userTodosRef = getTodosRef(currUser.uid);
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
+    
     const todoId: string | null = push(userTodosRef).key;
     const todoName: string | undefined = inputRef.current?.value;
-    if (
-      todoId == null ||
-      todoName == undefined ||
-      todoName.trim().length == 0
-    ) {
-      console.log("ERROR");
-    } else {
-      update(child(userTodosRef, todoId), { name: todoName.trim() });
+
+    if (!todoName || todoName.trim().length == 0) {
+      throw Error();
     }
+
+    const todoRef = getTodoRef(currUser.uid, todoId);
+    update(todoRef, { name: todoName.trim() });
   }
   return (
     <>

@@ -19,6 +19,7 @@ import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
 import AutomatedTasks from "./AutomatedTasks";
 import ITask from "../../interface/ITask";
 import addAutoTask from "../../helpers/addAutoTask";
+import { getAutosRef, getTodoRef } from "../../helpers/refs";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -30,8 +31,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   const { todoId, isOpen, onClose } = props;
 
   const currUser: User = useAuth().getCurrUser();
-  const todoRef = ref(db, `users/${currUser.uid}/todos/${props.todoId}`);
-  const autosRef = child(todoRef, "autos");
+  const autosRef = getAutosRef(currUser.uid, todoId);
 
   const [freq, setFreq] = useState<TimeInterval>(TimeInterval.DAY);
   const inputRef = useRef<HTMLInputElement>(null);

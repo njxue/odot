@@ -6,6 +6,7 @@ import ITask from "../interface/ITask";
 import { User } from "firebase/auth";
 import TimeInterval from "./TimeInterval";
 import { calculateNextUpdateTime } from "./DateTimeCalculations";
+import { getAutosRef, getTasksRef } from "./refs";
 
 function addAutoTask(
   user: User,
@@ -14,8 +15,8 @@ function addAutoTask(
   freq: TimeInterval
 ) {
   const currUser = user;
-  const tasksRef = ref(db, `/users/${currUser.uid}/todos/${todoId}/tasks`);
-  const autosRef = ref(db, `/users/${currUser.uid}/todos/${todoId}/autos`);
+  const tasksRef = getTasksRef(currUser.uid, todoId);
+  const autosRef = getAutosRef(currUser.uid, todoId);
   const taskId = push(tasksRef).key;
 
   if (!taskId) {

@@ -4,24 +4,19 @@ import useAuth from "../../contexts/AuthContext";
 import styles from "../../styles/Button.module.css";
 import ITask from "../../interface/ITask";
 import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
+import { getAutoRef, getTaskRef } from "../../helpers/refs";
 
 interface RemoveTaskButtonProps {
   task: ITask;
-  todoId: String;
+  todoId: string;
 }
 
 const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
   const { task, todoId } = props;
   const currUser = useAuth().getCurrUser();
-  const autoRef = ref(
-    db,
-    `users/${currUser.uid}/todos/${todoId}/autos/${task.id}`
-  );
+  const autoRef = getAutoRef(currUser.uid, todoId, task.id);
 
-  const taskRef = ref(
-    db,
-    `users/${currUser.uid}/todos/${todoId}/tasks/${task.id}`
-  );
+  const taskRef = getTaskRef(currUser.uid, todoId, task.id);
 
   function handleRemove(): void {
     if (task.isAuto) {

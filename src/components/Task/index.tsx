@@ -4,7 +4,7 @@ import styles from "../../styles/Task.module.css";
 
 interface TaskProps {
   task: ITask;
-  todoId: String
+  todoId: string
 }
 
 export const Task: React.FC<TaskProps> = (props) => {

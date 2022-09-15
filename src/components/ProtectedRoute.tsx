@@ -5,8 +5,6 @@ import { Login } from "./Login";
 
 export const ProtectedRoute: React.FC<{}> = () => {
   let isLoggedIn: boolean | undefined = useAuth().isLoggedIn;
-  const navigate = useNavigate();
- 
 
   if (isLoggedIn == undefined) {
     return <div>loading......</div>;

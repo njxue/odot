@@ -29,9 +29,7 @@ export const Dashboard: React.FC<{}> = () => {
       setTodos(tmp);
     });
   }, []);
-
-  //console.log(todos?.length);
-
+  
   return todos == undefined ? (
     <div>loading......</div>
   ) : (
