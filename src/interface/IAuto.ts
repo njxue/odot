@@ -1,8 +1,9 @@
-interface IAuto {
-  id: String;
+import ITask from "./ITask";
+
+interface IAuto extends ITask {
   freq: number;
-  name: String;
-  nextUpdate: String;
+  nextUpdate: Date;
+  isPushed: boolean;
 }
 
 export default IAuto;

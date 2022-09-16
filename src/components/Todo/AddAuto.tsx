@@ -2,7 +2,13 @@ import useAuth from "../../contexts/AuthContext";
 import formStyles from "../../styles/Form.module.css";
 import React, { useRef, useState } from "react";
 import TimeInterval from "../../helpers/TimeInterval";
-import addAutoTask from "../../helpers/addAutoTask";
+import { update } from "firebase/database";
+import IAuto from "../../interface/IAuto";
+import { User } from "firebase/auth";
+import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
+import { getAutosRef, getTasksRef } from "../../helpers/refs";
+import getDatabaseKey from "../../helpers/getDatabaseKey";
+import SelectFreq from "./SelectFreq";
 
 interface AddAutoProps {
   todoId: string;
@@ -13,12 +19,6 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
   const [freq, setFreq] = useState<TimeInterval>(TimeInterval.DAY);
-  const intervals: TimeInterval[] = [
-    TimeInterval.DAY,
-    TimeInterval.WEEK,
-    TimeInterval.MONTH,
-    TimeInterval.SECONDS,
-  ];
 
   function addAutomaticTask(e: React.FormEvent): void {
     e.preventDefault();
@@ -28,24 +28,31 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       // error
       return;
     }
-    addAutoTask(currUser, todoId, taskName, freq);
+    const tasksRef = getTasksRef(currUser.uid, todoId);
+    const autosRef = getAutosRef(currUser.uid, todoId);
+    const taskId = getDatabaseKey(tasksRef);
+
+    const auto: IAuto = {
+      id: taskId,
+      todoId: todoId,
+      name: taskName,
+      isAuto: true,
+      nextUpdate: calculateNextUpdateTime(freq),
+      freq: freq,
+      isPushed: false,
+    };
+
+    update(autosRef, { [`${taskId}`]: auto });
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const value: number = parseInt(e.target.value);
-
-    setFreq(intervals[value]);
+  function handleChange(interval: TimeInterval) {
+    setFreq(interval);
   }
 
   return (
     <form className={formStyles.form} onSubmit={addAutomaticTask}>
       <input ref={inputRef} type="text" placeholder="Foo" />
-      <select name="updateFreq" onChange={handleChange}>
-        <option value="0">Day</option>
-        <option value="1">Week</option>
-        <option value="2">Month</option>
-        <option value="3">5 seconds</option>
-      </select>
+      <SelectFreq onChange={handleChange} />
       <button type="submit">Add</button>
     </form>
   );

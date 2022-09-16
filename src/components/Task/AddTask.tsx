@@ -1,10 +1,13 @@
 import React, { useRef } from "react";
-import { ref, child, push, update } from "firebase/database";
-import { db } from "../../config/firebase";
+import { update } from "firebase/database";
+import ITask from "../../interface/ITask";
+import { User } from "firebase/auth";
+import { getTasksRef } from "../../helpers/refs";
+import getDatabaseKey from "../../helpers/getDatabaseKey";
+import resetInputField from "../../helpers/resetInputField";
 import useAuth from "../../contexts/AuthContext";
 import buttonStyles from "../../styles/Button.module.css";
 import formStyles from "../../styles/Form.module.css";
-import addManualTask from "../../helpers/addManualTask";
 
 interface AddTaskProps {
   todoId: string;
@@ -25,6 +28,23 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     } else {
       addManualTask(currUser, todoId, taskName);
     }
+  }
+
+  function addManualTask(user: User, todoId: string, taskName: string) {
+    const currUser = user;
+    const tasksRef = getTasksRef(currUser.uid, todoId);
+    const taskId = getDatabaseKey(tasksRef);
+
+    const task: ITask = {
+      id: taskId,
+      todoId: todoId,
+      name: taskName,
+      isAuto: false,
+    };
+
+    update(tasksRef, { [`${taskId}`]: task }).then(() =>
+      resetInputField(taskRef)
+    );
   }
 
   return (

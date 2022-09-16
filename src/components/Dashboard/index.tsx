@@ -7,6 +7,8 @@ import { User } from "firebase/auth";
 import Todo from "../../interface/Todo";
 import { TodoMenu } from "../Todo";
 import dashboardStyles from "../../styles/Dashboard.module.css";
+import { Accordion } from "@chakra-ui/react";
+import todoStyles from "../../styles/Todo.module.css";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -29,7 +31,7 @@ export const Dashboard: React.FC<{}> = () => {
       setTodos(tmp);
     });
   }, []);
-  
+
   return todos == undefined ? (
     <div>loading......</div>
   ) : (
@@ -38,11 +40,11 @@ export const Dashboard: React.FC<{}> = () => {
         <h1>Add a Todo: </h1>
         <AddModule />
       </div>
-      <div>
+      <Accordion allowMultiple allowToggle >
         {todos.map((todo) => (
           <TodoMenu todo={todo} key={todo.id} />
         ))}
-      </div>
+      </Accordion>
     </div>
   );
 };

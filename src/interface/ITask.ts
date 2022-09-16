@@ -5,6 +5,4 @@ export default interface ITask {
   todoId: string;
   name: string;
   isAuto: boolean;
-  nextUpdate?: Date;
-  freq?: TimeInterval
 }

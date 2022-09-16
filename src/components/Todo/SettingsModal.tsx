@@ -10,11 +10,12 @@ import {
 import { User } from "firebase/auth";
 import { onValue } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
-import React, { useEffect, useRef, useState } from "react";
-import AutomatedTasks from "./AutomatedTasks";
-import ITask from "../../interface/ITask";
+import React, { useEffect, useState } from "react";
+import IAuto from "../../interface/IAuto";
 import { getAutosRef } from "../../helpers/refs";
 import AddAuto from "./AddAuto";
+import DeleteTodo from "./DeleteTodo";
+import AutoCollections from "./AutoCollections";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -28,13 +29,12 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   const currUser: User = useAuth().getCurrUser();
   const autosRef = getAutosRef(currUser.uid, todoId);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [autos, setAutos] = useState<ITask[] | undefined>();
+  const [autos, setAutos] = useState<IAuto[] | undefined>();
 
   useEffect(() => {
     onValue(autosRef, (snapshot) => {
       const value = snapshot.val();
-      const tmp: ITask[] = [];
+      const tmp: IAuto[] = [];
       for (const key in value) {
         const task = value[key];
         tmp.push({ id: key, ...task });
@@ -54,8 +54,9 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
           <ModalHeader>Configure</ModalHeader>
           <Divider />
           <div>Automatic Additions:</div>
-          <AutomatedTasks tasks={autos} todoId={todoId} />
+          <AutoCollections tasks={autos} todoId={todoId} />
           <AddAuto todoId={todoId} />
+          <DeleteTodo todoId={todoId} />
         </ModalBody>
       </ModalContent>
     </Modal>

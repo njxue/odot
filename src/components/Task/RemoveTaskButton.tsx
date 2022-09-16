@@ -1,8 +1,8 @@
-import { db } from "../../config/firebase";
-import { ref, remove, update } from "firebase/database";
+import { remove, update } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import styles from "../../styles/Button.module.css";
 import ITask from "../../interface/ITask";
+import IAuto from "../../interface/IAuto";
 import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
 import { getAutoRef, getTaskRef } from "../../helpers/refs";
 
@@ -27,7 +27,10 @@ const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
   }
 
   function handleRemoveAuto(): void {
-    update(autoRef, { nextUpdate: calculateNextUpdateTime(task.freq) });
+    update(autoRef, {
+      nextUpdate: calculateNextUpdateTime((task as IAuto).freq),
+      isPushed: false,
+    });
   }
 
   function handleRemoveManual(): void {
