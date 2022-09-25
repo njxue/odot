@@ -1,25 +1,22 @@
 import { remove, update } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
-import styles from "../../styles/Button.module.css";
 import ITask from "../../interface/ITask";
 import IAuto from "../../interface/IAuto";
 import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
 import { getAutoRef, getTaskRef } from "../../helpers/refs";
-import { VscCircleLargeFilled } from "react-icons/vsc";
-import { Icon, Tooltip } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
+import { Tooltip } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 interface RemoveTaskButtonProps {
   task: ITask;
-  todoId: string;
 }
 
 const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
-  const { task, todoId } = props;
+  const { task } = props;
   const currUser = useAuth().getCurrUser();
-  const autoRef = getAutoRef(currUser.uid, todoId, task.id);
+  const autoRef = getAutoRef(currUser.uid, task.todoId, task.id);
 
-  const taskRef = getTaskRef(currUser.uid, todoId, task.id);
+  const taskRef = getTaskRef(currUser.uid, task.todoId, task.id);
 
   function handleRemove(): void {
     if (task.isAuto) {
@@ -41,8 +38,8 @@ const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
   }
 
   return (
-    <Tooltip label="Completed">
-      <CheckIcon
+    <Tooltip label="Delete">
+      <DeleteIcon
         _hover={{ cursor: "pointer" }}
         boxSize="15px"
         onClick={handleRemove}

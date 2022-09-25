@@ -1,5 +1,4 @@
 import {
-  Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
@@ -10,9 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
-import { db } from "../../config/firebase";
 import {
-  ref,
   onValue,
   get,
   update,
@@ -26,13 +23,9 @@ import AddTask from "../Task/AddTask";
 import todoStyles from "../../styles/Todo.module.css";
 import SettingsModal from "./SettingsModal";
 import { isAfter } from "../../helpers/DateTimeCalculations";
-import {
-  getAutosRef,
-  getTaskRef,
-  getTasksRef,
-  getTodoRef,
-} from "../../helpers/refs";
+import { getAutosRef, getTasksRef, getTodoRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
+import CompletedTasks from "../CompletedTasks";
 
 interface TodoProps {
   todo: Todo;
@@ -48,6 +41,9 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [manualTasks, setManualTasks] = useState<ITask[]>([]);
   const [autoTasks, setAutoTasks] = useState<IAuto[]>([]);
+  const [completedManuals, setCompletedManuals] = useState<ITask[]>([]);
+  const [completedAutos, setCompletedAutos] = useState<IAuto[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
 
   function loadTasks(): void {
     loadManuals();
@@ -56,26 +52,39 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
 
   function loadManuals() {
     onValue(tasksRef, (snapshot) => {
-      const tmp: ITask[] = [];
+      const incomplete: ITask[] = [];
+      const completed: ITask[] = [];
       const data = snapshot.val();
       for (const id in data) {
-        tmp.push(data[id]);
+        const task: ITask = data[id];
+        if (task.isCompleted) {
+          completed.push(task);
+        } else {
+          incomplete.push(task);
+        }
       }
-      setManualTasks(tmp);
+      setManualTasks(incomplete);
+      setCompletedManuals(completed);
     });
   }
 
   function loadAutos() {
     get(autosRef).then((snapshot) => {
-      const tmp: IAuto[] = [];
+      const incomplete: IAuto[] = [];
+      const completed: IAuto[] = [];
       const data = snapshot.val();
       for (const id in data) {
         const task = data[id];
         if (!isAfter(task.nextUpdate, new Date()) || task.isPushed) {
-          tmp.push(task);
+          if (task.isCompleted) {
+            completed.push(task);
+          } else {
+            incomplete.push(task);
+          }
         }
       }
-      setAutoTasks(tmp);
+      setAutoTasks(incomplete);
+      setCompletedAutos(completed);
     });
   }
 
@@ -98,6 +107,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
 
   useEffect(() => {
     setTasks([...autoTasks, ...manualTasks]);
+    setCompletedTasks([...completedAutos, ...completedManuals]);
     updateAutosPushedStatus(autoTasks);
   }, [manualTasks, autoTasks]);
 
@@ -119,7 +129,14 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
         <button onClick={onOpen}>settings</button>
         <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
         <Divider borderColor="black" />
-        <TaskList tasks={tasks} todoId={todo.id} />
+        <div className={todoStyles.taskContainer}>
+          <div className={todoStyles.incompleteTasks}>
+            <TaskList tasks={tasks} todoId={todo.id} />
+          </div>
+          <div className={todoStyles.completedTasks}>
+            <CompletedTasks tasks={completedTasks} />
+          </div>
+        </div>
         <AddTask todoId={todo.id} />
       </AccordionPanel>
     </AccordionItem>

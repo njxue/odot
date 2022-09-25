@@ -1,17 +1,24 @@
 import ITask from "../../interface/ITask";
-import RemoveTaskButton from "./RemoveTaskButton";
+import ToggleCompletionStatusButton from "./ToggleCompletionStatusButton";
 import styles from "../../styles/Task.module.css";
+import RemoveTaskButton from "./RemoveTaskButton";
 
 interface TaskProps {
   task: ITask;
-  todoId: string;
 }
 
 export const Task: React.FC<TaskProps> = (props) => {
+  const { task } = props;
   return (
     <div className={styles.task}>
-      <RemoveTaskButton task={props.task} todoId={props.todoId} />
-      <p>{props.task.name}</p>
+      <div className={styles.status}>
+        <ToggleCompletionStatusButton
+          task={task}
+          completed={task.isCompleted}
+        />
+        <p>{task.name}</p>
+      </div>
+      <RemoveTaskButton task={task} />
     </div>
   );
 };

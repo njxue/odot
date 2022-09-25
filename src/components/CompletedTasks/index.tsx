@@ -2,17 +2,18 @@ import ITask from "../../interface/ITask";
 import { Task } from "../Task";
 import styles from "../../styles/Task.module.css";
 
-interface TaskListProps {
+interface CompletedTasksProps {
   tasks: ITask[];
-  todoId: string;
 }
 
-const TaskList: React.FC<TaskListProps> = (props) => {
+const CompletedTasks: React.FC<CompletedTasksProps> = (props) => {
+  const { tasks } = props;
+
   return (
     <div className={styles.taskList}>
-      Pending
+      <b>Completed</b>
       <ol>
-        {props.tasks.map((task) => (
+        {tasks.map((task) => (
           <li key={task.id}>
             <Task task={task} />
           </li>
@@ -22,4 +23,4 @@ const TaskList: React.FC<TaskListProps> = (props) => {
   );
 };
 
-export default TaskList;
+export default CompletedTasks;

@@ -5,4 +5,5 @@ export default interface ITask {
   todoId: string;
   name: string;
   isAuto: boolean;
+  isCompleted: boolean;
 }

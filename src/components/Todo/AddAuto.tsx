@@ -41,6 +41,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       nextUpdate: calculateNextUpdateTime(freq),
       freq: freq,
       isPushed: false,
+      isCompleted: false,
     };
 
     update(autosRef, { [`${taskId}`]: auto });
