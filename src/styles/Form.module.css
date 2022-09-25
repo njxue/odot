@@ -1,12 +1,19 @@
 .form {
-    padding: 5px;
+  padding: 5px;
 }
 
 .form > input {
-    padding: 5px;
-    border: solid black 1px
+  padding: 5px;
+  height: 40px;
+  border: solid rgb(206, 206, 206) 1px;
 }
 
 .form > button {
-    margin-left: 2px;
+  margin-left: 2px;
+  height: 40px;
+}
+
+.form > select {
+  height: 40px;
+  border: solid rgb(206, 206, 206) 1px;
 }

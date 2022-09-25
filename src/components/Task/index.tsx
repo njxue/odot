@@ -10,10 +10,8 @@ interface TaskProps {
 export const Task: React.FC<TaskProps> = (props) => {
   return (
     <div className={styles.task}>
+      <RemoveTaskButton task={props.task} todoId={props.todoId} />
       <p>{props.task.name}</p>
-      <div>
-        <RemoveTaskButton task={props.task} todoId={props.todoId} />
-      </div>
     </div>
   );
 };

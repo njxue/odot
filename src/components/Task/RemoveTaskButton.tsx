@@ -5,6 +5,9 @@ import ITask from "../../interface/ITask";
 import IAuto from "../../interface/IAuto";
 import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
 import { getAutoRef, getTaskRef } from "../../helpers/refs";
+import { VscCircleLargeFilled } from "react-icons/vsc";
+import { Icon, Tooltip } from "@chakra-ui/react";
+import { CheckIcon } from "@chakra-ui/icons";
 
 interface RemoveTaskButtonProps {
   task: ITask;
@@ -38,9 +41,13 @@ const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
   }
 
   return (
-    <button className={styles.removeBtn} onClick={handleRemove}>
-      remove
-    </button>
+    <Tooltip label="Completed">
+      <CheckIcon
+        _hover={{ cursor: "pointer" }}
+        boxSize="15px"
+        onClick={handleRemove}
+      />
+    </Tooltip>
   );
 };
 
