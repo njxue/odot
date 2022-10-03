@@ -1,5 +1,5 @@
 .todo {
-  background-color: rgb(209, 224, 231);
+  background-color: white;
 }
 
 .taskContainer {
@@ -17,4 +17,11 @@
 .taskContainer > .completedTasks {
   flex-grow: 1;
   flex-basis: 0;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }

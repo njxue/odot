@@ -3,8 +3,10 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Box,
   Divider,
   HStack,
+  Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
 import Todo from "../../interface/Todo";
@@ -29,6 +31,8 @@ import {
 import { getAutosRef, getTasksRef, getTodoRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import CompletedTasks from "../CompletedTasks";
+import Progress from "./Progress";
+import { SettingsIcon } from "@chakra-ui/icons";
 
 interface TodoProps {
   todo: Todo;
@@ -44,6 +48,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   const [autoTasksToPush, setAutoTasksToPush] = useState<IAuto[]>([]);
   const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
   const [incompleteTasks, setIncompleteTasks] = useState<ITask[]>([]);
+  const [percentComplete, setPercentComplete] = useState<number>(0);
 
   function loadTasks(): void {
     loadAutos();
@@ -101,37 +106,59 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, []);
 
   useEffect(() => {
+    setPercentComplete(
+      Math.round(
+        (100 * completedTasks.length) /
+          (completedTasks.length + incompleteTasks.length)
+      )
+    );
+  }, [completedTasks, incompleteTasks]);
+
+  useEffect(() => {
     pushAutoTasks(autoTasksToPush);
   }, [autoTasksToPush]);
 
   return incompleteTasks == undefined || completedTasks == undefined ? (
     <div>loading......</div>
   ) : (
-    <AccordionItem className={todoStyles.todo}>
-      <h2>
-        <AccordionButton fontSize="xl">
-          <HStack justifyContent="space-between" w="100%">
-            <h1>
-              <b>{todo.name}</b>
-            </h1>
-            <AccordionIcon />
-          </HStack>
-        </AccordionButton>
-      </h2>
-      <AccordionPanel>
-        <button onClick={onOpen}>settings</button>
-        <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
-        <Divider borderColor="black" />
-        <div className={todoStyles.taskContainer}>
-          <div className={todoStyles.incompleteTasks}>
-            <TaskList tasks={incompleteTasks} todoId={todo.id} />
-          </div>
-          <div className={todoStyles.completedTasks}>
-            <CompletedTasks tasks={completedTasks} />
-          </div>
+    <AccordionItem>
+      {({ isExpanded }) => (
+        <div>
+          <h2>
+            <AccordionButton fontSize="xl">
+              <HStack
+                justifyContent="space-between"
+                w="100%"
+                alignItems="center"
+              >
+                <h1>
+                  <b>{todo.name}</b>
+                  <Progress value={percentComplete} />
+                </h1>
+                <AccordionIcon />
+              </HStack>
+            </AccordionButton>
+          </h2>
+
+          <AccordionPanel bgColor="rgb(236, 236, 236)">
+            <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
+            <div className={todoStyles.taskContainer}>
+              <div className={todoStyles.incompleteTasks}>
+                <TaskList tasks={incompleteTasks} todoId={todo.id} />
+              </div>
+              <div className={todoStyles.completedTasks}>
+                <CompletedTasks tasks={completedTasks} />
+              </div>
+            </div>
+            <div className={todoStyles.footer}>
+              <AddTask todoId={todo.id} />
+              <Tooltip label="configure">
+                <SettingsIcon onClick={onOpen} cursor="pointer" />
+              </Tooltip>
+            </div>
+          </AccordionPanel>
         </div>
-        <AddTask todoId={todo.id} />
-      </AccordionPanel>
+      )}
     </AccordionItem>
   );
 };

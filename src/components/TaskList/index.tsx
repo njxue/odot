@@ -10,7 +10,9 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = (props) => {
   return (
     <div className={styles.taskList}>
-      Pending
+      <div className={styles.header}>
+        <b>Shit to do</b>
+      </div>
       <ol>
         {props.tasks.map((task) => (
           <li key={task.id}>

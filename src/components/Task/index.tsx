@@ -10,7 +10,12 @@ interface TaskProps {
 export const Task: React.FC<TaskProps> = (props) => {
   const { task } = props;
   return (
-    <div className={styles.task}>
+    <div
+      className={styles.task}
+      style={{
+        backgroundColor: task.isCompleted ? "rgb(236, 236, 236)" : "white",
+      }}
+    >
       <div className={styles.status}>
         <ToggleCompletionStatusButton
           task={task}
