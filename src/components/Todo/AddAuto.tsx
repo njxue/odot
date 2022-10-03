@@ -37,10 +37,8 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       id: taskId,
       todoId: todoId,
       name: taskName,
-      isAuto: true,
       nextUpdate: calculateNextUpdateTime(freq),
       freq: freq,
-      isPushed: false,
       isCompleted: false,
     };
 

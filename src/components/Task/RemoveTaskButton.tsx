@@ -19,21 +19,6 @@ const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
   const taskRef = getTaskRef(currUser.uid, task.todoId, task.id);
 
   function handleRemove(): void {
-    if (task.isAuto) {
-      handleRemoveAuto();
-    } else {
-      handleRemoveManual();
-    }
-  }
-
-  function handleRemoveAuto(): void {
-    update(autoRef, {
-      nextUpdate: calculateNextUpdateTime((task as IAuto).freq),
-      isPushed: false,
-    });
-  }
-
-  function handleRemoveManual(): void {
     remove(taskRef);
   }
 

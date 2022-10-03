@@ -39,7 +39,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
       id: taskId,
       todoId: todoId,
       name: taskName,
-      isAuto: false,
+
       isCompleted: false,
     };
 

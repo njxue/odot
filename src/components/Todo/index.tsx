@@ -22,7 +22,10 @@ import TaskList from "../TaskList";
 import AddTask from "../Task/AddTask";
 import todoStyles from "../../styles/Todo.module.css";
 import SettingsModal from "./SettingsModal";
-import { isAfter } from "../../helpers/DateTimeCalculations";
+import {
+  calculateNextUpdateTime,
+  isAfter,
+} from "../../helpers/DateTimeCalculations";
 import { getAutosRef, getTasksRef, getTodoRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import CompletedTasks from "../CompletedTasks";
@@ -34,20 +37,17 @@ interface TodoProps {
 export const TodoMenu: React.FC<TodoProps> = (props) => {
   const todo: Todo = props.todo;
   const currUser = useAuth().getCurrUser();
-  const todoRef = getTodoRef(currUser.uid, todo.id);
   const tasksRef = getTasksRef(currUser.uid, todo.id);
   const autosRef = getAutosRef(currUser.uid, todo.id);
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const [tasks, setTasks] = useState<ITask[]>([]);
-  const [manualTasks, setManualTasks] = useState<ITask[]>([]);
-  const [autoTasks, setAutoTasks] = useState<IAuto[]>([]);
-  const [completedManuals, setCompletedManuals] = useState<ITask[]>([]);
-  const [completedAutos, setCompletedAutos] = useState<IAuto[]>([]);
+
+  const [autoTasksToPush, setAutoTasksToPush] = useState<IAuto[]>([]);
   const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
+  const [incompleteTasks, setIncompleteTasks] = useState<ITask[]>([]);
 
   function loadTasks(): void {
-    loadManuals();
     loadAutos();
+    loadManuals();
   }
 
   function loadManuals() {
@@ -63,55 +63,48 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
           incomplete.push(task);
         }
       }
-      setManualTasks(incomplete);
-      setCompletedManuals(completed);
+      setIncompleteTasks(incomplete);
+      setCompletedTasks(completed);
     });
   }
 
   function loadAutos() {
     get(autosRef).then((snapshot) => {
-      const incomplete: IAuto[] = [];
-      const completed: IAuto[] = [];
       const data = snapshot.val();
+      const tmp: IAuto[] = [];
       for (const id in data) {
-        const task = data[id];
-        if (!isAfter(task.nextUpdate, new Date()) || task.isPushed) {
-          if (task.isCompleted) {
-            completed.push(task);
-          } else {
-            incomplete.push(task);
-          }
+        const task: IAuto = data[id];
+        if (!isAfter(task.nextUpdate, new Date())) {
+          tmp.push(task);
         }
       }
-      setAutoTasks(incomplete);
-      setCompletedAutos(completed);
+      setAutoTasksToPush(tmp);
     });
   }
 
-  function updateAutosPushedStatus(autos: IAuto[]): void {
-    const batchUpdate: { [key: string]: IAuto } = {};
-    for (const k in autos) {
-      const auto: IAuto = autos[k];
-      auto.isPushed = true;
-      const id = auto.id;
-      batchUpdate[id] = auto;
+  function pushAutoTasks(tasks: IAuto[]): void {
+    const batchUpdate: { [key: string]: ITask } = {};
+    const batchUpdateTime: { [key: string]: Date } = {};
+    for (const k in tasks) {
+      const task: IAuto = tasks[k];
+      batchUpdate[task.id] = task;
+      batchUpdateTime[`${task.id}/nextUpdate`] = calculateNextUpdateTime(
+        task.freq
+      );
     }
-    update(autosRef, batchUpdate);
+    update(tasksRef, batchUpdate);
+    update(autosRef, batchUpdateTime);
   }
 
   useEffect(() => {
     loadTasks();
-    onChildChanged(autosRef, loadAutos);
-    onChildRemoved(autosRef, loadAutos);
   }, []);
 
   useEffect(() => {
-    setTasks([...autoTasks, ...manualTasks]);
-    setCompletedTasks([...completedAutos, ...completedManuals]);
-    updateAutosPushedStatus(autoTasks);
-  }, [manualTasks, autoTasks]);
+    pushAutoTasks(autoTasksToPush);
+  }, [autoTasksToPush]);
 
-  return tasks == undefined ? (
+  return incompleteTasks == undefined || completedTasks == undefined ? (
     <div>loading......</div>
   ) : (
     <AccordionItem className={todoStyles.todo}>
@@ -131,7 +124,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
         <Divider borderColor="black" />
         <div className={todoStyles.taskContainer}>
           <div className={todoStyles.incompleteTasks}>
-            <TaskList tasks={tasks} todoId={todo.id} />
+            <TaskList tasks={incompleteTasks} todoId={todo.id} />
           </div>
           <div className={todoStyles.completedTasks}>
             <CompletedTasks tasks={completedTasks} />

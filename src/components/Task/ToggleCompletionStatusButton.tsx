@@ -19,11 +19,8 @@ const ToggleCompletionStatusButton: React.FC<
   function toggleCompletionStatus(): void {
     let ref: DatabaseReference;
 
-    if (task.isAuto) {
-      ref = getAutoRef(uid, task.todoId, task.id);
-    } else {
-      ref = getTaskRef(uid, task.todoId, task.id);
-    }
+    ref = getTaskRef(uid, task.todoId, task.id);
+
     update(ref, { isCompleted: !task.isCompleted });
   }
 
