@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.container > * {
+  flex-grow: 1;
+  flex-basis: 0;
+}

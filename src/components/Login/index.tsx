@@ -1,13 +1,21 @@
 import { Flex } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import PreLoginLayout from "../layout/PreLoginLayout";
 import GreetingCard from "./GreetingCard";
 import LoginForm from "./LoginForm";
 
-interface Props {}
-export const Login: React.FC<Props> = () => {
+export const Login: React.FC<{}> = () => {
+  const navigate = useNavigate();
+
   return (
-    <Flex direction="row" h="100vh" alignContent="center">
-      <GreetingCard />
+    <PreLoginLayout>
+      <GreetingCard
+        header="Sign up"
+        text="lorem ipsum"
+        onClickButtonEvent={() => navigate("/register")}
+        buttonText="Register"
+      />
       <LoginForm />
-    </Flex>
+    </PreLoginLayout>
   );
 };
