@@ -24,7 +24,8 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       <Heading>{header}</Heading>
       <Heading size="md">{text}</Heading>
       <Button
-        colorScheme={buttonColor ? buttonColor : "pink"}
+        bgColor={buttonColor ? buttonColor : "pink.700"}
+        _hover={{ bgColor: buttonColor ? "teal.500" : "pink.600" }} // this feels too hacky, fix this
         onClick={onClickButtonEvent}
       >
         {buttonText}

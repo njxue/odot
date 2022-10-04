@@ -43,7 +43,12 @@ const RegisterForm: React.FC<{}> = () => {
         <FormLabel>Confirm Password: </FormLabel>
         <Input ref={passwordCfRef} type="password" borderColor="gray" />
       </FormControl>
-      <Button onClick={handleRegister} colorScheme="pink" w="100%">
+      <Button
+        onClick={handleRegister}
+        color="white"
+        bgColor="pink.700"
+        w="100%"
+      >
         Register
       </Button>
     </PreLoginForm>

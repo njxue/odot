@@ -12,7 +12,7 @@ export const Register: React.FC<{}> = () => {
         text="lorem ipsum"
         onClickButtonEvent={() => navigate("/")}
         buttonText="Login"
-        bgColor="#d83c8c"
+        bgColor="pink.700"
         buttonColor="teal"
       />
       <RegisterForm />
