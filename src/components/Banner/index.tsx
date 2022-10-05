@@ -1,6 +1,7 @@
 import useAuth from "../../contexts/AuthContext";
 import buttonStyles from "../../styles/Button.module.css";
 import bannerStyles from "../../styles/Banner.module.css";
+import { Image } from "@chakra-ui/react";
 
 interface BannerProps {
   children?: React.ReactNode;
@@ -15,7 +16,7 @@ export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   return (
     <div>
       <div className={bannerStyles.banner}>
-        <h1>Todo-List</h1>
+        <Image src={require("../../static/odotlogo.png")} boxSize="70px" />
         <button className={buttonStyles.logoutBtn} onClick={handleClick}>
           log out
         </button>

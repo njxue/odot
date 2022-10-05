@@ -1,13 +1,14 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../contexts/AuthContext";
 import { Banner } from "./Banner";
+import Loader from "./layout/Loader";
 import { Login } from "./Login";
 
 export const ProtectedRoute: React.FC<{}> = () => {
   let isLoggedIn: boolean | undefined = useAuth().isLoggedIn;
 
   if (isLoggedIn == undefined) {
-    return <div>loading......</div>;
+    return <Loader />;
   }
 
   if (!isLoggedIn) {

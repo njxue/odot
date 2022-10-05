@@ -10,8 +10,8 @@ export const Login: React.FC<{}> = () => {
   return (
     <PreLoginLayout>
       <GreetingCard
-        header="Sign up"
-        text="lorem ipsum"
+        header="Sign up now"
+        text="You won't forget shit"
         onClickButtonEvent={() => navigate("/register")}
         buttonText="Register"
       />

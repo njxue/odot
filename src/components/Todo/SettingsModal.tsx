@@ -16,6 +16,7 @@ import { getAutosRef } from "../../helpers/refs";
 import AddAuto from "./AddAuto";
 import DeleteTodo from "./DeleteTodo";
 import AutoCollections from "./AutoCollections";
+import Loader from "../layout/Loader";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -44,7 +45,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   }, []);
 
   return autos == undefined ? (
-    <div>loading......</div>
+    <Loader />
   ) : (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

@@ -8,8 +8,7 @@ export const Register: React.FC<{}> = () => {
   return (
     <PreLoginLayout>
       <GreetingCard
-        header="Login"
-        text="lorem ipsum"
+        header="See what shit you've left undone"
         onClickButtonEvent={() => navigate("/")}
         buttonText="Login"
         bgColor="pink.700"

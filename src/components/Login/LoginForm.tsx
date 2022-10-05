@@ -26,6 +26,7 @@ const LoginForm: React.FC<{}> = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [emailIsInvalid, setEmailIsInvalid] = useState<boolean>(false);
   const [passwordIsInvalid, setPasswordIsInvalid] = useState<boolean>(false);
@@ -40,31 +41,39 @@ const LoginForm: React.FC<{}> = () => {
   let auth = useAuth();
 
   function handleLogin() {
+    setIsLoading(true);
     setEmailIsInvalid(false);
     setPasswordIsInvalid(false);
 
+    // Input elements do not exist
     if (emailRef.current == null) {
       setEmailIsInvalid(true);
+      setIsLoading(false);
       return;
     }
 
     if (passwordRef.current == null) {
       setPasswordIsInvalid(true);
+      setIsLoading(false);
       return;
     }
 
     let email = emailRef.current.value.trim();
     let password = passwordRef.current!.value;
 
+    // Empty inputs
     if (email.length == 0) {
       setEmailIsInvalid(true);
       setEmailErrorMessage(MESSAGE_EMAIL_MISSING);
-      return;
     }
 
     if (password.length == 0) {
       setPasswordIsInvalid(true);
       setPasswordErrorMessage(MESSAGE_PASSWORD_MISSING);
+    }
+
+    if (email.length == 0 || password.length == 0) {
+      setIsLoading(false);
       return;
     }
 
@@ -73,7 +82,6 @@ const LoginForm: React.FC<{}> = () => {
       .then(() => navigate("/"))
       .catch((err) => {
         const errorCode: string = err.code;
-        console.log(errorCode);
         if (emailErrorCodes[errorCode]) {
           setEmailIsInvalid(true);
           setEmailErrorMessage(emailErrorCodes[errorCode]);
@@ -97,7 +105,12 @@ const LoginForm: React.FC<{}> = () => {
           <Input ref={passwordRef} type="password" borderColor="gray" />
           <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
         </FormControl>
-        <Button w="100%" colorScheme="teal" onClick={handleLogin}>
+        <Button
+          w="100%"
+          colorScheme="teal"
+          onClick={handleLogin}
+          isLoading={isLoading}
+        >
           Login
         </Button>
       </VStack>

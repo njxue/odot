@@ -33,6 +33,7 @@ import IAuto from "../../interface/IAuto";
 import CompletedTasks from "../CompletedTasks";
 import Progress from "./Progress";
 import { SettingsIcon } from "@chakra-ui/icons";
+import Loader from "../layout/Loader";
 
 interface TodoProps {
   todo: Todo;
@@ -119,7 +120,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, [autoTasksToPush]);
 
   return incompleteTasks == undefined || completedTasks == undefined ? (
-    <div>loading......</div>
+    <Loader />
   ) : (
     <AccordionItem>
       {({ isExpanded }) => (

@@ -1,8 +1,8 @@
-import { Button, Flex, Heading, VStack } from "@chakra-ui/react";
+import { Button, Flex, Heading, Image, VStack } from "@chakra-ui/react";
 
 interface GreetingCardProps {
   header: string;
-  text: string;
+  text?: string;
   onClickButtonEvent?: () => void;
   buttonText?: string;
   buttonColor?: string;
@@ -21,15 +21,19 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       justifyContent="center"
       alignItems="center"
     >
-      <Heading>{header}</Heading>
-      <Heading size="md">{text}</Heading>
-      <Button
-        bgColor={buttonColor ? buttonColor : "pink.700"}
-        _hover={{ bgColor: buttonColor ? "teal.500" : "pink.600" }} // this feels too hacky, fix this
-        onClick={onClickButtonEvent}
-      >
-        {buttonText}
-      </Button>
+      <VStack>
+        <Image src={require("../../static/odotlogo.png")}  />
+        <Heading size="md">{text}</Heading>
+        <Heading>{header}</Heading>
+        <Button
+          bgColor={buttonColor ? buttonColor : "pink.700"}
+          _hover={{ bgColor: buttonColor ? "teal.500" : "pink.600" }} // this feels too hacky, fix this
+          w="300px"
+          onClick={onClickButtonEvent}
+        >
+          {buttonText}
+        </Button>
+      </VStack>
     </Flex>
   );
 };
