@@ -38,7 +38,6 @@ export const Dashboard: React.FC<{}> = () => {
   ) : (
     <div>
       <div className={dashboardStyles.addTodo}>
-        <h1>Add a Todo: </h1>
         <AddModule />
       </div>
       <Accordion allowMultiple allowToggle>

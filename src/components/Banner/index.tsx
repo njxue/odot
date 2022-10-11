@@ -1,7 +1,7 @@
 import useAuth from "../../contexts/AuthContext";
-import buttonStyles from "../../styles/Button.module.css";
 import bannerStyles from "../../styles/Banner.module.css";
-import { Image } from "@chakra-ui/react";
+import { Icon, Image, Tooltip } from "@chakra-ui/react";
+import { AiOutlineLogout } from "react-icons/ai";
 
 interface BannerProps {
   children?: React.ReactNode;
@@ -17,9 +17,17 @@ export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
     <div>
       <div className={bannerStyles.banner}>
         <Image src={require("../../static/odotlogo.png")} boxSize="70px" />
-        <button className={buttonStyles.logoutBtn} onClick={handleClick}>
-          log out
-        </button>
+        <Tooltip label="Logout">
+          <span>
+            <Icon
+              as={AiOutlineLogout}
+              color="white"
+              cursor="pointer"
+              boxSize="50px"
+              onClick={handleClick}
+            />
+          </span>
+        </Tooltip>
       </div>
       <div>{props.children}</div>
     </div>

@@ -1,3 +1,4 @@
+import { Divider } from "@chakra-ui/react";
 import IAuto from "../../interface/IAuto";
 import autoStyles from "../../styles/Auto.module.css";
 import Auto from "./Auto";
@@ -13,7 +14,10 @@ const AutoCollections: React.FC<AutomatedTasksProps> = (props) => {
   return (
     <div className={autoStyles.container}>
       {tasks.map((task) => (
-        <Auto task={task} todoId={todoId} />
+        <>
+          <Auto task={task} todoId={todoId} />
+          <Divider borderColor="black" />
+        </>
       ))}
     </div>
   );

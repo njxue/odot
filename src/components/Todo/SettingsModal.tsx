@@ -6,6 +6,7 @@ import {
   ModalOverlay,
   ModalBody,
   Divider,
+  Heading,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import { onValue } from "firebase/database";
@@ -47,14 +48,15 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   return autos == undefined ? (
     <Loader />
   ) : (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
         <ModalBody>
           <ModalHeader>Configure</ModalHeader>
           <Divider />
-          <div>Automatic Additions:</div>
+          <Heading size="s">Atomatic Additions:</Heading>
+          <Divider />
           <AutoCollections tasks={autos} todoId={todoId} />
           <AddAuto todoId={todoId} />
           <DeleteTodo todoId={todoId} />

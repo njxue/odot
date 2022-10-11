@@ -7,14 +7,15 @@ interface TaskProps {
   task: ITask;
 }
 
+const incompleteTaskClassName = `${styles.task} ${styles.incompleteTask}`;
+const completedTaskClassName = `${styles.task} ${styles.completedTask}`;
 export const Task: React.FC<TaskProps> = (props) => {
   const { task } = props;
   return (
     <div
-      className={styles.task}
-      style={{
-        backgroundColor: task.isCompleted ? "rgb(236, 236, 236)" : "white",
-      }}
+      className={
+        task.isCompleted ? completedTaskClassName : incompleteTaskClassName
+      }
     >
       <div className={styles.status}>
         <ToggleCompletionStatusButton

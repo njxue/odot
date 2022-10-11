@@ -6,6 +6,7 @@ import styles from "../../styles/Button.module.css";
 import formStyles from "../../styles/Form.module.css";
 import { getTodoRef, getTodosRef } from "../../helpers/refs";
 import resetInputField from "../../helpers/resetInputField";
+import AddButton from "../layout/AddButton";
 
 export const AddModule: React.FC<{}> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -30,10 +31,8 @@ export const AddModule: React.FC<{}> = () => {
   return (
     <>
       <form onSubmit={handleAdd} className={formStyles.form}>
-        <input required ref={inputRef} type="text" placeholder="Module" />
-        <button type="submit" className={styles.addBtn}>
-          Add
-        </button>
+        <input required ref={inputRef} type="text" placeholder="New Todo" />
+        <AddButton />
       </form>
     </>
   );
