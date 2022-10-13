@@ -141,7 +141,10 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
             </AccordionButton>
           </h2>
 
-          <AccordionPanel bgColor="rgb(236, 236, 236)">
+          <AccordionPanel
+            bgColor="rgb(236, 236, 236)"
+            border={isExpanded ? "solid 3px" : "white"}
+          >
             <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
             <div className={todoStyles.taskContainer}>
               <div className={todoStyles.incompleteTasks}>
