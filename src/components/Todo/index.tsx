@@ -107,12 +107,12 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    setPercentComplete(
-      Math.round(
-        (100 * completedTasks.length) /
-          (completedTasks.length + incompleteTasks.length)
-      )
-    );
+    const totalTasksLength = completedTasks.length + incompleteTasks.length;
+    if (totalTasksLength != 0) {
+      setPercentComplete(
+        Math.round((100 * completedTasks.length) / totalTasksLength)
+      );
+    }
   }, [completedTasks, incompleteTasks]);
 
   useEffect(() => {
