@@ -40,8 +40,8 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
       id: taskId,
       todoId: todoId,
       name: taskName,
-
       isCompleted: false,
+      isImportant: false,
     };
 
     update(tasksRef, { [`${taskId}`]: task }).then(() =>

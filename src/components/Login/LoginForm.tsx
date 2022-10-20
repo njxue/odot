@@ -94,7 +94,7 @@ const LoginForm: React.FC<{}> = () => {
 
   return (
     <PreLoginForm header="Login" text="lorem ipsum">
-      <VStack alignItems="start" w="100%">
+      <VStack alignItems="start" w="100%" h="100%">
         <FormControl isInvalid={emailIsInvalid}>
           <FormLabel>Email: </FormLabel>
           <Input ref={emailRef} type="text" borderColor="gray" />

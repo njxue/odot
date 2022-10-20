@@ -20,6 +20,7 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
+      h="100%"
     >
       <VStack>
         <Image src={require("../../static/odotlogo.png")}  />

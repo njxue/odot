@@ -1,7 +1,7 @@
 import ITask from "../../interface/ITask";
 import ToggleCompletionStatusButton from "./ToggleCompletionStatusButton";
 import styles from "../../styles/Task.module.css";
-import RemoveTaskButton from "./RemoveTaskButton";
+import RemoveTaskButton from "./RemoveTaskButton";import ToggleImportance from "./ToggleImportance";
 
 interface TaskProps {
   task: ITask;
@@ -24,7 +24,10 @@ export const Task: React.FC<TaskProps> = (props) => {
         />
         <p>{task.name}</p>
       </div>
-      <RemoveTaskButton task={task} />
+      <div className={styles.controls}>
+        {!task.isCompleted && <ToggleImportance task={task} />}
+        <RemoveTaskButton task={task} />
+      </div>
     </div>
   );
 };

@@ -14,6 +14,7 @@ const PreLoginForm: React.FC<PreLoginFormProps> = (props) => {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      h="100%"
     >
       <Flex
         direction="column"

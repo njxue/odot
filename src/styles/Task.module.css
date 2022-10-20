@@ -42,3 +42,9 @@
 .taskList > ol {
   list-style: none;
 }
+
+.task .controls {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

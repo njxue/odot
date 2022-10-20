@@ -6,16 +6,18 @@ import LoginForm from "./LoginForm";
 
 export const Login: React.FC<{}> = () => {
   const navigate = useNavigate();
-
+  const greetingComponent: React.ReactNode = (
+    <GreetingCard
+      header="Sign up now"
+      text="You won't forget shit"
+      onClickButtonEvent={() => navigate("/register")}
+      buttonText="Register"
+    />
+  );
   return (
-    <PreLoginLayout>
-      <GreetingCard
-        header="Sign up now"
-        text="You won't forget shit"
-        onClickButtonEvent={() => navigate("/register")}
-        buttonText="Register"
-      />
-      <LoginForm />
-    </PreLoginLayout>
+    <PreLoginLayout
+      greetingComponent={greetingComponent}
+      formComponent={<LoginForm />}
+    />
   );
 };

@@ -69,6 +69,22 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
           incomplete.push(task);
         }
       }
+
+      incomplete.sort((task1, task2) => {
+        if (task1.isImportant && task2.isImportant) {
+          if (task1.name < task2.name) {
+            return -1;
+          }
+          return 1;
+        }
+
+        if (task1.isImportant) {
+          return -1;
+        }
+
+        return 1;
+      });
+
       setIncompleteTasks(incomplete);
       setCompletedTasks(completed);
     });

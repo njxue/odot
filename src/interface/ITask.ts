@@ -3,4 +3,5 @@ export default interface ITask {
   todoId: string;
   name: string;
   isCompleted: boolean;
+  isImportant: boolean;
 }
