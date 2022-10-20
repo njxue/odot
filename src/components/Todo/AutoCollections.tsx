@@ -5,17 +5,15 @@ import Auto from "./Auto";
 
 interface AutomatedTasksProps {
   tasks: IAuto[];
-  todoId: string;
 }
 
 const AutoCollections: React.FC<AutomatedTasksProps> = (props) => {
-  const { tasks, todoId } = props;
-
+  const { tasks } = props;
   return (
     <div className={autoStyles.container}>
       {tasks.map((task) => (
         <>
-          <Auto task={task} todoId={todoId} />
+          <Auto task={task} />
           <Divider borderColor="black" />
         </>
       ))}

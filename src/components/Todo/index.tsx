@@ -70,6 +70,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
         }
       }
 
+      // sort by importance
       incomplete.sort((task1, task2) => {
         if (task1.isImportant && task2.isImportant) {
           if (task1.name < task2.name) {
@@ -104,18 +105,23 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     });
   }
 
+  // Push (copy) autos into the list of incomplete tasks
   function pushAutoTasks(tasks: IAuto[]): void {
     const batchUpdate: { [key: string]: ITask } = {};
     const batchUpdateTime: { [key: string]: Date } = {};
+    const batchUpdatePushedStatus: { [key: string]: boolean } = {};
     for (const k in tasks) {
       const task: IAuto = tasks[k];
       batchUpdate[task.id] = task;
       batchUpdateTime[`${task.id}/nextUpdate`] = calculateNextUpdateTime(
         task.freq
       );
+      batchUpdatePushedStatus[`${task.id}/isPushed`] = true;
     }
     update(tasksRef, batchUpdate);
+    // Update next update time
     update(autosRef, batchUpdateTime);
+    update(autosRef, batchUpdatePushedStatus);
   }
 
   useEffect(() => {

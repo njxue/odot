@@ -57,7 +57,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
           <Divider />
           <Heading size="s">Atomatic Additions:</Heading>
           <Divider />
-          <AutoCollections tasks={autos} todoId={todoId} />
+          <AutoCollections tasks={autos} />
           <AddAuto todoId={todoId} />
           <DeleteTodo todoId={todoId} />
         </ModalBody>

@@ -52,4 +52,7 @@ function getEndOfMonth(): Date {
   return new Date(new Date(yr, mth + 1, 0).setHours(23, 59, 59));
 }
 
-export { calculateNextUpdateTime, isAfter };
+function getTimeNow(): Date {
+  return new Date();
+}
+export { calculateNextUpdateTime, isAfter, getTimeNow };
