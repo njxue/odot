@@ -7,6 +7,7 @@ import {
   ModalBody,
   Divider,
   Heading,
+  Tooltip,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import { onValue } from "firebase/database";
@@ -18,6 +19,7 @@ import AddAuto from "./AddAuto";
 import DeleteTodo from "./DeleteTodo";
 import AutoCollections from "./AutoCollections";
 import Loader from "../layout/Loader";
+import { QuestionIcon } from "@chakra-ui/icons";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -55,10 +57,20 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
         <ModalBody>
           <ModalHeader>Configure</ModalHeader>
           <Divider />
-          <Heading size="s">Atomatic Additions:</Heading>
+          <Heading size="s" alignContent="center">
+            Automatic Additions
+            <Tooltip
+              hasArrow
+              label="These tasks will be automatically pushed to the main list"
+              placement="top-start"
+            >
+              <QuestionIcon color="gray" margin={1} />
+            </Tooltip>
+          </Heading>
           <Divider />
           <AutoCollections tasks={autos} />
           <AddAuto todoId={todoId} />
+          <Divider h="10px"/>
           <DeleteTodo todoId={todoId} />
         </ModalBody>
       </ModalContent>

@@ -1,4 +1,4 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { Button, useDisclosure } from "@chakra-ui/react";
 import { remove } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import { getTodoRef } from "../../helpers/refs";
@@ -16,9 +16,15 @@ const DeleteTodo: React.FC<{ todoId: string }> = (props) => {
 
   return (
     <>
-      <button className={`${styles.btn} ${styles.removeBtn}`} onClick={onOpen}>
+      <Button
+        colorScheme="red"
+        variant="outline"
+        onClick={onOpen}
+        w="100%"
+        _hover={{ backgroundColor: "maroon", color: "white" }}
+      >
         Delete this todo
-      </button>
+      </Button>
       <ConfirmationModal
         actionToConfirm="delete this todo"
         isOpen={isOpen}

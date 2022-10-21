@@ -43,6 +43,7 @@ const ConfirmationModal: React.FC<ModalProps> = (props) => {
               colorScheme="gray"
               flexGrow={1}
               flexBasis={0}
+              variant="outline"
             >
               Cancel
             </Button>

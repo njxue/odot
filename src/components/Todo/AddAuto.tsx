@@ -41,7 +41,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       nextUpdate: calculateNextUpdateTime(freq),
       freq: freq,
       isCompleted: false,
-      isImportant: false
+      isImportant: false,
     };
 
     update(autosRef, { [`${taskId}`]: auto });
@@ -53,8 +53,8 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
 
   return (
     <div className={formStyles.form}>
-      <form className={autoStyles.autoForm} onSubmit={addAutomaticTask}>
-        <div>
+      <form onSubmit={addAutomaticTask} className={autoStyles.autoForm}>
+        <div className={autoStyles.autoFormInputs}>
           <input ref={inputRef} type="text" placeholder="Task name" />
           <SelectFreq onChange={handleChange} />
         </div>

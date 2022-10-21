@@ -12,10 +12,7 @@ const AutoCollections: React.FC<AutomatedTasksProps> = (props) => {
   return (
     <div className={autoStyles.container}>
       {tasks.map((task) => (
-        <>
-          <Auto task={task} />
-          <Divider borderColor="black" />
-        </>
+        <Auto task={task} />
       ))}
     </div>
   );
