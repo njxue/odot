@@ -47,17 +47,19 @@ const Auto: React.FC<AutoProps> = (props) => {
           onChange={handleIntervalChange}
           defaultValue={task.freq.toString()}
         />
-        <DeleteIcon onClick={handleDelete} cursor="pointer" color="gray" />
-        <Tooltip label="Push to list">
-          <span>
-            <Icon
-              as={IoPush}
-              onClick={forcePush}
-              cursor="pointer"
-              boxSize={5}
-            />
-          </span>
-        </Tooltip>
+        <div className={autoStyles.optionButtonGroup}>
+          <DeleteIcon onClick={handleDelete} cursor="pointer" color="gray"  />
+          <Tooltip label="Push to list">
+            <span>
+              <Icon
+                as={IoPush}
+                onClick={forcePush}
+                cursor="pointer"
+                boxSize={5}
+              />
+            </span>
+          </Tooltip>
+        </div>
       </div>
     </div>
   );

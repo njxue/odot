@@ -24,12 +24,18 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
 
   function addAutomaticTask(e: React.FormEvent): void {
     e.preventDefault();
-    const taskName = inputRef.current?.value;
 
-    if (taskName == undefined) {
+    if (inputRef.current == null) {
       // error
       return;
     }
+
+    const taskName = inputRef.current.value.trim();
+    
+    if (taskName.length == 0) {
+      return;
+    }
+
     const tasksRef = getTasksRef(currUser.uid, todoId);
     const autosRef = getAutosRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);

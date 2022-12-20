@@ -8,8 +8,7 @@
   margin-bottom: 2px;
   border-radius: 5px;
   min-width: 200px;
-  border: solid 1px;
-  box-shadow: 3px 3px gray;
+  border: solid 1px gray;
 }
 
 .completedTask {
@@ -38,7 +37,10 @@
 
 .taskList {
   padding: 10px 0px 10px 0px;
+  max-height: 100%;
+  overflow: scroll;
 }
+
 .taskList > ol {
   list-style: none;
 }

@@ -5,46 +5,109 @@ import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import Todo from "../../interface/Todo";
-import { TodoMenu } from "../Todo";
-import dashboardStyles from "../../styles/Dashboard.module.css";
-import { Accordion } from "@chakra-ui/react";
-import todoStyles from "../../styles/Todo.module.css";
+import ITask from "../../interface/ITask";
 import Loader from "../layout/Loader";
+
+import { Organised } from "./Organised";
+import {
+  TabList,
+  Tab,
+  Tabs,
+  TabPanels,
+  TabPanel,
+  Heading,
+  Divider,
+  Button,
+  HStack,
+} from "@chakra-ui/react";
+import TaskList from "../TaskList";
+import { TasksBoard } from "./TasksBoard";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
   const todosRef = ref(db, `users/${currUser.uid}/todos`);
 
   const [todos, setTodos] = useState<Todo[] | undefined>(undefined);
+  const [tasks, setTasks] = useState<ITask[] | undefined>(undefined);
+  const [importantTasks, setImportantTasks] = useState<ITask[] | undefined>(
+    undefined
+  );
+  const [completedTasks, setCompletedTasks] = useState<ITask[] | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     onValue(todosRef, (snapshot) => {
-      const tmp: Todo[] = [];
+      const tmpTodos: Todo[] = [];
+      const tmpTasks: ITask[] = [];
+      const tmpImpt: ITask[] = [];
+      const tmpCompleted: ITask[] = [];
       const data = snapshot.val();
       for (const todoId in data) {
+        const name: string = data[todoId].name;
+        const tasks = data[todoId].tasks;
         const todo: Todo = {
           id: todoId,
-          name: data[todoId].name,
+          name: name,
           tasks: data[todoId].tasks,
         };
-        tmp.push(todo);
+        tmpTodos.push(todo);
+        if (tasks != undefined) {
+          for (const taskId in tasks) {
+            const task: ITask = tasks[taskId];
+            
+            if (task.isImportant && !task.isCompleted) {
+              tmpImpt.push(task);
+            }
+            if (task.isCompleted) {
+              tmpCompleted.push(task);
+            } else {
+              tmpTasks.push(task);
+            }
+          }
+        }
       }
-      setTodos(tmp);
+      setTodos(tmpTodos);
+      setTasks(tmpTasks);
+      setImportantTasks(tmpImpt);
+      setCompletedTasks(tmpCompleted);
     });
   }, []);
 
-  return todos == undefined ? (
+  return todos == undefined ||
+    tasks == undefined ||
+    importantTasks == undefined ||
+    completedTasks == undefined ? (
     <Loader />
   ) : (
-    <div>
-      <div className={dashboardStyles.addTodo}>
-        <AddModule />
-      </div>
-      <Accordion allowMultiple allowToggle>
-        {todos.map((todo) => (
-          <TodoMenu todo={todo} key={todo.id} />
-        ))}
-      </Accordion>
-    </div>
+    <Tabs orientation="vertical" w="100%" display="flex" h="100%">
+      <TabList w="100%" flexGrow={1} flexBasis={0} paddingTop={5}>
+        <Tab w="100%">Organised</Tab>
+        <Tab w="100%">All</Tab>
+        <Tab w="100%">Important</Tab>
+        <Tab w="100%">Today</Tab>
+        <Tab w="100%">Completed</Tab>
+      </TabList>
+      <Divider orientation="vertical" borderColor="black" />
+      <TabPanels flexGrow={5} flexBasis={0}>
+        <TabPanel>
+          <Heading>Welcome back!</Heading>
+          <Divider marginTop={3} borderColor="gray" />
+          <Organised todos={todos} />
+        </TabPanel>
+        <TabPanel>
+          <TasksBoard tasks={tasks} header="All" placeholder="Add tasks!"/>
+        </TabPanel>
+        <TabPanel>
+          <TasksBoard tasks={importantTasks} header="Important" placeholder="Try starring some tasks to see them here!"/>
+        </TabPanel>
+        <TabPanel>
+          <TasksBoard tasks={[]} header="Today" placeholder="Tasks that are due today show up here!"/>
+        </TabPanel>
+        <TabPanel>
+          <TasksBoard tasks={completedTasks} header="Completed" placeholder="Try to complete some tasks to see them here!"/>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
   );
 };

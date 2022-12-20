@@ -1,7 +1,8 @@
 import ITask from "../../interface/ITask";
 import ToggleCompletionStatusButton from "./ToggleCompletionStatusButton";
 import styles from "../../styles/Task.module.css";
-import RemoveTaskButton from "./RemoveTaskButton";import ToggleImportance from "./ToggleImportance";
+import RemoveTaskButton from "./RemoveTaskButton";
+import ToggleImportance from "./ToggleImportance";
 
 interface TaskProps {
   task: ITask;

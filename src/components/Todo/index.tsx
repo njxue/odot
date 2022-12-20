@@ -164,17 +164,17 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
           </h2>
 
           <AccordionPanel
-            bgColor="rgb(236, 236, 236)"
-            border={isExpanded ? "solid 3px" : "white"}
+            bgColor="#E7E7E7"
           >
             <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
             <div className={todoStyles.taskContainer}>
               <div className={todoStyles.incompleteTasks}>
-                <TaskList tasks={incompleteTasks} todoId={todo.id} />
+                <TaskList tasks={incompleteTasks} />
               </div>
-              <div className={todoStyles.completedTasks}>
+              {/* <div className={todoStyles.completedTasks}>
                 <CompletedTasks tasks={completedTasks} />
-              </div>
+              </div> */}
+             
             </div>
             <div className={todoStyles.footer}>
               <AddTask todoId={todo.id} />

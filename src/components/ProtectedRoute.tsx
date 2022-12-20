@@ -3,6 +3,7 @@ import useAuth from "../contexts/AuthContext";
 import { Banner } from "./Banner";
 import Loader from "./layout/Loader";
 import { Login } from "./Login";
+import { Box, VStack } from "@chakra-ui/react";
 
 export const ProtectedRoute: React.FC<{}> = () => {
   let isLoggedIn: boolean | undefined = useAuth().isLoggedIn;
@@ -16,8 +17,11 @@ export const ProtectedRoute: React.FC<{}> = () => {
   }
 
   return (
-    <Banner>
-      <Outlet />
-    </Banner>
+    <Box margin={0} padding={0} maxW="100vw" h="100vh">
+      <VStack align="stretch" h="100%" spacing={0}>
+        <Banner />
+        <Outlet />
+      </VStack>
+    </Box>
   );
 };

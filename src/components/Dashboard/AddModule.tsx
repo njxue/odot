@@ -29,11 +29,9 @@ export const AddModule: React.FC<{}> = () => {
     });
   }
   return (
-    <>
-      <form onSubmit={handleAdd} className={formStyles.form}>
-        <input required ref={inputRef} type="text" placeholder="New Todo" />
-        <AddButton />
-      </form>
-    </>
+    <form onSubmit={handleAdd} className={formStyles.form}>
+      <input required ref={inputRef} type="text" placeholder="New Todo" />
+      <AddButton />
+    </form>
   );
 };

@@ -29,7 +29,6 @@ export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
           </span>
         </Tooltip>
       </div>
-      <div>{props.children}</div>
     </div>
   );
 };
