@@ -9,7 +9,7 @@ export const Login: React.FC<{}> = () => {
   const greetingComponent: React.ReactNode = (
     <GreetingCard
       header="Sign up now"
-      text="You won't forget shit"
+      text="Do not have an account?"
       onClickButtonEvent={() => navigate("/register")}
       buttonText="Register"
     />

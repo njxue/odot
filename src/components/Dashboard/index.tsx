@@ -17,8 +17,8 @@ import {
   TabPanel,
   Heading,
   Divider,
-  Button,
-  HStack,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import TaskList from "../TaskList";
 import { TasksBoard } from "./TasksBoard";
@@ -55,7 +55,7 @@ export const Dashboard: React.FC<{}> = () => {
         if (tasks != undefined) {
           for (const taskId in tasks) {
             const task: ITask = tasks[taskId];
-            
+
             if (task.isImportant && !task.isCompleted) {
               tmpImpt.push(task);
             }
@@ -89,23 +89,38 @@ export const Dashboard: React.FC<{}> = () => {
         <Tab w="100%">Completed</Tab>
       </TabList>
       <Divider orientation="vertical" borderColor="black" />
-      <TabPanels flexGrow={5} flexBasis={0}>
-        <TabPanel>
-          <Heading>Welcome back!</Heading>
-          <Divider marginTop={3} borderColor="gray" />
-          <Organised todos={todos} />
+      <TabPanels flexGrow={5} flexBasis={0} h="100%" overflow="hidden">
+        <TabPanel h="100%">
+          <Flex direction="column" maxH="100%">
+            <Heading>Welcome back!</Heading>
+            <Divider marginTop={3} borderColor="gray" />
+            <Organised todos={todos} />
+            <AddModule />
+          </Flex>
         </TabPanel>
-        <TabPanel>
-          <TasksBoard tasks={tasks} header="All" placeholder="Add tasks!"/>
+        <TabPanel h="100%">
+          <TasksBoard tasks={tasks} header="All" placeholder="Add tasks!" />
         </TabPanel>
-        <TabPanel>
-          <TasksBoard tasks={importantTasks} header="Important" placeholder="Try starring some tasks to see them here!"/>
+        <TabPanel h="100%">
+          <TasksBoard
+            tasks={importantTasks}
+            header="Important"
+            placeholder="Try starring some tasks to see them here!"
+          />
         </TabPanel>
-        <TabPanel>
-          <TasksBoard tasks={[]} header="Today" placeholder="Tasks that are due today show up here!"/>
+        <TabPanel h="100%">
+          <TasksBoard
+            tasks={[]}
+            header="Today"
+            placeholder="Tasks that are due today show up here!"
+          />
         </TabPanel>
-        <TabPanel>
-          <TasksBoard tasks={completedTasks} header="Completed" placeholder="Try to complete some tasks to see them here!"/>
+        <TabPanel h="100%">
+          <TasksBoard
+            tasks={completedTasks}
+            header="Completed"
+            placeholder="Try to complete some tasks to see them here!"
+          />
         </TabPanel>
       </TabPanels>
     </Tabs>

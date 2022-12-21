@@ -7,7 +7,8 @@ export const Register: React.FC<{}> = () => {
   const navigate = useNavigate();
   const greetingComponent: React.ReactNode = (
     <GreetingCard
-      header="See what shit you've left undone"
+      header="Check your progress!"
+      text="Already have an account?"
       onClickButtonEvent={() => navigate("/")}
       buttonText="Login"
       bgColor="pink.700"
