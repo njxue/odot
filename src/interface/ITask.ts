@@ -4,4 +4,5 @@ export default interface ITask {
   name: string;
   isCompleted: boolean;
   isImportant: boolean;
+  dueDate?: Date;
 }

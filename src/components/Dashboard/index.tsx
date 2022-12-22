@@ -7,7 +7,6 @@ import { User } from "firebase/auth";
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
 import Loader from "../layout/Loader";
-
 import { Organised } from "./Organised";
 import {
   TabList,
@@ -20,22 +19,24 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
-import TaskList from "../TaskList";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/windowDimensions";
+import { isToday } from "../../helpers/DateTimeCalculations";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
   const todosRef = ref(db, `users/${currUser.uid}/todos`);
 
-  const [todos, setTodos] = useState<Todo[] | undefined>(undefined);
-  const [tasks, setTasks] = useState<ITask[] | undefined>(undefined);
-  const [importantTasks, setImportantTasks] = useState<ITask[] | undefined>(
-    undefined
-  );
-  const [completedTasks, setCompletedTasks] = useState<ITask[] | undefined>(
-    undefined
-  );
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  // ================================ Filtered list of tasks ==============================================
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [importantTasks, setImportantTasks] = useState<ITask[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
+  const [todayTasks, setTodayTasks] = useState<ITask[]>([]);
+  // =======================================================================================================
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const w = useWindowDimensions().width;
 
@@ -45,6 +46,7 @@ export const Dashboard: React.FC<{}> = () => {
       const tmpTasks: ITask[] = [];
       const tmpImpt: ITask[] = [];
       const tmpCompleted: ITask[] = [];
+      const tmpToday: ITask[] = [];
       const data = snapshot.val();
       for (const todoId in data) {
         const name: string = data[todoId].name;
@@ -54,6 +56,7 @@ export const Dashboard: React.FC<{}> = () => {
           name: name,
           tasks: data[todoId].tasks,
         };
+
         tmpTodos.push(todo);
         if (tasks != undefined) {
           for (const taskId in tasks) {
@@ -62,10 +65,19 @@ export const Dashboard: React.FC<{}> = () => {
             if (task.isImportant && !task.isCompleted) {
               tmpImpt.push(task);
             }
+
             if (task.isCompleted) {
               tmpCompleted.push(task);
             } else {
               tmpTasks.push(task);
+            }
+
+            if (
+              task.dueDate != undefined &&
+              isToday(new Date(task.dueDate)) &&
+              !task.isCompleted
+            ) {
+              tmpToday.push(task);
             }
           }
         }
@@ -74,13 +86,12 @@ export const Dashboard: React.FC<{}> = () => {
       setTasks(tmpTasks);
       setImportantTasks(tmpImpt);
       setCompletedTasks(tmpCompleted);
+      setTodayTasks(tmpToday);
+      setIsLoading(false);
     });
   }, []);
 
-  return todos == undefined ||
-    tasks == undefined ||
-    importantTasks == undefined ||
-    completedTasks == undefined ? (
+  return isLoading ? (
     <Loader />
   ) : (
     <Tabs
@@ -119,7 +130,7 @@ export const Dashboard: React.FC<{}> = () => {
         </TabPanel>
         <TabPanel h="100%">
           <TasksBoard
-            tasks={[]}
+            tasks={todayTasks}
             header="Today"
             placeholder="Tasks that are due today show up here!"
           />

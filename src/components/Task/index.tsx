@@ -3,6 +3,7 @@ import ToggleCompletionStatusButton from "./ToggleCompletionStatusButton";
 import styles from "../../styles/Task.module.css";
 import RemoveTaskButton from "./RemoveTaskButton";
 import ToggleImportance from "./ToggleImportance";
+import { getDateString } from "../../helpers/DateTimeCalculations";
 
 interface TaskProps {
   task: ITask;
@@ -25,6 +26,7 @@ export const Task: React.FC<TaskProps> = (props) => {
         />
         <p>{task.name}</p>
       </div>
+      {task.dueDate && <p>{getDateString(new Date(task.dueDate))}</p>}
       <div className={styles.controls}>
         {!task.isCompleted && <ToggleImportance task={task} />}
         <RemoveTaskButton task={task} />

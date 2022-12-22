@@ -7,8 +7,7 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
-
-  return (
+   return (
     <div className={styles.taskList}>
       <ol>
         {props.tasks.map((task) => (

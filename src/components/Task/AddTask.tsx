@@ -6,9 +6,9 @@ import { getTasksRef } from "../../helpers/refs";
 import getDatabaseKey from "../../helpers/getDatabaseKey";
 import resetInputField from "../../helpers/resetInputField";
 import useAuth from "../../contexts/AuthContext";
-import buttonStyles from "../../styles/Button.module.css";
 import formStyles from "../../styles/Form.module.css";
 import AddButton from "../layout/AddButton";
+import { getTimeNow, getDateString } from "../../helpers/DateTimeCalculations";
 
 interface AddTaskProps {
   todoId: string;
@@ -17,21 +17,32 @@ interface AddTaskProps {
 const AddTask: React.FC<AddTaskProps> = (props) => {
   const todoId = props.todoId;
   const taskRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
 
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
 
     const taskName = taskRef.current?.value;
+    const dueDate = dateRef.current?.value;
 
-    if (taskName == undefined || taskName.trim().length == 0) {
+    if (
+      taskName == undefined ||
+      taskName.trim().length == 0 ||
+      dueDate == undefined
+    ) {
       console.log("ERRORRRR");
     } else {
-      addManualTask(currUser, todoId, taskName);
+      addManualTask(currUser, todoId, taskName, dueDate);
     }
   }
 
-  function addManualTask(user: User, todoId: string, taskName: string) {
+  function addManualTask(
+    user: User,
+    todoId: string,
+    taskName: string,
+    dueDate: string
+  ) {
     const currUser = user;
     const tasksRef = getTasksRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);
@@ -42,16 +53,19 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
       name: taskName,
       isCompleted: false,
       isImportant: false,
+      dueDate: new Date(dueDate),
     };
 
-    update(tasksRef, { [`${taskId}`]: task }).then(() =>
-      resetInputField(taskRef)
-    );
+    resetInputField(taskRef);
+    resetInputField(dateRef);
+
+    update(tasksRef, { [`${taskId}`]: task });
   }
 
   return (
     <form onSubmit={handleAdd} className={formStyles.form}>
       <input ref={taskRef} type="text" placeholder="Task" />
+      <input ref={dateRef} type="date" min={getDateString(getTimeNow())} />
       <AddButton />
     </form>
   );

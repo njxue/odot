@@ -30,7 +30,7 @@ const Auto: React.FC<AutoProps> = (props) => {
     });
   }
 
-  // Push the auto into the main list in the database
+  // Pushes the auto into the main list of tasks
   // An alternative is to update nextUpdateTime to current time, but this will not trigger a re-render because there isn't an onValue
   // listener for Autos (it uses get, not onValue)
   function forcePush(): void {

@@ -24,9 +24,8 @@ export const AddModule: React.FC<{}> = () => {
     }
 
     const todoRef = getTodoRef(currUser.uid, todoId);
-    update(todoRef, { name: todoName.trim() }).then(() => {
-      resetInputField(inputRef);
-    });
+    resetInputField(inputRef);
+    update(todoRef, { name: todoName.trim() });
   }
   return (
     <form onSubmit={handleAdd} className={formStyles.form}>

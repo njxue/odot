@@ -3,21 +3,13 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
-  Divider,
   HStack,
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
-import {
-  onValue,
-  get,
-  update,
-  onChildRemoved,
-  onChildChanged,
-} from "firebase/database";
+import { get, update } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import TaskList from "../TaskList";
@@ -28,12 +20,10 @@ import {
   calculateNextUpdateTime,
   isAfter,
 } from "../../helpers/DateTimeCalculations";
-import { getAutosRef, getTasksRef, getTodoRef } from "../../helpers/refs";
+import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
-import CompletedTasks from "../CompletedTasks";
 import Progress from "./Progress";
 import { SettingsIcon } from "@chakra-ui/icons";
-import Loader from "../layout/Loader";
 
 interface TodoProps {
   todo: Todo;
@@ -42,57 +32,19 @@ interface TodoProps {
 export const TodoMenu: React.FC<TodoProps> = (props) => {
   const todo: Todo = props.todo;
   const currUser = useAuth().getCurrUser();
+
   const tasksRef = getTasksRef(currUser.uid, todo.id);
   const autosRef = getAutosRef(currUser.uid, todo.id);
+
   const { onOpen, isOpen, onClose } = useDisclosure();
 
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [autoTasksToPush, setAutoTasksToPush] = useState<IAuto[]>([]);
-  const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
-  const [incompleteTasks, setIncompleteTasks] = useState<ITask[]>([]);
   const [percentComplete, setPercentComplete] = useState<number>(0);
-
-  function loadTasks(): void {
-    loadAutos();
-    loadManuals();
-  }
-
-  function loadManuals() {
-    onValue(tasksRef, (snapshot) => {
-      const incomplete: ITask[] = [];
-      const completed: ITask[] = [];
-      const data = snapshot.val();
-      for (const id in data) {
-        const task: ITask = data[id];
-        if (task.isCompleted) {
-          completed.push(task);
-        } else {
-          incomplete.push(task);
-        }
-      }
-
-      // sort by importance
-      incomplete.sort((task1, task2) => {
-        if (task1.isImportant && task2.isImportant) {
-          if (task1.name < task2.name) {
-            return -1;
-          }
-          return 1;
-        }
-
-        if (task1.isImportant) {
-          return -1;
-        }
-
-        return 1;
-      });
-
-      setIncompleteTasks(incomplete);
-      setCompletedTasks(completed);
-    });
-  }
 
   function loadAutos() {
     get(autosRef).then((snapshot) => {
+      console.log("get autos");
       const data = snapshot.val();
       const tmp: IAuto[] = [];
       for (const id in data) {
@@ -107,43 +59,48 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
 
   // Push (copy) autos into the list of incomplete tasks
   function pushAutoTasks(tasks: IAuto[]): void {
-    const batchUpdate: { [key: string]: ITask } = {};
+    const batchUpdate: { [key: string]: ITask } = {}; // tasks to be pushed to the main list
     const batchUpdateTime: { [key: string]: Date } = {};
-    const batchUpdatePushedStatus: { [key: string]: boolean } = {};
+
     for (const k in tasks) {
       const task: IAuto = tasks[k];
       batchUpdate[task.id] = task;
       batchUpdateTime[`${task.id}/nextUpdate`] = calculateNextUpdateTime(
         task.freq
       );
-      batchUpdatePushedStatus[`${task.id}/isPushed`] = true;
     }
     update(tasksRef, batchUpdate);
     // Update next update time
     update(autosRef, batchUpdateTime);
-    update(autosRef, batchUpdatePushedStatus);
   }
 
   useEffect(() => {
-    loadTasks();
-  }, []);
-
-  useEffect(() => {
-    const totalTasksLength = completedTasks.length + incompleteTasks.length;
-    if (totalTasksLength != 0) {
-      setPercentComplete(
-        Math.round((100 * completedTasks.length) / totalTasksLength)
-      );
+    const tmpTasks: ITask[] = [];
+    if (todo.tasks != undefined) {
+      for (const taskId in todo.tasks) {
+        const task: ITask = todo.tasks[taskId];
+        if (!task.isCompleted) {
+          tmpTasks.push(task);
+        }
+      }
     }
-  }, [completedTasks, incompleteTasks]);
+
+    setTasks(tmpTasks);
+  }, [todo]);
 
   useEffect(() => {
     pushAutoTasks(autoTasksToPush);
   }, [autoTasksToPush]);
 
-  return incompleteTasks == undefined || completedTasks == undefined ? (
-    <Loader />
-  ) : (
+  // autos should only load once per page load because if a PUSHED auto has past its nextUpdateTime, deleting it/marking it as 
+  // important will trigger another push. i.e. deleting/marking the auto should not trigger a push. 
+  // Therefore, loadAutos() should run once when the page is mounted and should not be placed inside the useEffect with [todo], 
+  // because the useEffect with [todo] runs everytime a task is updated/deleted, triggeriing a page re-render.
+  useEffect(() => {
+    loadAutos();
+  }, []);
+
+  return (
     <AccordionItem>
       {({ isExpanded }) => (
         <div>
@@ -163,18 +120,12 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
             </AccordionButton>
           </h2>
 
-          <AccordionPanel
-            bgColor="#E7E7E7"
-          >
+          <AccordionPanel bgColor="#E7E7E7">
             <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
             <div className={todoStyles.taskContainer}>
               <div className={todoStyles.incompleteTasks}>
-                <TaskList tasks={incompleteTasks} />
+                {todo.tasks && <TaskList tasks={tasks} />}
               </div>
-              {/* <div className={todoStyles.completedTasks}>
-                <CompletedTasks tasks={completedTasks} />
-              </div> */}
-             
             </div>
             <div className={todoStyles.footer}>
               <AddTask todoId={todo.id} />

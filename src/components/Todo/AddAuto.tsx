@@ -31,7 +31,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     }
 
     const taskName = inputRef.current.value.trim();
-    
+
     if (taskName.length == 0) {
       return;
     }
@@ -40,11 +40,14 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     const autosRef = getAutosRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);
 
+    const dueDate: Date = calculateNextUpdateTime(freq);
+
     const auto: IAuto = {
       id: taskId,
       todoId: todoId,
       name: taskName,
-      nextUpdate: calculateNextUpdateTime(freq),
+      nextUpdate: dueDate,
+      dueDate: dueDate,
       freq: freq,
       isCompleted: false,
       isImportant: false,

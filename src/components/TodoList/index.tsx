@@ -32,9 +32,6 @@ const TodoList: React.FC<TodoListProps> = (props) => {
     setCompletedTasks(completedTasksTmp);
   }, [todos]);
 
-  useEffect(() => {
-    console.log(incompleteTasks.length);
-  }, [incompleteTasks]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { NodeWithTypeArguments } from "typescript";
 import TimeInterval from "./TimeInterval";
 
 function calculateNextUpdateTime(time: TimeInterval | undefined) {
@@ -11,7 +12,6 @@ function calculateNextUpdateTime(time: TimeInterval | undefined) {
     return getEndOfToday();
   } else if (time == TimeInterval.SECONDS) {
     const today = new Date();
-    console.log(today.getHours());
     const newDate = new Date(
       today.setHours(
         today.getHours(),
@@ -26,9 +26,6 @@ function calculateNextUpdateTime(time: TimeInterval | undefined) {
 }
 
 function isAfter(d1: Date | undefined, d2: Date): boolean {
-  if (d1 !== undefined) {
-    console.log(new Date(d1) + "   vs   " + d2);
-  }
   return d1 == undefined || new Date(d1) > d2;
 }
 
@@ -55,4 +52,20 @@ function getEndOfMonth(): Date {
 function getTimeNow(): Date {
   return new Date();
 }
-export { calculateNextUpdateTime, isAfter, getTimeNow };
+
+function getDateString(d: Date): string {
+  const date: number = d.getDate();
+  const mth: number = d.getMonth() + 1;
+  const yr: number = d.getFullYear();
+  return yr + "-" + mth + "-" + date;
+}
+
+function isToday(d: Date): boolean {
+  const today: Date = new Date();
+  return (
+    d.getDate() == today.getDate() &&
+    d.getMonth() == today.getMonth() &&
+    d.getFullYear() == today.getFullYear()
+  );
+}
+export { calculateNextUpdateTime, isAfter, getTimeNow, getDateString, isToday };
