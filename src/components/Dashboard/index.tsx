@@ -91,6 +91,11 @@ export const Dashboard: React.FC<{}> = () => {
     });
   }, []);
 
+  const selectedStyles = {
+    marginLeft: "3px",
+    borderLeft: "solid 10px maroon",
+    fontWeight: "bold",
+  };
   return isLoading ? (
     <Loader />
   ) : (
@@ -102,11 +107,21 @@ export const Dashboard: React.FC<{}> = () => {
       h="100%"
     >
       <TabList w="100%" paddingTop={5} flexGrow={1} flexBasis={0} minW="200px">
-        <Tab w="100%">Organised</Tab>
-        <Tab w="100%">All</Tab>
-        <Tab w="100%">Important</Tab>
-        <Tab w="100%">Today</Tab>
-        <Tab w="100%">Completed</Tab>
+        <Tab w="100%" _selected={selectedStyles}>
+          Organised
+        </Tab>
+        <Tab w="100%" _selected={selectedStyles}>
+          All
+        </Tab>
+        <Tab w="100%" _selected={selectedStyles}>
+          Important
+        </Tab>
+        <Tab w="100%" _selected={selectedStyles}>
+          Today
+        </Tab>
+        <Tab w="100%" _selected={selectedStyles}>
+          Completed
+        </Tab>
       </TabList>
       {w >= 500 && <Divider orientation="vertical" borderColor="black" />}
       <TabPanels flexGrow={1} h="100%" overflow="hidden">

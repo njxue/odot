@@ -28,6 +28,7 @@ const RemoveTaskButton: React.FC<RemoveTaskButtonProps> = (props) => {
         _hover={{ cursor: "pointer" }}
         boxSize="15px"
         onClick={handleRemove}
+        color="#CECECE"
       />
     </Tooltip>
   );

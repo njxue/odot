@@ -13,16 +13,32 @@
 
 .completedTask {
   background-color: transparent;
+  display: flex;
   box-shadow: none;
   color: gray;
   border: none;
 }
 
-.task > .status {
+.task > .details {
   display: flex;
+  flex-grow: 1;
   justify-content: start;
   align-items: center;
   gap: 10px;
+}
+
+.task .controls {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.task .dueDate {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2px;
+  min-width: 100px;
 }
 
 .task:hover {
@@ -43,10 +59,4 @@
 
 .taskList > ol {
   list-style: none;
-}
-
-.task .controls {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
 }
