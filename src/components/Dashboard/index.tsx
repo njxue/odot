@@ -23,7 +23,7 @@ import {
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { MdOutlineCalendarToday } from "react-icons/md";
-import { TfiLayoutListThumbAlt } from "react-icons/tfi";
+import { TbListDetails } from "react-icons/tb";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/windowDimensions";
 import { isToday } from "../../helpers/DateTimeCalculations";
@@ -131,7 +131,7 @@ export const Dashboard: React.FC<{}> = () => {
               <TabContent icon={RiArchiveDrawerFill} text="Organised" />
             </Tab>
             <Tab w="100%" _selected={selectedStyles}>
-              <TabContent icon={TfiLayoutListThumbAlt} text="All" />
+              <TabContent icon={TbListDetails} text="All" />
             </Tab>
             <Tab w="100%" _selected={selectedStyles}>
               <TabContent icon={StarIcon} text="Important" />
@@ -173,7 +173,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TasksBoard
             tasks={tasks}
             headerText="All"
-            headerIcon={TfiLayoutListThumbAlt}
+            headerIcon={TbListDetails}
             placeholder="Add tasks!"
           />
         </TabPanel>
