@@ -16,7 +16,7 @@ export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   return (
     <div>
       <div className={bannerStyles.banner}>
-        <Image src={require("../../static/odotlogo.png")} boxSize="70px" />
+        <Image src={require("../../assets/logo.png")} w="150px" />
         <Tooltip label="Logout">
           <span>
             <Icon

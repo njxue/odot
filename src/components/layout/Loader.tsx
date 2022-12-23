@@ -10,12 +10,12 @@ const Loader: React.FC<{}> = () => {
       h="100%"
       padding={0}
       margin={0}
-      bg="rgb(0,43,51)"
+      bg="#00494c"
       zIndex={2147483647}
     >
       <Box w="30%" h="30%">
         <Image
-          src={require("../../static/loadinggif.gif")}
+          src={require("../../assets/logo.png")}
           boxSize="100%"
           objectFit="contain"
         />
