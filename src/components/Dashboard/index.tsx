@@ -16,12 +16,16 @@ import {
   TabPanel,
   Heading,
   Divider,
-  Box,
   Flex,
 } from "@chakra-ui/react";
+import { RiArchiveDrawerFill } from "react-icons/ri";
+import { FaListUl } from "react-icons/fa";
+import { MdOutlineCalendarToday } from "react-icons/md";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/windowDimensions";
 import { isToday } from "../../helpers/DateTimeCalculations";
+import { TabContent } from "./TabContent";
+import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -108,19 +112,19 @@ export const Dashboard: React.FC<{}> = () => {
     >
       <TabList w="100%" paddingTop={5} flexGrow={1} flexBasis={0} minW="200px">
         <Tab w="100%" _selected={selectedStyles}>
-          Organised
+          <TabContent icon={RiArchiveDrawerFill} text="Organised" />
         </Tab>
         <Tab w="100%" _selected={selectedStyles}>
-          All
+          <TabContent icon={FaListUl} text="All" />
         </Tab>
         <Tab w="100%" _selected={selectedStyles}>
-          Important
+          <TabContent icon={StarIcon} text="Important" />
         </Tab>
         <Tab w="100%" _selected={selectedStyles}>
-          Today
+          <TabContent icon={MdOutlineCalendarToday} text="Today" />
         </Tab>
         <Tab w="100%" _selected={selectedStyles}>
-          Completed
+          <TabContent icon={CheckIcon} text="Completed" />
         </Tab>
       </TabList>
       {w >= 500 && <Divider orientation="vertical" borderColor="black" />}
@@ -134,26 +138,34 @@ export const Dashboard: React.FC<{}> = () => {
           </Flex>
         </TabPanel>
         <TabPanel h="100%">
-          <TasksBoard tasks={tasks} header="All" placeholder="Add tasks!" />
+          <TasksBoard
+            tasks={tasks}
+            headerText="All"
+            headerIcon={FaListUl}
+            placeholder="Add tasks!"
+          />
         </TabPanel>
         <TabPanel h="100%">
           <TasksBoard
             tasks={importantTasks}
-            header="Important"
+            headerText="Important"
+            headerIcon={StarIcon}
             placeholder="Try starring some tasks to see them here!"
           />
         </TabPanel>
         <TabPanel h="100%">
           <TasksBoard
             tasks={todayTasks}
-            header="Today"
+            headerText="Today"
+            headerIcon={MdOutlineCalendarToday}
             placeholder="Tasks that are due today show up here!"
           />
         </TabPanel>
         <TabPanel h="100%">
           <TasksBoard
             tasks={completedTasks}
-            header="Completed"
+            headerText="Completed"
+            headerIcon={CheckIcon}
             placeholder="Try to complete some tasks to see them here!"
           />
         </TabPanel>
