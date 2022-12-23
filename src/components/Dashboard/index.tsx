@@ -16,11 +16,14 @@ import {
   TabPanel,
   Heading,
   Divider,
+  Box,
   Flex,
+  Spacer,
 } from "@chakra-ui/react";
 import { RiArchiveDrawerFill } from "react-icons/ri";
-import { FaListUl } from "react-icons/fa";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 import { MdOutlineCalendarToday } from "react-icons/md";
+import { TfiLayoutListThumbAlt } from "react-icons/tfi";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/windowDimensions";
 import { isToday } from "../../helpers/DateTimeCalculations";
@@ -55,6 +58,7 @@ export const Dashboard: React.FC<{}> = () => {
       for (const todoId in data) {
         const name: string = data[todoId].name;
         const tasks = data[todoId].tasks;
+
         const todo: Todo = {
           id: todoId,
           name: name,
@@ -96,10 +100,9 @@ export const Dashboard: React.FC<{}> = () => {
   }, []);
 
   const selectedStyles = {
-    marginLeft: "3px",
-    borderLeft: "solid 10px maroon",
+    borderLeft: "solid 10px #05002A",
     fontWeight: "bold",
-    bg: "#E7E7E7",
+    bg: "#F2F2F2",
   };
   return isLoading ? (
     <Loader />
@@ -111,31 +114,52 @@ export const Dashboard: React.FC<{}> = () => {
       flexDir={w < 500 ? "column" : "row"}
       h="100%"
     >
-      <TabList
-        w="100%"
-        paddingTop={3}
-        paddingRight={3}
-        flexGrow={1}
-        flexBasis={0}
-        minW="200px"
-      >
-        <Tab w="100%" _selected={selectedStyles}>
-          <TabContent icon={RiArchiveDrawerFill} text="Organised" />
-        </Tab>
-        <Tab w="100%" _selected={selectedStyles}>
-          <TabContent icon={FaListUl} text="All" />
-        </Tab>
-        <Tab w="100%" _selected={selectedStyles}>
-          <TabContent icon={StarIcon} text="Important" />
-        </Tab>
-        <Tab w="100%" _selected={selectedStyles}>
-          <TabContent icon={MdOutlineCalendarToday} text="Today" />
-        </Tab>
-        <Tab w="100%" _selected={selectedStyles}>
-          <TabContent icon={CheckIcon} text="Completed" />
-        </Tab>
+      <TabList w="100%" paddingTop={3} flexBasis={0} minW="200px">
+        <Flex
+          w="100%"
+          direction="column"
+          justifyContent="space-between"
+          padding="2px"
+          h="100%"
+        >
+          <Flex
+            direction={w < 500 ? "row" : "column"}
+            flexGrow={1}
+            overflow="scroll"
+          >
+            <Tab w="100%" _selected={selectedStyles}>
+              <TabContent icon={RiArchiveDrawerFill} text="Organised" />
+            </Tab>
+            <Tab w="100%" _selected={selectedStyles}>
+              <TabContent icon={TfiLayoutListThumbAlt} text="All" />
+            </Tab>
+            <Tab w="100%" _selected={selectedStyles}>
+              <TabContent icon={StarIcon} text="Important" />
+            </Tab>
+            <Tab w="100%" _selected={selectedStyles}>
+              <TabContent icon={MdOutlineCalendarToday} text="Today" />
+            </Tab>
+            <Tab w="100%" _selected={selectedStyles}>
+              <TabContent icon={CheckIcon} text="Completed" />
+            </Tab>
+          </Flex>
+          <Divider borderColor="blackAlpha.700" />
+          <Flex
+            direction={w < 500 ? "row" : "column"}
+            marginTop="20px"
+            overflow="scroll"
+            flexGrow={3}
+            flexBasis="50%"
+            padding={0}
+          >
+            {todos.map((t) => (
+              <Tab w="100%" _selected={selectedStyles}>
+                <TabContent icon={AiOutlineUnorderedList} text={t.name} />
+              </Tab>
+            ))}
+          </Flex>
+        </Flex>
       </TabList>
-      {/* w >= 500 && <Divider orientation="vertical" borderColor="black" /> */}
       <TabPanels flexGrow={1} h="100%" overflow="hidden">
         <TabPanel h="100%">
           <Flex direction="column" maxH="100%">
@@ -149,7 +173,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TasksBoard
             tasks={tasks}
             headerText="All"
-            headerIcon={FaListUl}
+            headerIcon={TfiLayoutListThumbAlt}
             placeholder="Add tasks!"
           />
         </TabPanel>
@@ -177,6 +201,21 @@ export const Dashboard: React.FC<{}> = () => {
             placeholder="Try to complete some tasks to see them here!"
           />
         </TabPanel>
+        {todos.map((t) => (
+          <TabPanel h="100%" bgColor="#D2EFED">
+            <TasksBoard
+              tasks={
+                t.tasks == undefined
+                  ? []
+                  : Object.entries(t.tasks)
+                      .map((t) => t[1])
+                      .filter((t) => !t.isCompleted)
+              }
+              headerText={t.name}
+              placeholder="Try to complete some tasks to see them here!"
+            />
+          </TabPanel>
+        ))}
       </TabPanels>
     </Tabs>
   );
