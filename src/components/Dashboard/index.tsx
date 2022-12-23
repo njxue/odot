@@ -99,6 +99,7 @@ export const Dashboard: React.FC<{}> = () => {
     marginLeft: "3px",
     borderLeft: "solid 10px maroon",
     fontWeight: "bold",
+    bg: "#E7E7E7",
   };
   return isLoading ? (
     <Loader />
@@ -110,7 +111,14 @@ export const Dashboard: React.FC<{}> = () => {
       flexDir={w < 500 ? "column" : "row"}
       h="100%"
     >
-      <TabList w="100%" paddingTop={5} flexGrow={1} flexBasis={0} minW="200px">
+      <TabList
+        w="100%"
+        paddingTop={3}
+        paddingRight={3}
+        flexGrow={1}
+        flexBasis={0}
+        minW="200px"
+      >
         <Tab w="100%" _selected={selectedStyles}>
           <TabContent icon={RiArchiveDrawerFill} text="Organised" />
         </Tab>
@@ -127,7 +135,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TabContent icon={CheckIcon} text="Completed" />
         </Tab>
       </TabList>
-      {w >= 500 && <Divider orientation="vertical" borderColor="black" />}
+      {/* w >= 500 && <Divider orientation="vertical" borderColor="black" /> */}
       <TabPanels flexGrow={1} h="100%" overflow="hidden">
         <TabPanel h="100%">
           <Flex direction="column" maxH="100%">
@@ -137,7 +145,7 @@ export const Dashboard: React.FC<{}> = () => {
             <AddModule />
           </Flex>
         </TabPanel>
-        <TabPanel h="100%">
+        <TabPanel h="100%" bgColor="#D2EFED">
           <TasksBoard
             tasks={tasks}
             headerText="All"
@@ -145,7 +153,7 @@ export const Dashboard: React.FC<{}> = () => {
             placeholder="Add tasks!"
           />
         </TabPanel>
-        <TabPanel h="100%">
+        <TabPanel h="100%" bgColor="#D1F0F4">
           <TasksBoard
             tasks={importantTasks}
             headerText="Important"
@@ -153,7 +161,7 @@ export const Dashboard: React.FC<{}> = () => {
             placeholder="Try starring some tasks to see them here!"
           />
         </TabPanel>
-        <TabPanel h="100%">
+        <TabPanel h="100%" bgColor="#F4DFD1">
           <TasksBoard
             tasks={todayTasks}
             headerText="Today"
@@ -161,7 +169,7 @@ export const Dashboard: React.FC<{}> = () => {
             placeholder="Tasks that are due today show up here!"
           />
         </TabPanel>
-        <TabPanel h="100%">
+        <TabPanel h="100%" bgColor="#D2EFED">
           <TasksBoard
             tasks={completedTasks}
             headerText="Completed"

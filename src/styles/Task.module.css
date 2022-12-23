@@ -8,15 +8,12 @@
   margin-bottom: 2px;
   border-radius: 5px;
   min-width: 200px;
-  border: solid 1px gray;
 }
 
 .completedTask {
-  background-color: transparent;
   display: flex;
   box-shadow: none;
   color: gray;
-  border: none;
 }
 
 .task > .details {
@@ -57,6 +54,10 @@
   overflow: scroll;
 }
 
-.taskList > ol {
+.taskList ol {
   list-style: none;
+}
+
+.taskList li {
+  padding: 3px;
 }
