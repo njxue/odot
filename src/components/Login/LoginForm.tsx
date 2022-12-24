@@ -81,6 +81,7 @@ const LoginForm: React.FC<{}> = () => {
       .login(email, password)
       .then(() => navigate("/"))
       .catch((err) => {
+        setIsLoading(false);
         const errorCode: string = err.code;
         if (emailErrorCodes[errorCode]) {
           setEmailIsInvalid(true);
@@ -93,7 +94,7 @@ const LoginForm: React.FC<{}> = () => {
   }
 
   return (
-    <PreLoginForm header="Login" text="lorem ipsum">
+    <PreLoginForm header="Login">
       <VStack alignItems="start" w="100%" h="100%">
         <FormControl isInvalid={emailIsInvalid}>
           <FormLabel>Email: </FormLabel>
@@ -110,6 +111,7 @@ const LoginForm: React.FC<{}> = () => {
           colorScheme="teal"
           onClick={handleLogin}
           isLoading={isLoading}
+          _hover={{ bgColor: "teal.500" }}
         >
           Login
         </Button>

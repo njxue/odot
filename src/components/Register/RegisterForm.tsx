@@ -48,26 +48,32 @@ const RegisterForm: React.FC<{}> = () => {
     MESSAGE_PASSWORD_MISSING
   );
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   register = useAuth().register;
 
   function handleRegister() {
     setEmailIsInvalid(false);
     setPasswordIsInvalid(false);
     setPasswordCfIsInvalid(false);
+    setIsLoading(true);
 
     // Input elements do not exist
     if (emailRef.current == null) {
       setEmailIsInvalid(true);
+      setIsLoading(false);
       return;
     }
 
     if (passwordRef.current == null) {
       setPasswordIsInvalid(true);
+      setIsLoading(false);
       return;
     }
 
     if (passwordCfRef.current == null) {
       setPasswordCfIsInvalid(true);
+      setIsLoading(false);
       return;
     }
 
@@ -79,37 +85,42 @@ const RegisterForm: React.FC<{}> = () => {
     if (email.length == 0) {
       setEmailIsInvalid(true);
       setEmailErrorMessage(MESSAGE_EMAIL_MISSING);
+      setIsLoading(false);
     }
 
     if (password.length == 0) {
       setPasswordIsInvalid(true);
       setPasswordErrorMessage(MESSAGE_PASSWORD_MISSING);
+      setIsLoading(false);
     }
-
 
     if (passwordcf.length == 0) {
       setPasswordCfIsInvalid(true);
       setPasswordCfErrorMessage(MESSAGE_PASSWORD_CF_MISSING);
+      setIsLoading(false);
     }
 
     if (email.length == 0 || password.length == 0 || passwordcf.length == 0) {
+      setIsLoading(false);
       return;
     }
 
     if (password.length < 6) {
       setPasswordIsInvalid(true);
       setPasswordErrorMessage(MESSAGE_PASSWORD_TOO_SHORT);
+      setIsLoading(false);
       return;
     }
 
     if (passwordcf != password) {
       setPasswordCfIsInvalid(true);
       setPasswordCfErrorMessage(MESSAGE_PASSWORD_MISMATCH);
+      setIsLoading(false);
       return;
     }
 
-  
     register(email, password, passwordcf).catch((err) => {
+      setIsLoading(false);
       const errorCode: string = err.code;
       console.log(errorCode);
       if (emailErrorCodes[errorCode]) {
@@ -122,7 +133,7 @@ const RegisterForm: React.FC<{}> = () => {
     });
   }
   return (
-    <PreLoginForm header="Register" text="lorem ipsum">
+    <PreLoginForm header="Register">
       <FormControl isInvalid={emailIsInvalid} isRequired>
         <FormLabel>Email: </FormLabel>
         <Input ref={emailRef} type="text" borderColor="gray" />
@@ -141,8 +152,10 @@ const RegisterForm: React.FC<{}> = () => {
       <Button
         onClick={handleRegister}
         color="white"
-        bgColor="pink.700"
+        bgColor="teal"
+        _hover={{ bgColor: "teal.500" }}
         w="100%"
+        isLoading={isLoading}
       >
         Register
       </Button>

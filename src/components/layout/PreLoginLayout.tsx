@@ -2,6 +2,7 @@ import React from "react";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
 import styles from "../../styles/PreLogin.module.css";
 import GreetingCard from "../Login/GreetingCard";
+import { Box, Flex } from "@chakra-ui/react";
 
 interface PreLoginLayoutProps {
   greetingComponent: React.ReactNode;
@@ -12,10 +13,14 @@ const PreLoginLayout: React.FC<PreLoginLayoutProps> = (props) => {
   const { width } = useWindowDimensions();
   const { greetingComponent, formComponent } = props;
   return (
-    <div className={styles.container}>
-      <div>{greetingComponent}</div>
-      <div>{formComponent}</div>
-    </div>
+    <Flex direction={width > 500 ? "row" : "column"} w="100vw" h="100vh">
+      <Box flexGrow={2} h="100%">
+        {greetingComponent}
+      </Box>
+      <Box flexGrow={3} h="100%" padding={30}>
+        {formComponent}
+      </Box>
+    </Flex>
   );
 };
 

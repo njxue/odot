@@ -1,4 +1,4 @@
-import { Box, Flex, VStack, Heading, Divider } from "@chakra-ui/react";
+import { Box, Flex, VStack, Heading, Divider, Center } from "@chakra-ui/react";
 import styles from "../../styles/PreLogin.module.css";
 
 interface PreLoginFormProps {
@@ -9,31 +9,16 @@ interface PreLoginFormProps {
 
 const PreLoginForm: React.FC<PreLoginFormProps> = (props) => {
   return (
-    <Box
-      flexGrow="1"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      h="100%"
-    >
-      <Flex
-        direction="column"
-        minW="200px"
-        maxW="300px"
-        w="50%"
-        alignItems="start"
-        gap="100px"
-      >
-        <VStack w="100%" alignItems="start">
+    <Center h="100%" justifyContent="center">
+      <VStack w="50%" minW="300px">
+        <VStack alignItems="start" w="100%">
           <Heading>{props.header}</Heading>
           <Divider borderColor="black" />
-          <p>{props.text}</p>
         </VStack>
-        <VStack alignItems="start" w="100%">
-          {props.children}
-        </VStack>
-      </Flex>
-    </Box>
+        <p>{props.text}</p>
+        {props.children}
+      </VStack>
+    </Center>
   );
 };
 

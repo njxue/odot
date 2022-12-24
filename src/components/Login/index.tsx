@@ -8,7 +8,6 @@ export const Login: React.FC<{}> = () => {
   const navigate = useNavigate();
   const greetingComponent: React.ReactNode = (
     <GreetingCard
-      header="Sign up now"
       text="Do not have an account?"
       onClickButtonEvent={() => navigate("/register")}
       buttonText="Register"
