@@ -24,6 +24,7 @@ import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import Progress from "./Progress";
 import { SettingsIcon } from "@chakra-ui/icons";
+import { Settings } from "./Settings";
 
 interface TodoProps {
   todo: Todo;
@@ -92,9 +93,9 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     pushAutoTasks(autoTasksToPush);
   }, [autoTasksToPush]);
 
-  // autos should only load once per page load because if a PUSHED auto has past its nextUpdateTime, deleting it/marking it as 
-  // important will trigger another push. i.e. deleting/marking the auto should not trigger a push. 
-  // Therefore, loadAutos() should run once when the page is mounted and should not be placed inside the useEffect with [todo], 
+  // autos should only load once per page load because if a PUSHED auto has past its nextUpdateTime, deleting it/marking it as
+  // important will trigger another push. i.e. deleting/marking the auto should not trigger a push.
+  // Therefore, loadAutos() should run once when the page is mounted and should not be placed inside the useEffect with [todo],
   // because the useEffect with [todo] runs everytime a task is updated/deleted, triggeriing a page re-render.
   useEffect(() => {
     loadAutos();
@@ -121,7 +122,6 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
           </h2>
 
           <AccordionPanel bgColor="#E7E7E7">
-            <SettingsModal isOpen={isOpen} onClose={onClose} todoId={todo.id} />
             <div className={todoStyles.taskContainer}>
               <div className={todoStyles.incompleteTasks}>
                 {todo.tasks && <TaskList tasks={tasks} />}
@@ -129,9 +129,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
             </div>
             <div className={todoStyles.footer}>
               <AddTask todoId={todo.id} />
-              <Tooltip label="configure">
-                <SettingsIcon onClick={onOpen} cursor="pointer" />
-              </Tooltip>
+              <Settings todoId={todo.id} />
             </div>
           </AccordionPanel>
         </div>

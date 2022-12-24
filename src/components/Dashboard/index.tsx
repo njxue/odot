@@ -16,9 +16,8 @@ import {
   TabPanel,
   Heading,
   Divider,
-  Box,
+  Icon,
   Flex,
-  Spacer,
 } from "@chakra-ui/react";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
@@ -29,6 +28,7 @@ import { useWindowDimensions } from "../../helpers/windowDimensions";
 import { isToday } from "../../helpers/DateTimeCalculations";
 import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
+import { Settings } from "../Todo/Settings";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -173,7 +173,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TasksBoard
             tasks={tasks}
             headerText="All"
-            headerIcon={TbListDetails}
+            headerLeftElement={<Icon as={TbListDetails} boxSize={5} />}
             placeholder="Add tasks!"
           />
         </TabPanel>
@@ -181,7 +181,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TasksBoard
             tasks={importantTasks}
             headerText="Important"
-            headerIcon={StarIcon}
+            headerLeftElement={<Icon as={StarIcon} boxSize={5} />}
             placeholder="Try starring some tasks to see them here!"
           />
         </TabPanel>
@@ -189,7 +189,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TasksBoard
             tasks={todayTasks}
             headerText="Today"
-            headerIcon={MdOutlineCalendarToday}
+            headerLeftElement={<Icon as={MdOutlineCalendarToday} boxSize={5} />}
             placeholder="Tasks that are due today show up here!"
           />
         </TabPanel>
@@ -197,7 +197,7 @@ export const Dashboard: React.FC<{}> = () => {
           <TasksBoard
             tasks={completedTasks}
             headerText="Completed"
-            headerIcon={CheckIcon}
+            headerLeftElement={<Icon as={CheckIcon} boxSize={5} />}
             placeholder="Try to complete some tasks to see them here!"
           />
         </TabPanel>
@@ -212,6 +212,7 @@ export const Dashboard: React.FC<{}> = () => {
                       .filter((t) => !t.isCompleted)
               }
               headerText={t.name}
+              headerRightElement={<Settings todoId={t.id} />}
               placeholder="Try to complete some tasks to see them here!"
             />
           </TabPanel>
