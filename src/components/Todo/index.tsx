@@ -37,15 +37,12 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   const tasksRef = getTasksRef(currUser.uid, todo.id);
   const autosRef = getAutosRef(currUser.uid, todo.id);
 
-  const { onOpen, isOpen, onClose } = useDisclosure();
-
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [autoTasksToPush, setAutoTasksToPush] = useState<IAuto[]>([]);
   const [percentComplete, setPercentComplete] = useState<number>(0);
 
   function loadAutos() {
     get(autosRef).then((snapshot) => {
-      console.log("get autos");
       const data = snapshot.val();
       const tmp: IAuto[] = [];
       for (const id in data) {
@@ -77,15 +74,21 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
 
   useEffect(() => {
     const tmpTasks: ITask[] = [];
+    let numIncomplete = 0;
+    let total = 0;
     if (todo.tasks != undefined) {
       for (const taskId in todo.tasks) {
         const task: ITask = todo.tasks[taskId];
         if (!task.isCompleted) {
           tmpTasks.push(task);
+          numIncomplete++;
         }
+        total++;
       }
     }
-
+    setPercentComplete(
+      total == 0 ? 0 : Math.round(((total - numIncomplete) * 100) / total)
+    );
     setTasks(tmpTasks);
   }, [todo]);
 
