@@ -11,3 +11,14 @@
   color: white;
   font-size: x-large;
 }
+
+.banner > img {
+  width: 100px;
+}
+
+.banner svg {
+  color: white;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}

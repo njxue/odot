@@ -1,6 +1,7 @@
 .form {
   padding: 5px;
   display: flex;
+  flex-wrap: wrap;
   gap: 3px;
   width: 100%;
 }
@@ -9,7 +10,7 @@
   padding: 5px;
   border: solid rgb(206, 206, 206) 1px;
   border-radius: 5px;
-  flex: 1;
+  flex-grow: 1;
 }
 
 .form button {

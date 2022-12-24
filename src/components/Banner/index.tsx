@@ -14,21 +14,13 @@ export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
     logout();
   }
   return (
-    <div>
-      <div className={bannerStyles.banner}>
-        <Image src={require("../../assets/logo.png")} w="150px" />
-        <Tooltip label="Logout">
-          <span>
-            <Icon
-              as={AiOutlineLogout}
-              color="white"
-              cursor="pointer"
-              boxSize="50px"
-              onClick={handleClick}
-            />
-          </span>
-        </Tooltip>
-      </div>
+    <div className={bannerStyles.banner}>
+      <Image src={require("../../assets/logo.png")} />
+      <Tooltip label="Logout">
+        <span>
+          <Icon as={AiOutlineLogout} onClick={handleClick} />
+        </span>
+      </Tooltip>
     </div>
   );
 };

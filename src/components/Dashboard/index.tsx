@@ -18,6 +18,7 @@ import {
   Divider,
   Icon,
   Flex,
+  VStack,
 } from "@chakra-ui/react";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
@@ -162,10 +163,12 @@ export const Dashboard: React.FC<{}> = () => {
       </TabList>
       <TabPanels flexGrow={1} h="100%" overflow="hidden">
         <TabPanel h="100%">
-          <Flex direction="column" maxH="100%">
-            <Heading>Welcome back!</Heading>
-            <Divider marginTop={3} borderColor="gray" />
-            <Organised todos={todos} />
+          <Flex direction="column" h="100%" justifyContent="space-between">
+            <VStack align="stretch" overflow="scroll">
+              <Heading>Welcome back!</Heading>
+              <Divider marginTop={3} borderColor="gray" />
+              <Organised todos={todos} />
+            </VStack>
             <AddModule />
           </Flex>
         </TabPanel>

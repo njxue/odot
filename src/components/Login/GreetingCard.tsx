@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Image, VStack } from "@chakra-ui/react";
+import { Button, Heading, Image, VStack } from "@chakra-ui/react";
 
 interface GreetingCardProps {
   text?: string;
@@ -18,7 +18,7 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       padding={30}
       minH="500px"
     >
-      <Image src={require("../../assets/logo.png")} />
+      <Image src={require("../../assets/logo.png")} w="50%"/>
       <Heading size="md">{text}</Heading>
       <Button
         bgColor="teal"

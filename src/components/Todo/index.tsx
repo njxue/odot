@@ -127,10 +127,10 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
                 {todo.tasks && <TaskList tasks={tasks} />}
               </div>
             </div>
-            <div className={todoStyles.footer}>
+            <HStack>
               <AddTask todoId={todo.id} />
               <Settings todoId={todo.id} />
-            </div>
+            </HStack>
           </AccordionPanel>
         </div>
       )}
