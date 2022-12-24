@@ -177,7 +177,7 @@ export const Dashboard: React.FC<{}> = () => {
             placeholder="Add tasks!"
           />
         </TabPanel>
-        <TabPanel h="100%" bgColor="#D1F0F4">
+        <TabPanel h="100%" bgColor="#F3DDBF">
           <TasksBoard
             tasks={importantTasks}
             headerText="Important"
@@ -193,7 +193,7 @@ export const Dashboard: React.FC<{}> = () => {
             placeholder="Tasks that are due today show up here!"
           />
         </TabPanel>
-        <TabPanel h="100%" bgColor="#D2EFED">
+        <TabPanel h="100%" bgColor="#BFF3C3">
           <TasksBoard
             tasks={completedTasks}
             headerText="Completed"
