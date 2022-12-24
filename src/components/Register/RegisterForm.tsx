@@ -14,6 +14,8 @@ import {
   passwordErrorCodes,
 } from "../../helpers/authErrorCodes";
 import formStyles from "../../styles/Form.module.css";
+import { sendEmailVerification } from "firebase/auth";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const MESSAGE_PASSWORD_MISSING = "Password is required";
 const MESSAGE_PASSWORD_CF_MISSING = "Confirm your password";
@@ -23,11 +25,8 @@ const MESSAGE_PASSWORD_MISMATCH = "Passwords do not match";
 const MESSAGE_EMAIL_MISSING = "Email is required";
 
 const RegisterForm: React.FC<{}> = () => {
-  let register: (
-    email: string,
-    password: string,
-    username: string
-  ) => Promise<any>;
+  let auth = useAuth();
+  const navigate = useNavigate();
 
   // Input elements
   const emailRef = useRef<HTMLInputElement>(null);
@@ -52,8 +51,6 @@ const RegisterForm: React.FC<{}> = () => {
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  register = useAuth().register;
 
   function handleRegister(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
@@ -123,34 +120,40 @@ const RegisterForm: React.FC<{}> = () => {
       return;
     }
 
-    register(email, password, passwordcf).catch((err) => {
-      setIsLoading(false);
-      const errorCode: string = err.code;
-      console.log(errorCode);
-      if (emailErrorCodes[errorCode]) {
-        setEmailIsInvalid(true);
-        setEmailErrorMessage(emailErrorCodes[errorCode]);
-      } else if (passwordErrorCodes[errorCode]) {
-        setPasswordIsInvalid(true);
-        setPasswordErrorMessage(passwordErrorCodes[errorCode]);
-      }
-    });
+    auth
+      .register(email, password)
+      .then(() => {
+        setIsLoading(false);
+        navigate("/login");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorCode: string = err.code;
+        console.log(err);
+        if (emailErrorCodes[errorCode]) {
+          setEmailIsInvalid(true);
+          setEmailErrorMessage(emailErrorCodes[errorCode]);
+        } else if (passwordErrorCodes[errorCode]) {
+          setPasswordIsInvalid(true);
+          setPasswordErrorMessage(passwordErrorCodes[errorCode]);
+        }
+      });
   }
   return (
     <PreLoginForm header="Register">
       <form onSubmit={(e) => handleRegister(e)} className={formStyles.form}>
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
-          <FormControl isInvalid={emailIsInvalid} >
+          <FormControl isInvalid={emailIsInvalid}>
             <FormLabel>Email: </FormLabel>
             <Input ref={emailRef} type="text" borderColor="gray" />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={passwordIsInvalid} >
+          <FormControl isInvalid={passwordIsInvalid}>
             <FormLabel>Password: </FormLabel>
             <Input ref={passwordRef} type="password" borderColor="gray" />
             <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={passwordCfIsInvalid} >
+          <FormControl isInvalid={passwordCfIsInvalid}>
             <FormLabel>Confirm Password: </FormLabel>
             <Input ref={passwordCfRef} type="password" borderColor="gray" />
             <FormErrorMessage>{passwordCfErrorMessage}</FormErrorMessage>

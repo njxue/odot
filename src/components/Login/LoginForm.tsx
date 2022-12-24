@@ -15,9 +15,11 @@ import {
 } from "../../helpers/authErrorCodes";
 import PreLoginForm from "../layout/PreLoginForm";
 import formStyles from "../../styles/Form.module.css";
+import { signOut } from "firebase/auth";
 
 const MESSAGE_PASSWORD_MISSING = "Password is required";
 const MESSAGE_EMAIL_MISSING = "Email is required";
+const MESSAGE_EMAIL_UNVERIFIED = "Please verify your email before logging in";
 
 const LoginForm: React.FC<{}> = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -26,6 +28,7 @@ const LoginForm: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [emailIsInvalid, setEmailIsInvalid] = useState<boolean>(false);
+  const [emailIsUnverified, setEmailIsUnverified] = useState<boolean>(false);
   const [passwordIsInvalid, setPasswordIsInvalid] = useState<boolean>(false);
 
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>(
@@ -77,7 +80,15 @@ const LoginForm: React.FC<{}> = () => {
 
     auth
       .login(email, password)
-      .then(() => navigate("/"))
+      .then(() => {
+        setIsLoading(false);
+        if (!auth.isLoggedIn) {
+          setEmailIsUnverified(true);
+          setEmailErrorMessage(MESSAGE_EMAIL_UNVERIFIED);
+        } else {
+          navigate("/");
+        }
+      })
       .catch((err) => {
         setIsLoading(false);
         const errorCode: string = err.code;
@@ -95,7 +106,7 @@ const LoginForm: React.FC<{}> = () => {
     <PreLoginForm header="Login">
       <form onSubmit={(e) => handleLogin(e)} className={formStyles.form}>
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
-          <FormControl isInvalid={emailIsInvalid}>
+          <FormControl isInvalid={emailIsInvalid || emailIsUnverified}>
             <FormLabel>Email: </FormLabel>
             <Input ref={emailRef} type="text" borderColor="gray" />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>

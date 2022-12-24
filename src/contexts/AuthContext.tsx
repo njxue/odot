@@ -21,7 +21,7 @@ import { ref } from "firebase/database";
 
 interface AuthContextType {
   getCurrUser: () => User;
-  register: (email: string, password: string, username: string) => Promise<any>;
+  register: (email: string, password: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => Promise<any>;
   isLoggedIn: boolean | undefined;
@@ -48,8 +48,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const unsubscribe: Unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setCurrUser(user);
-        setIsLoggedIn(true);
+        if (user.emailVerified) {
+          setCurrUser(user);
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
       } else {
         setCurrUser(undefined);
         setIsLoggedIn(false);
@@ -67,15 +71,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-function register(
-  email: string,
-  password: string,
-  username: string
-): Promise<any> {
+function register(email: string, password: string): Promise<any> {
   return createUserWithEmailAndPassword(auth, email, password).then((cred) => {
-    updateProfile(cred.user, {
-      displayName: username,
-    });
+    sendEmailVerification(cred.user).then(() => console.log("email sent!"));
   });
 }
 
