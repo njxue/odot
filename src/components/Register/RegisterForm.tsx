@@ -4,14 +4,16 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  VStack,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import useAuth from "../../contexts/AuthContext";
 import PreLoginForm from "../layout/PreLoginForm";
 import {
   emailErrorCodes,
   passwordErrorCodes,
 } from "../../helpers/authErrorCodes";
+import formStyles from "../../styles/Form.module.css";
 
 const MESSAGE_PASSWORD_MISSING = "Password is required";
 const MESSAGE_PASSWORD_CF_MISSING = "Confirm your password";
@@ -52,7 +54,8 @@ const RegisterForm: React.FC<{}> = () => {
 
   register = useAuth().register;
 
-  function handleRegister() {
+  function handleRegister(e: React.FormEvent<HTMLElement>) {
+    e.preventDefault();
     setEmailIsInvalid(false);
     setPasswordIsInvalid(false);
     setPasswordCfIsInvalid(false);
@@ -134,31 +137,35 @@ const RegisterForm: React.FC<{}> = () => {
   }
   return (
     <PreLoginForm header="Register">
-      <FormControl isInvalid={emailIsInvalid} isRequired>
-        <FormLabel>Email: </FormLabel>
-        <Input ref={emailRef} type="text" borderColor="gray" />
-        <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={passwordIsInvalid} isRequired>
-        <FormLabel>Password: </FormLabel>
-        <Input ref={passwordRef} type="password" borderColor="gray" />
-        <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={passwordCfIsInvalid} isRequired>
-        <FormLabel>Confirm Password: </FormLabel>
-        <Input ref={passwordCfRef} type="password" borderColor="gray" />
-        <FormErrorMessage>{passwordCfErrorMessage}</FormErrorMessage>
-      </FormControl>
-      <Button
-        onClick={handleRegister}
-        color="white"
-        bgColor="teal"
-        _hover={{ bgColor: "teal.500" }}
-        w="100%"
-        isLoading={isLoading}
-      >
-        Register
-      </Button>
+      <form onSubmit={(e) => handleRegister(e)} className={formStyles.form}>
+        <VStack alignItems="start" w="100%" h="100%" gap={3}>
+          <FormControl isInvalid={emailIsInvalid} isRequired>
+            <FormLabel>Email: </FormLabel>
+            <Input ref={emailRef} type="text" borderColor="gray" />
+            <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={passwordIsInvalid} isRequired>
+            <FormLabel>Password: </FormLabel>
+            <Input ref={passwordRef} type="password" borderColor="gray" />
+            <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={passwordCfIsInvalid} isRequired>
+            <FormLabel>Confirm Password: </FormLabel>
+            <Input ref={passwordCfRef} type="password" borderColor="gray" />
+            <FormErrorMessage>{passwordCfErrorMessage}</FormErrorMessage>
+          </FormControl>
+          <Button
+            type="submit"
+            color="white"
+            bgColor="teal"
+            _hover={{ bgColor: "teal.500" }}
+            w="100%"
+            isLoading={isLoading}
+          >
+            Register
+          </Button>
+        </VStack>
+      </form>
     </PreLoginForm>
   );
 };

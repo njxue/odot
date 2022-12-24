@@ -2,12 +2,8 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   VStack,
-  Box,
-  Divider,
-  Flex,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
@@ -18,6 +14,7 @@ import {
   passwordErrorCodes,
 } from "../../helpers/authErrorCodes";
 import PreLoginForm from "../layout/PreLoginForm";
+import formStyles from "../../styles/Form.module.css";
 
 const MESSAGE_PASSWORD_MISSING = "Password is required";
 const MESSAGE_EMAIL_MISSING = "Email is required";
@@ -40,7 +37,8 @@ const LoginForm: React.FC<{}> = () => {
 
   let auth = useAuth();
 
-  function handleLogin() {
+  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setIsLoading(true);
     setEmailIsInvalid(false);
     setPasswordIsInvalid(false);
@@ -95,27 +93,29 @@ const LoginForm: React.FC<{}> = () => {
 
   return (
     <PreLoginForm header="Login">
-      <VStack alignItems="start" w="100%" h="100%">
-        <FormControl isInvalid={emailIsInvalid}>
-          <FormLabel>Email: </FormLabel>
-          <Input ref={emailRef} type="text" borderColor="gray" />
-          <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={passwordIsInvalid}>
-          <FormLabel>Password: </FormLabel>
-          <Input ref={passwordRef} type="password" borderColor="gray" />
-          <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
-        </FormControl>
-        <Button
-          w="100%"
-          colorScheme="teal"
-          onClick={handleLogin}
-          isLoading={isLoading}
-          _hover={{ bgColor: "teal.500" }}
-        >
-          Login
-        </Button>
-      </VStack>
+      <form onSubmit={(e) => handleLogin(e)} className={formStyles.form}>
+        <VStack alignItems="start" w="100%" h="100%" gap={3}>
+          <FormControl isInvalid={emailIsInvalid}>
+            <FormLabel>Email: </FormLabel>
+            <Input ref={emailRef} type="text" borderColor="gray" />
+            <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={passwordIsInvalid}>
+            <FormLabel>Password: </FormLabel>
+            <Input ref={passwordRef} type="password" borderColor="gray" />
+            <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
+          </FormControl>
+          <Button
+            w="100%"
+            type="submit"
+            colorScheme="teal"
+            isLoading={isLoading}
+            _hover={{ bgColor: "teal.500" }}
+          >
+            Login
+          </Button>
+        </VStack>
+      </form>
     </PreLoginForm>
   );
 };
