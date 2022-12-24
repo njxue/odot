@@ -39,6 +39,7 @@ const RegisterForm: React.FC<{}> = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState<boolean>(false);
   const [passwordCfIsInvalid, setPasswordCfIsInvalid] =
     useState<boolean>(false);
+
   // Error messages
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>(
     MESSAGE_EMAIL_MISSING
@@ -139,17 +140,17 @@ const RegisterForm: React.FC<{}> = () => {
     <PreLoginForm header="Register">
       <form onSubmit={(e) => handleRegister(e)} className={formStyles.form}>
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
-          <FormControl isInvalid={emailIsInvalid} isRequired>
+          <FormControl isInvalid={emailIsInvalid} >
             <FormLabel>Email: </FormLabel>
             <Input ref={emailRef} type="text" borderColor="gray" />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={passwordIsInvalid} isRequired>
+          <FormControl isInvalid={passwordIsInvalid} >
             <FormLabel>Password: </FormLabel>
             <Input ref={passwordRef} type="password" borderColor="gray" />
             <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={passwordCfIsInvalid} isRequired>
+          <FormControl isInvalid={passwordCfIsInvalid} >
             <FormLabel>Confirm Password: </FormLabel>
             <Input ref={passwordCfRef} type="password" borderColor="gray" />
             <FormErrorMessage>{passwordCfErrorMessage}</FormErrorMessage>
