@@ -21,10 +21,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { RiArchiveDrawerFill } from "react-icons/ri";
-import { AiOutlineUnorderedList } from "react-icons/ai";
+import { AiOutlineUnorderedList, AiOutlineFieldTime } from "react-icons/ai";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
-import { RxLapTimer } from "react-icons/rx";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/windowDimensions";
 import { isAfter, isToday } from "../../helpers/DateTimeCalculations";
@@ -116,7 +115,7 @@ export const Dashboard: React.FC<{}> = () => {
     Important: StarIcon,
     Today: MdOutlineCalendarToday,
     Completed: CheckIcon,
-    Overdue: RxLapTimer,
+    Overdue: AiOutlineFieldTime,
   };
 
   return isLoading ? (
@@ -227,7 +226,7 @@ export const Dashboard: React.FC<{}> = () => {
             withLabel
             tasks={overdueTasks}
             headerText="Overdue"
-            headerLeftElement={<Icon as={tabs.Today} boxSize={5} />}
+            headerLeftElement={<Icon as={tabs.Overdue} boxSize={5} />}
             altText="Yay! You have no overdue-d tasks!"
             altImg="amazed.png"
           />
@@ -246,7 +245,7 @@ export const Dashboard: React.FC<{}> = () => {
               }
               headerText={t.name}
               headerRightElement={<Settings todoId={t.id} todoName={t.name} />}
-              altText={`No tasks left for ${t.name}!`} 
+              altText={`No tasks left for ${t.name}!`}
               altImg="amazed.png"
             />
           </TabPanel>
