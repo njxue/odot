@@ -12,10 +12,11 @@ import { getTimeNow, getDateString } from "../../helpers/DateTimeCalculations";
 
 interface AddTaskProps {
   todoId: string;
+  todoName: string;
 }
 
 const AddTask: React.FC<AddTaskProps> = (props) => {
-  const todoId = props.todoId;
+  const { todoId, todoName } = props;
   const taskRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
@@ -50,6 +51,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     const task: ITask = {
       id: taskId,
       todoId: todoId,
+      todoName: todoName,
       name: taskName,
       isCompleted: false,
       isImportant: false,

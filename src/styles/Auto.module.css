@@ -46,22 +46,3 @@
   width: 70%;
   overflow: auto;
 }
-
-.autoForm {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.autoForm .autoFormInputs {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.autoForm .select {
-  min-width: 150px;
-  height: 33px;
-  border: solid rgb(206, 206, 206) 1px;
-}

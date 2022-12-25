@@ -105,7 +105,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, []);
 
   return (
-    <AccordionItem>
+    <AccordionItem bg="white">
       {({ isExpanded }) => (
         <div>
           <h2>
@@ -131,8 +131,8 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
               </div>
             </div>
             <HStack>
-              <AddTask todoId={todo.id} />
-              <Settings todoId={todo.id} />
+              <AddTask todoId={todo.id} todoName={todo.name} />
+              <Settings todoId={todo.id} todoName={todo.name} />
             </HStack>
           </AccordionPanel>
         </div>

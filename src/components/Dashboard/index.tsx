@@ -144,7 +144,7 @@ export const Dashboard: React.FC<{}> = () => {
               <TabContent icon={CheckIcon} text="Completed" />
             </Tab>
           </Flex>
-          <Divider borderColor="blackAlpha.700" />
+          {todos.length > 0 && <Divider borderColor="gray.400" />}
           <Flex
             direction={w < 500 ? "row" : "column"}
             marginTop="20px"
@@ -162,7 +162,7 @@ export const Dashboard: React.FC<{}> = () => {
         </Flex>
       </TabList>
       <TabPanels flexGrow={1} h="100%" overflow="hidden">
-        <TabPanel h="100%">
+        <TabPanel h="100%" bg="#F2F2F2">
           <Flex direction="column" h="100%" justifyContent="space-between">
             <VStack align="stretch" overflow="scroll">
               <Heading>Welcome back!</Heading>
@@ -174,6 +174,7 @@ export const Dashboard: React.FC<{}> = () => {
         </TabPanel>
         <TabPanel h="100%" bgColor="#D2EFED">
           <TasksBoard
+            withLabel
             tasks={tasks}
             headerText="All"
             headerLeftElement={<Icon as={TbListDetails} boxSize={5} />}
@@ -182,6 +183,7 @@ export const Dashboard: React.FC<{}> = () => {
         </TabPanel>
         <TabPanel h="100%" bgColor="#F3DDBF">
           <TasksBoard
+            withLabel
             tasks={importantTasks}
             headerText="Important"
             headerLeftElement={<Icon as={StarIcon} boxSize={5} />}
@@ -190,6 +192,7 @@ export const Dashboard: React.FC<{}> = () => {
         </TabPanel>
         <TabPanel h="100%" bgColor="#F4DFD1">
           <TasksBoard
+            withLabel
             tasks={todayTasks}
             headerText="Today"
             headerLeftElement={<Icon as={MdOutlineCalendarToday} boxSize={5} />}
@@ -198,6 +201,7 @@ export const Dashboard: React.FC<{}> = () => {
         </TabPanel>
         <TabPanel h="100%" bgColor="#BFF3C3">
           <TasksBoard
+            withLabel
             tasks={completedTasks}
             headerText="Completed"
             headerLeftElement={<Icon as={CheckIcon} boxSize={5} />}
@@ -207,6 +211,7 @@ export const Dashboard: React.FC<{}> = () => {
         {todos.map((t) => (
           <TabPanel h="100%" bgColor="#D2EFED">
             <TasksBoard
+              withLabel
               tasks={
                 t.tasks == undefined
                   ? []
@@ -215,7 +220,7 @@ export const Dashboard: React.FC<{}> = () => {
                       .filter((t) => !t.isCompleted)
               }
               headerText={t.name}
-              headerRightElement={<Settings todoId={t.id} />}
+              headerRightElement={<Settings todoId={t.id} todoName={t.name} />}
               placeholder="Try to complete some tasks to see them here!"
             />
           </TabPanel>

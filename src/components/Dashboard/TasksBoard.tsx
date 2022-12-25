@@ -18,6 +18,7 @@ export const TasksBoard: React.FC<{
   headerLeftElement?: any;
   headerRightElement?: any;
   placeholder: string;
+  withLabel?: boolean;
 }> = (props) => {
   return (
     <Flex direction="column" maxH="100%">
@@ -36,7 +37,7 @@ export const TasksBoard: React.FC<{
             <NoTasks text={props.placeholder} />
           </Center>
         ) : (
-          <TaskList tasks={props.tasks} />
+          <TaskList tasks={props.tasks} withLabel />
         )}
       </Box>
     </Flex>

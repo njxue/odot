@@ -25,10 +25,11 @@ interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   todoId: string;
+  todoName: string;
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = (props) => {
-  const { todoId, isOpen, onClose } = props;
+  const { todoId, todoName, isOpen, onClose } = props;
 
   const currUser: User = useAuth().getCurrUser();
   const autosRef = getAutosRef(currUser.uid, todoId);
@@ -58,10 +59,10 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
           <ModalHeader>Configure</ModalHeader>
           <Divider />
           <Heading size="s" alignContent="center">
-            Automatic Additions
+            Automatic Tasks
             <Tooltip
               hasArrow
-              label="These tasks will be automatically pushed to the main list"
+              label="These tasks will be automatically pushed to the main list of tasks"
               placement="top-start"
             >
               <QuestionIcon color="gray" margin={1} />
@@ -69,8 +70,8 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
           </Heading>
           <Divider />
           <AutoCollections tasks={autos} />
-          <AddAuto todoId={todoId} />
-          <Divider h="10px"/>
+          <AddAuto todoId={todoId} todoName={todoName}/>
+          <Divider h="10px" />
           <DeleteTodo todoId={todoId} />
         </ModalBody>
       </ModalContent>

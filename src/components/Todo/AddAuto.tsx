@@ -14,10 +14,11 @@ import AddButton from "../layout/AddButton";
 
 interface AddAutoProps {
   todoId: string;
+  todoName: string;
 }
 
 const AddAuto: React.FC<AddAutoProps> = (props) => {
-  const { todoId } = props;
+  const { todoId, todoName } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
   const [freq, setFreq] = useState<TimeInterval>(TimeInterval.DAY);
@@ -45,6 +46,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     const auto: IAuto = {
       id: taskId,
       todoId: todoId,
+      todoName: todoName,
       name: taskName,
       nextUpdate: dueDate,
       dueDate: dueDate,
@@ -61,15 +63,11 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
   }
 
   return (
-    <div className={formStyles.form}>
-      <form onSubmit={addAutomaticTask} className={autoStyles.autoForm}>
-        <div className={autoStyles.autoFormInputs}>
-          <input ref={inputRef} type="text" placeholder="Task name" />
-          <SelectFreq onChange={handleChange} />
-        </div>
-        <AddButton />
-      </form>
-    </div>
+    <form onSubmit={addAutomaticTask} className={formStyles.form}>
+      <input ref={inputRef} type="text" placeholder="Task name" />
+      <SelectFreq onChange={handleChange} />
+      <AddButton />
+    </form>
   );
 };
 
