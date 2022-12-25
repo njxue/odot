@@ -24,9 +24,10 @@ import { RiArchiveDrawerFill } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
+import { RxLapTimer } from "react-icons/rx";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/windowDimensions";
-import { isToday } from "../../helpers/DateTimeCalculations";
+import { isAfter, isToday } from "../../helpers/DateTimeCalculations";
 import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { Settings } from "../Todo/Settings";
@@ -42,6 +43,7 @@ export const Dashboard: React.FC<{}> = () => {
   const [importantTasks, setImportantTasks] = useState<ITask[]>([]);
   const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
   const [todayTasks, setTodayTasks] = useState<ITask[]>([]);
+  const [overdueTasks, setOverdueTasks] = useState<ITask[]>([]);
   // =======================================================================================================
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -55,6 +57,7 @@ export const Dashboard: React.FC<{}> = () => {
       const tmpImpt: ITask[] = [];
       const tmpCompleted: ITask[] = [];
       const tmpToday: ITask[] = [];
+      const tmpOverdue: ITask[] = [];
       const data = snapshot.val();
       for (const todoId in data) {
         const name: string = data[todoId].name;
@@ -81,12 +84,12 @@ export const Dashboard: React.FC<{}> = () => {
               tmpTasks.push(task);
             }
 
-            if (
-              task.dueDate != undefined &&
-              isToday(new Date(task.dueDate)) &&
-              !task.isCompleted
-            ) {
-              tmpToday.push(task);
+            if (task.dueDate != undefined && !task.isCompleted) {
+              if (isToday(new Date(task.dueDate))) {
+                tmpToday.push(task);
+              } else if (isAfter(new Date(), new Date(task.dueDate))) {
+                tmpOverdue.push(task);
+              }
             }
           }
         }
@@ -96,6 +99,7 @@ export const Dashboard: React.FC<{}> = () => {
       setImportantTasks(tmpImpt);
       setCompletedTasks(tmpCompleted);
       setTodayTasks(tmpToday);
+      setOverdueTasks(tmpOverdue);
       setIsLoading(false);
     });
   }, []);
@@ -105,6 +109,16 @@ export const Dashboard: React.FC<{}> = () => {
     fontWeight: "bold",
     bg: "#F2F2F2",
   };
+
+  const tabs = {
+    Organised: RiArchiveDrawerFill,
+    All: TbListDetails,
+    Important: StarIcon,
+    Today: MdOutlineCalendarToday,
+    Completed: CheckIcon,
+    Overdue: RxLapTimer,
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -128,21 +142,11 @@ export const Dashboard: React.FC<{}> = () => {
             flexGrow={1}
             overflow="scroll"
           >
-            <Tab w="100%" _selected={selectedStyles}>
-              <TabContent icon={RiArchiveDrawerFill} text="Organised" />
-            </Tab>
-            <Tab w="100%" _selected={selectedStyles}>
-              <TabContent icon={TbListDetails} text="All" />
-            </Tab>
-            <Tab w="100%" _selected={selectedStyles}>
-              <TabContent icon={StarIcon} text="Important" />
-            </Tab>
-            <Tab w="100%" _selected={selectedStyles}>
-              <TabContent icon={MdOutlineCalendarToday} text="Today" />
-            </Tab>
-            <Tab w="100%" _selected={selectedStyles}>
-              <TabContent icon={CheckIcon} text="Completed" />
-            </Tab>
+            {Object.entries(tabs).map((e) => (
+              <Tab w="100%" _selected={selectedStyles}>
+                <TabContent icon={e[1]} text={e[0]} />
+              </Tab>
+            ))}
           </Flex>
           {todos.length > 0 && <Divider borderColor="gray.400" />}
           <Flex
@@ -162,6 +166,7 @@ export const Dashboard: React.FC<{}> = () => {
         </Flex>
       </TabList>
       <TabPanels flexGrow={1} h="100%" overflow="hidden">
+        {/* ============================ Tasks organised by list ============================ */}
         <TabPanel h="100%" bg="#F2F2F2">
           <Flex direction="column" h="100%" justifyContent="space-between">
             <VStack align="stretch" overflow="scroll">
@@ -172,42 +177,62 @@ export const Dashboard: React.FC<{}> = () => {
             <AddModule />
           </Flex>
         </TabPanel>
+        {/* ============================ All Tasks ============================ */}
         <TabPanel h="100%" bgColor="#D2EFED">
           <TasksBoard
             withLabel
             tasks={tasks}
             headerText="All"
-            headerLeftElement={<Icon as={TbListDetails} boxSize={5} />}
-            placeholder="Add tasks!"
+            headerLeftElement={<Icon as={tabs.All} boxSize={5} />}
+            altText="Wauw you have no tasks! Try adding some from the 'Organised' tab to see them here!"
+            altImg="shibaBark.png"
           />
         </TabPanel>
+        {/* ============================ Important Tasks ============================ */}
         <TabPanel h="100%" bgColor="#F3DDBF">
           <TasksBoard
             withLabel
             tasks={importantTasks}
             headerText="Important"
-            headerLeftElement={<Icon as={StarIcon} boxSize={5} />}
-            placeholder="Try starring some tasks to see them here!"
+            headerLeftElement={<Icon as={tabs.Important} boxSize={5} />}
+            altText="You have no important tasks. Try starring some tasks to see them here!"
+            altImg="shibaShock.png"
           />
         </TabPanel>
+        {/* ============================ Tasks due today ============================ */}
         <TabPanel h="100%" bgColor="#F4DFD1">
           <TasksBoard
             withLabel
             tasks={todayTasks}
             headerText="Today"
-            headerLeftElement={<Icon as={MdOutlineCalendarToday} boxSize={5} />}
-            placeholder="Tasks that are due today show up here!"
+            headerLeftElement={<Icon as={tabs.Today} boxSize={5} />}
+            altText="You have no tasks due today. Go have fun!"
+            altImg="shibaWink.png"
           />
         </TabPanel>
+        {/* ============================ Completed Tasks ============================ */}
         <TabPanel h="100%" bgColor="#BFF3C3">
           <TasksBoard
             withLabel
             tasks={completedTasks}
             headerText="Completed"
-            headerLeftElement={<Icon as={CheckIcon} boxSize={5} />}
-            placeholder="Try to complete some tasks to see them here!"
+            headerLeftElement={<Icon as={tabs.Completed} boxSize={5} />}
+            altText="You have not completed any tasks!"
+            altImg="shibaSad.png"
           />
         </TabPanel>
+        {/* ============================ Overdue-d Tasks ============================ */}
+        <TabPanel h="100%" bgColor="#F9C0C0">
+          <TasksBoard
+            withLabel
+            tasks={overdueTasks}
+            headerText="Overdue"
+            headerLeftElement={<Icon as={tabs.Today} boxSize={5} />}
+            altText="Yay! You have no overdue-d tasks!"
+            altImg="amazed.png"
+          />
+        </TabPanel>
+        {/* ============================ Created lists ============================ */}
         {todos.map((t) => (
           <TabPanel h="100%" bgColor="#D2EFED">
             <TasksBoard
@@ -221,7 +246,8 @@ export const Dashboard: React.FC<{}> = () => {
               }
               headerText={t.name}
               headerRightElement={<Settings todoId={t.id} todoName={t.name} />}
-              placeholder="Try to complete some tasks to see them here!"
+              altText={`No tasks left for ${t.name}!`} 
+              altImg="amazed.png"
             />
           </TabPanel>
         ))}

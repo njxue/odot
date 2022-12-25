@@ -17,11 +17,12 @@ export const TasksBoard: React.FC<{
   headerText: string;
   headerLeftElement?: any;
   headerRightElement?: any;
-  placeholder: string;
+  altText: string;
+  altImg: string;
   withLabel?: boolean;
 }> = (props) => {
   return (
-    <Flex direction="column" maxH="100%">
+    <Flex direction="column" h="100%">
       <HStack justifyContent="space-between">
         <HStack>
           {props.headerLeftElement && props.headerLeftElement}
@@ -34,7 +35,7 @@ export const TasksBoard: React.FC<{
       <Box flexGrow={1} overflow="scroll">
         {props.tasks.length == 0 ? (
           <Center h="100%">
-            <NoTasks text={props.placeholder} />
+            <NoTasks text={props.altText} img={props.altImg} />
           </Center>
         ) : (
           <TaskList tasks={props.tasks} withLabel />

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
-import { get, update } from "firebase/database";
+import { get, update, push } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import TaskList from "../TaskList";
@@ -62,7 +62,12 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
 
     for (const k in tasks) {
       const task: IAuto = tasks[k];
-      batchUpdate[task.id] = task;
+      const newId: string | null = push(tasksRef).key;
+      if (newId == null) {
+        throw Error;
+      }
+      const newTask: IAuto = { ...task, id: newId };
+      batchUpdate[newId] = newTask;
       batchUpdateTime[`${task.id}/nextUpdate`] = calculateNextUpdateTime(
         task.freq
       );
