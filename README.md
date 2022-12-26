@@ -20,7 +20,7 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 
 Some screenshots:
 ![important](/public/snapshots/snapshotImportant.PNG)
-![overdue](/public/snapshots/snapshotOverdue.PNG)
+![settings](/public/snapshots/snapshotSettings.PNG)
 
 ##### Built with
 
