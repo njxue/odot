@@ -11,7 +11,7 @@ Odo.t ("todo" read backwards) is an online "Todo" list. It automatically adds ta
 
 A todo-list only works if you _remember_ to add the tasks into your todo-list. For example, if you have weekly assignments to complete, you would have to remember to add these assignments into the list _every week_. With **Odo.t**, you will only have to add each of these assignments once (for example, on Week 0), and it will automatically add them back to the list every week (or day, or month) once you have completed them.
 
-###Features
+### Features
 
 - Group tasks together (e.g. tasks for different NUS modules)
 - Mark tasks as impoerant
