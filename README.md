@@ -6,6 +6,7 @@ Odo.t ("todo" read backwards) is an online "Todo" list. It automatically adds ta
 
 ![organised](/public/snapshots/snapshotOrganised.png)
 
+
 ### Why?
 
 A todo-list only works if you _remember_ to add the tasks into your todo-list. For example, if you have weekly assignments to complete, you would have to remember to add these assignments into the list _every week_. With **Odo.t**, you will only have to add each of these assignments once (for example, on Week 0), and it will automatically add them back to the list every week (or day, or month) once you have completed them.
@@ -21,3 +22,12 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 Some screenshots:
 ![important](/public/snapshots/snapshotImportant.png)
 ![overdue](/public/snapshots/snapshotOverdue.png)
+
+
+##### Built with
+<img src="/public/logos/react.svg" width="50px" />
+<img src="/public/logos/typescript-icon.svg" width="50px"/>
+<img src="/public/logos/firebase.svg" width="40px"/>
+<img src="/public/logos/chakraui.jpg" width="50px"/>
+<img src="/public/logos/html-5.svg" width="40px"/>
+<img src="/public/logos/css-3.svg" width="40px"/>
