@@ -228,7 +228,7 @@ export const Dashboard: React.FC<{}> = () => {
             headerText="Overdue"
             headerLeftElement={<Icon as={tabs.Overdue} boxSize={5} />}
             altText="Yay! You have no overdue-d tasks!"
-            altImg="amazed.png"
+            altImg="shibaAmazed.png"
           />
         </TabPanel>
         {/* ============================ Created lists ============================ */}
@@ -245,7 +245,7 @@ export const Dashboard: React.FC<{}> = () => {
               headerText={t.name}
               headerRightElement={<Settings todoId={t.id} todoName={t.name} />}
               altText={`No tasks left for ${t.name}!`}
-              altImg="amazed.png"
+              altImg="shibaAmazed.png"
             />
           </TabPanel>
         ))}
