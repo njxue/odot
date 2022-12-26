@@ -22,12 +22,3 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 Some screenshots:
 ![important](/public/snapshots/snapshotImportant.png)
 ![overdue](/public/snapshots/snapshotOverdue.png)
-
-
-##### Built with
-<img src="/public/logos/react.svg" width="50px" />
-<img src="/public/logos/typescript-icon.svg" width="50px"/>
-<img src="/public/logos/firebase.svg" width="40px"/>
-<img src="/public/logos/chakraui.jpg" width="50px"/>
-<img src="/public/logos/html-5.svg" width="40px"/>
-<img src="/public/logos/css-3.svg" width="40px"/>
