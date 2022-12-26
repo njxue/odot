@@ -235,7 +235,6 @@ export const Dashboard: React.FC<{}> = () => {
         {todos.map((t) => (
           <TabPanel h="100%" bgColor="#D2EFED">
             <TasksBoard
-              withLabel
               tasks={
                 t.tasks == undefined
                   ? []

@@ -13,15 +13,7 @@ const Loader: React.FC<{}> = () => {
       bg="#00494c"
       zIndex={2147483647}
     >
-      <HStack
-        w="100%"
-        display="flex"
-        h="20%"
-        flexWrap="wrap-reverse"
-        alignContent="center"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <HStack w="100%" h="20%" flexWrap="wrap-reverse" justifyContent="center">
         <Image
           src={require("../../assets/logo.png")}
           boxSize="200px"
