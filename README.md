@@ -22,13 +22,13 @@ Some screenshots:
 
 <div style="display: flex; flex-direction: column; gap: 10px; width: 100%">
 <div style="display: flex; flex-direction: row; gap: 10px; max-width: 100%">
-    <img src="/public/snapshots/snapshotImportant.PNG" width="50%" />
-    <img src="/public/snapshots/snapshotOverdue.PNG" width="50%"/>
+    <img src="/public/snapshots/snapshotImportant.PNG" width="40%" />
+    <img src="/public/snapshots/snapshotOverdue.PNG" width="40%"/>
 </div>
 
 <div style="display: flex; flex-direction: row; gap: 10px; width: 100%">
-    <img src="/public/snapshots/snapshotLogin.PNG" width="50%" />
-    <img src="/public/snapshots/snapshotSettings.PNG" width="50%"  />
+    <img src="/public/snapshots/snapshotLogin.PNG" width="40%" />
+    <img src="/public/snapshots/snapshotSettings.PNG" width="40%"  />
 </div>
 </div>
 
