@@ -4,8 +4,7 @@
 
 Odo.t ("todo" read backwards) is an online "Todo" list. It automatically adds tasks to your list of to-dos based on a pre-set timer.
 
-![organised](/public/snapshots/snapshotOrganised.png)
-
+![organised](/public/snapshots/snapshotOrganised.PNG)
 
 ### Why?
 
@@ -20,5 +19,16 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 - View important/completed/overdue tasks
 
 Some screenshots:
-![important](/public/snapshots/snapshotImportant.png)
-![overdue](/public/snapshots/snapshotOverdue.png)
+![important](/public/snapshots/snapshotImportant.PNG)
+![overdue](/public/snapshots/snapshotOverdue.PNG)
+
+##### Built with
+
+<div style="display: flex; flex-direction: row; gap: 10px">
+<img src="/public/logos/react.svg" width="50px" />
+<img src="/public/logos/firebase.svg" width="40px" />
+<img src="/public/logos/typescript-icon.svg" width="50px" />
+<img src="/public/logos/chakraui.jpg" width="50px" />
+<img src="/public/logos/html-5.svg" width="40px" />
+<img src="/public/logos/css-3.svg" width="40px" />
+</div>
