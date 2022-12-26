@@ -19,16 +19,27 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 - View important/completed/overdue tasks
 
 Some screenshots:
-![important](/public/snapshots/snapshotImportant.PNG)
-![settings](/public/snapshots/snapshotSettings.PNG)
+
+<div style="display: flex; flex-direction: column; gap: 10px; width: 100%">
+<div style="display: flex; flex-direction: row; gap: 10px; width: 100%">
+    <img src="/public/snapshots/snapshotImportant.PNG" />
+    <img src="/public/snapshots/snapshotOverdue.PNG" />
+</div>
+
+<div style="display: flex; flex-direction: row; gap: 10px; width: 100%">
+    <img src="/public/snapshots/snapshotLogin.PNG" />
+    <img src="/public/snapshots/snapshotSettings.PNG" />
+</div>
+</div>
+
 
 ##### Built with
 
 <div style="display: flex; flex-direction: row; gap: 10px">
-<img src="/public/logos/react.svg" width="50px" />
-<img src="/public/logos/firebase.svg" width="40px" />
-<img src="/public/logos/typescript-icon.svg" width="50px" />
-<img src="/public/logos/chakraui.jpg" width="50px" />
-<img src="/public/logos/html-5.svg" width="40px" />
-<img src="/public/logos/css-3.svg" width="40px" />
+  <img src="/public/logos/react.svg" width="50px" />
+  <img src="/public/logos/firebase.svg" width="40px" />
+  <img src="/public/logos/typescript-icon.svg" width="50px" />
+  <img src="/public/logos/chakraui.jpg" width="50px" />
+  <img src="/public/logos/html-5.svg" width="40px" />
+  <img src="/public/logos/css-3.svg" width="40px" />
 </div>
