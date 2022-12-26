@@ -20,7 +20,7 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 
 Some screenshots:
 
-<div style="display: flex; flex-direction: column; gap: 10px; width: 100%">
+<div style="display: flex; flex-direction: column; gap: 10px; width: 50%">
 <div style="display: flex; flex-direction: row; gap: 10px; width: 100%">
     <img src="/public/snapshots/snapshotImportant.PNG" />
     <img src="/public/snapshots/snapshotOverdue.PNG" />
