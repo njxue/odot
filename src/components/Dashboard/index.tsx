@@ -30,6 +30,7 @@ import { isAfter, isToday } from "../../helpers/date-time-calculations";
 import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { Settings } from "../Todo/Settings";
+import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -211,6 +212,7 @@ export const Dashboard: React.FC<{}> = () => {
             tasks={completedTasks}
             headerText="Completed"
             headerLeftElement={<Icon as={tabs.Completed} boxSize={5} />}
+            headerRightElement={<ClearAllTasks tasks={completedTasks}/>}
             altText="You have not completed any tasks!"
             altImg="shibaSad.png"
           />

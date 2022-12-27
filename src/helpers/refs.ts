@@ -2,6 +2,13 @@ import { ref } from "firebase/database";
 import { db } from "../config/firebase";
 import requireNonNull from "./requireNonNull";
 
+
+
+const getUserRef = (uid: string | undefined | null) => {
+  requireNonNull(uid);
+  return ref(db, `users/${uid}`);
+};
+
 const getTodosRef = (uid: string | undefined | null) => {
   requireNonNull(uid);
   return ref(db, `users/${uid}/todos`);
@@ -46,6 +53,7 @@ const getAutoRef = (
 };
 
 export {
+  getUserRef,
   getTodosRef,
   getTodoRef,
   getTasksRef,
