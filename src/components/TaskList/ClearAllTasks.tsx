@@ -1,10 +1,11 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Icon } from "@chakra-ui/react";
 import ITask from "../../interface/ITask";
 import useAuth from "../../contexts/AuthContext";
-import { getTaskRef, getUserRef } from "../../helpers/refs";
-import { DatabaseReference, update } from "firebase/database";
+import { getUserRef } from "../../helpers/refs";
+import { update } from "firebase/database";
+import { MdClearAll } from "react-icons/md";
 
-function getRoute(task: ITask, uid: string): string {
+function getRoute(task: ITask): string {
   return `todos/${task.todoId}/tasks/${task.id}`;
 }
 
@@ -13,12 +14,18 @@ export const ClearAllTasks: React.FC<{ tasks: ITask[] }> = (props) => {
   const batchUpdate: { [k: string]: null } = {};
   const userRef = getUserRef(uid);
   props.tasks.forEach((t) => {
-    batchUpdate[getRoute(t, uid)] = null;
+    batchUpdate[getRoute(t)] = null;
   });
 
   function clearAll() {
-    update(userRef, batchUpdate);
+    if (Object.keys(batchUpdate).length > 0) {
+      update(userRef, batchUpdate);
+    }
   }
 
-  return <Button onClick={clearAll}>Clear All</Button>;
+  return (
+    <Button onClick={clearAll} rightIcon={<Icon as={MdClearAll} />}>
+      Clear
+    </Button>
+  );
 };
