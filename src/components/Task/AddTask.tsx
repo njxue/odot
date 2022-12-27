@@ -15,6 +15,7 @@ interface AddTaskProps {
   todoName: string;
 }
 
+const maxTaskNameLength: number = 100;
 const AddTask: React.FC<AddTaskProps> = (props) => {
   const { todoId, todoName } = props;
   const taskRef = useRef<HTMLInputElement>(null);
@@ -47,12 +48,11 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     const currUser = user;
     const tasksRef = getTasksRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);
-
     const task: ITask = {
       id: taskId,
       todoId: todoId,
       todoName: todoName,
-      name: taskName,
+      name: taskName.substring(0, maxTaskNameLength),
       isCompleted: false,
       isImportant: false,
       dueDate: new Date(dueDate),

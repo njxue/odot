@@ -11,12 +11,14 @@ import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import getDatabaseKey from "../../helpers/getDatabaseKey";
 import SelectFreq from "./SelectFreq";
 import AddButton from "../layout/AddButton";
+import resetInputField from "../../helpers/resetInputField";
 
 interface AddAutoProps {
   todoId: string;
   todoName: string;
 }
 
+const maxTaskNameLength: number = 100;
 const AddAuto: React.FC<AddAutoProps> = (props) => {
   const { todoId, todoName } = props;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,7 +49,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       id: taskId,
       todoId: todoId,
       todoName: todoName,
-      name: taskName,
+      name: taskName.substring(0, maxTaskNameLength),
       nextUpdate: dueDate,
       dueDate: dueDate,
       freq: freq,
@@ -55,7 +57,9 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       isImportant: false,
     };
 
+    resetInputField(inputRef);
     update(autosRef, { [`${taskId}`]: auto });
+   
   }
 
   function handleChange(interval: TimeInterval) {

@@ -11,7 +11,7 @@ interface TaskProps {
   withLabel?: boolean;
 }
 
-const incompleteTaskClassName = `${styles.task} ${styles.incompleteTask}`;
+const incompleteTaskClassName = `${styles.task}`;
 const completedTaskClassName = `${styles.task} ${styles.completedTask}`;
 export const Task: React.FC<TaskProps> = (props) => {
   const { task, withLabel } = props;
@@ -22,14 +22,19 @@ export const Task: React.FC<TaskProps> = (props) => {
       }
     >
       <div className={styles.details}>
-        <ToggleCompletionStatusButton
-          task={task}
-          completed={task.isCompleted}
-        />
-        <p>{task.name}</p>
-        {withLabel == true && <Badge>{task.todoName}</Badge>}
+        <div className={styles.name}>
+          <ToggleCompletionStatusButton
+            task={task}
+            completed={task.isCompleted}
+          />
+          <p>{task.name}</p>
+        </div>
+        <div className={styles.labels}>
+          {task.dueDate && <DueDate dueDate={task.dueDate} />}
+          {withLabel == true && <Badge>{task.todoName}</Badge>}
+        </div>
       </div>
-      {task.dueDate && <DueDate dueDate={task.dueDate} />}
+
       <div className={styles.controls}>
         {!task.isCompleted && <ToggleImportance task={task} />}
         <RemoveTaskButton task={task} />

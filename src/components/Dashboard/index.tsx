@@ -128,7 +128,12 @@ export const Dashboard: React.FC<{}> = () => {
       flexDir={w < 500 ? "column" : "row"}
       h="100%"
     >
-      <TabList w="100%" paddingTop={3} flexBasis={0} minW="200px">
+      <TabList
+        w="100%"
+        paddingTop={3}
+        flexBasis={0}
+        minW="200px"
+      >
         <Flex
           w="100%"
           direction="column"

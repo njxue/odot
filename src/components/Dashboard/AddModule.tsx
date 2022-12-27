@@ -8,6 +8,7 @@ import { getTodoRef, getTodosRef } from "../../helpers/refs";
 import resetInputField from "../../helpers/resetInputField";
 import AddButton from "../layout/AddButton";
 
+const maxTodoNameLength: number = 20;
 export const AddModule: React.FC<{}> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
@@ -25,7 +26,7 @@ export const AddModule: React.FC<{}> = () => {
 
     const todoRef = getTodoRef(currUser.uid, todoId);
     resetInputField(inputRef);
-    update(todoRef, { name: todoName.trim() });
+    update(todoRef, { name: todoName.trim().substring(0, maxTodoNameLength) });
   }
   return (
     <form onSubmit={handleAdd} className={formStyles.form}>

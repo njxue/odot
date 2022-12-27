@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionPanel,
   HStack,
+  Text,
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -119,21 +120,20 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
                 justifyContent="space-between"
                 w="100%"
                 alignItems="center"
+                alignContent="start"
               >
-                <h1>
-                  <b>{todo.name}</b>
+                <Text fontWeight="bold" textAlign="start">{todo.name}</Text>
+                <HStack gap={3}>
                   <Progress value={percentComplete} />
-                </h1>
-                <AccordionIcon />
+                  <AccordionIcon />
+                </HStack>
               </HStack>
             </AccordionButton>
           </h2>
 
           <AccordionPanel bgColor="#E7E7E7">
             <div className={todoStyles.taskContainer}>
-              <div className={todoStyles.incompleteTasks}>
-                {todo.tasks && <TaskList tasks={tasks} />}
-              </div>
+              {todo.tasks && <TaskList tasks={tasks} />}
             </div>
             <HStack>
               <AddTask todoId={todo.id} todoName={todo.name} />
