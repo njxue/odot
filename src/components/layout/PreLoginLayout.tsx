@@ -1,7 +1,5 @@
 import React from "react";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
-import styles from "../../styles/PreLogin.module.css";
-import GreetingCard from "../Login/GreetingCard";
 import { Box, Flex } from "@chakra-ui/react";
 
 interface PreLoginLayoutProps {

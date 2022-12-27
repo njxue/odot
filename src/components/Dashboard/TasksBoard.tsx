@@ -6,11 +6,9 @@ import {
   Box,
   Flex,
   HStack,
-  Icon,
 } from "@chakra-ui/react";
 import TaskList from "../TaskList";
 import { NoTasks } from "./NoTasks";
-import { Settings } from "../Todo/Settings";
 
 export const TasksBoard: React.FC<{
   tasks: ITask[];

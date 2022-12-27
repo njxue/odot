@@ -12,17 +12,18 @@ import PreLoginForm from "../layout/PreLoginForm";
 import {
   emailErrorCodes,
   passwordErrorCodes,
-} from "../../helpers/authErrorCodes";
+} from "../../helpers/auth-error-codes";
 import formStyles from "../../styles/Form.module.css";
-import { sendEmailVerification } from "firebase/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+//======================================== Error messages ========================================
 const MESSAGE_PASSWORD_MISSING = "Password is required";
 const MESSAGE_PASSWORD_CF_MISSING = "Confirm your password";
 const MESSAGE_PASSWORD_TOO_SHORT =
   "Password needs to be at least 6 characters long";
 const MESSAGE_PASSWORD_MISMATCH = "Passwords do not match";
 const MESSAGE_EMAIL_MISSING = "Email is required";
+//================================================================================================
 
 const RegisterForm: React.FC<{}> = () => {
   let auth = useAuth();

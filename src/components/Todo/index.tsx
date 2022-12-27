@@ -5,8 +5,6 @@ import {
   AccordionPanel,
   HStack,
   Text,
-  Tooltip,
-  useDisclosure,
 } from "@chakra-ui/react";
 import Todo from "../../interface/Todo";
 import ITask from "../../interface/ITask";
@@ -16,15 +14,13 @@ import { useEffect, useState } from "react";
 import TaskList from "../TaskList";
 import AddTask from "../Task/AddTask";
 import todoStyles from "../../styles/Todo.module.css";
-import SettingsModal from "./SettingsModal";
 import {
   calculateNextUpdateTime,
   isAfter,
-} from "../../helpers/DateTimeCalculations";
+} from "../../helpers/date-time-calculations";
 import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import Progress from "./Progress";
-import { SettingsIcon } from "@chakra-ui/icons";
 import { Settings } from "./Settings";
 
 interface TodoProps {
@@ -56,7 +52,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     });
   }
 
-  // Push (copy) autos into the list of incomplete tasks
+  // Push (a copy of each) autos into the list of incomplete tasks
   function pushAutoTasks(tasks: IAuto[]): void {
     const batchUpdate: { [key: string]: ITask } = {}; // tasks to be pushed to the main list
     const batchUpdateTime: { [key: string]: Date } = {};
@@ -122,7 +118,9 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
                 alignItems="center"
                 alignContent="start"
               >
-                <Text fontWeight="bold" textAlign="start">{todo.name}</Text>
+                <Text fontWeight="bold" textAlign="start">
+                  {todo.name}
+                </Text>
                 <HStack gap={3}>
                   <Progress value={percentComplete} />
                   <AccordionIcon />

@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import PreLoginLayout from "../layout/PreLoginLayout";
 import GreetingCard from "./GreetingCard";

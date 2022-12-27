@@ -4,7 +4,7 @@ import {
   getDateString,
   isAfter,
   isToday,
-} from "../../helpers/DateTimeCalculations";
+} from "../../helpers/date-time-calculations";
 import styles from "../../styles/Task.module.css";
 
 export const DueDate: React.FC<{ dueDate: Date }> = (props) => {

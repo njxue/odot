@@ -25,8 +25,8 @@ import { AiOutlineUnorderedList, AiOutlineFieldTime } from "react-icons/ai";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { TasksBoard } from "./TasksBoard";
-import { useWindowDimensions } from "../../helpers/windowDimensions";
-import { isAfter, isToday } from "../../helpers/DateTimeCalculations";
+import { useWindowDimensions } from "../../helpers/useWindowDimensions";
+import { isAfter, isToday } from "../../helpers/date-time-calculations";
 import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { Settings } from "../Todo/Settings";
@@ -34,7 +34,6 @@ import { Settings } from "../Todo/Settings";
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
   const todosRef = ref(db, `users/${currUser.uid}/todos`);
-
   const [todos, setTodos] = useState<Todo[]>([]);
 
   // ================================ Filtered list of tasks ==============================================
@@ -103,6 +102,7 @@ export const Dashboard: React.FC<{}> = () => {
     });
   }, []);
 
+  // ===============================================================
   const selectedStyles = {
     borderLeft: "solid 10px #05002A",
     fontWeight: "bold",
@@ -117,23 +117,13 @@ export const Dashboard: React.FC<{}> = () => {
     Completed: CheckIcon,
     Overdue: AiOutlineFieldTime,
   };
+  // ===============================================================
 
   return isLoading ? (
     <Loader />
   ) : (
-    <Tabs
-      orientation={w < 500 ? "horizontal" : "vertical"}
-      w="100%"
-      display="flex"
-      flexDir={w < 500 ? "column" : "row"}
-      h="100%"
-    >
-      <TabList
-        w="100%"
-        paddingTop={3}
-        flexBasis={0}
-        minW="200px"
-      >
+    <Tabs w="100%" display="flex" flexDir={w < 500 ? "column" : "row"} h="100%">
+      <TabList w="100%" paddingTop={3} flexBasis={0} minW="200px">
         <Flex
           w="100%"
           direction="column"
@@ -147,7 +137,7 @@ export const Dashboard: React.FC<{}> = () => {
             overflow="scroll"
           >
             {Object.entries(tabs).map((e) => (
-              <Tab w="100%" _selected={selectedStyles}>
+              <Tab w="100%" _selected={selectedStyles} key={e[0]}>
                 <TabContent icon={e[1]} text={e[0]} />
               </Tab>
             ))}
@@ -162,7 +152,7 @@ export const Dashboard: React.FC<{}> = () => {
             padding={0}
           >
             {todos.map((t) => (
-              <Tab w="100%" _selected={selectedStyles}>
+              <Tab w="100%" _selected={selectedStyles} key={t.id}>
                 <TabContent icon={AiOutlineUnorderedList} text={t.name} />
               </Tab>
             ))}
@@ -238,7 +228,7 @@ export const Dashboard: React.FC<{}> = () => {
         </TabPanel>
         {/* ============================ Created lists ============================ */}
         {todos.map((t) => (
-          <TabPanel h="100%" bgColor="#D2EFED">
+          <TabPanel h="100%" bgColor="#D2EFED" key={t.id}>
             <TasksBoard
               tasks={
                 t.tasks == undefined

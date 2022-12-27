@@ -5,7 +5,7 @@ import useAuth from "../../contexts/AuthContext";
 import { remove, update } from "firebase/database";
 import SelectFreq from "./SelectFreq";
 import TimeInterval, { intervalToFreq } from "../../helpers/TimeInterval";
-import { calculateNextUpdateTime } from "../../helpers/DateTimeCalculations";
+import { calculateNextUpdateTime } from "../../helpers/date-time-calculations";
 import { IoPush } from "react-icons/io5";
 import { DeleteIcon, Icon } from "@chakra-ui/icons";
 import { Tooltip } from "@chakra-ui/react";
@@ -48,7 +48,7 @@ const Auto: React.FC<AutoProps> = (props) => {
           defaultValue={task.freq.toString()}
         />
         <div className={autoStyles.optionButtonGroup}>
-          <DeleteIcon onClick={handleDelete} cursor="pointer" color="gray"  />
+          <DeleteIcon onClick={handleDelete} cursor="pointer" color="gray" />
           <Tooltip label="Push to list">
             <span>
               <Icon

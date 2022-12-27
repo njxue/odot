@@ -1,11 +1,6 @@
-import { NodeWithTypeArguments } from "typescript";
 import TimeInterval from "./TimeInterval";
 
-function calculateNextUpdateTime(time: TimeInterval | undefined) {
-  if (time == undefined) {
-    // TODO
-    throw Error;
-  }
+function calculateNextUpdateTime(time: TimeInterval) {
   if (time == TimeInterval.WEEK) {
     return getThisSunday();
   } else if (time == TimeInterval.DAY) {
@@ -25,8 +20,10 @@ function calculateNextUpdateTime(time: TimeInterval | undefined) {
   }
 }
 
-function isAfter(d1: Date | undefined, d2: Date): boolean {
-  return d1 == undefined || new Date(d1) > d2;
+
+// Checks if d2 is after d1
+function isAfter(d1: Date, d2: Date): boolean {
+  return new Date(d1) > new Date(d2);
 }
 
 function getThisSunday(): Date {
@@ -42,6 +39,7 @@ function getEndOfToday(): Date {
   return new Date(today.setHours(23, 59, 59));
 }
 
+
 function getEndOfMonth(): Date {
   const today = new Date();
   const mth = today.getMonth();
@@ -53,6 +51,7 @@ function getTimeNow(): Date {
   return new Date();
 }
 
+// Returns string representation of the date in the following format: YYYY-MM-DD
 function getDateString(d: Date): string {
   const date: number = d.getDate();
   const mth: number = d.getMonth() + 1;

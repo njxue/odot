@@ -3,11 +3,8 @@ import bannerStyles from "../../styles/Banner.module.css";
 import { Icon, Image, Tooltip } from "@chakra-ui/react";
 import { AiOutlineLogout } from "react-icons/ai";
 
-interface BannerProps {
-  children?: React.ReactNode;
-}
 
-export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
+export const Banner: React.FC<{}> = () => {
   const logout = useAuth().logout;
 
   function handleClick(): void {

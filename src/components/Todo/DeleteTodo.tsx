@@ -2,7 +2,6 @@ import { Button, useDisclosure } from "@chakra-ui/react";
 import { remove } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import { getTodoRef } from "../../helpers/refs";
-import styles from "../../styles/Button.module.css";
 import ConfirmationModal from "../layout/ConfirmationModal";
 
 const DeleteTodo: React.FC<{ todoId: string }> = (props) => {

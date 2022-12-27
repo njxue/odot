@@ -2,7 +2,7 @@ import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { Tooltip } from "@chakra-ui/react";
 import { DatabaseReference, update } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
-import { getAutoRef, getTaskRef } from "../../helpers/refs";
+import { getTaskRef } from "../../helpers/refs";
 import ITask from "../../interface/ITask";
 
 interface ToggleCompletionStatusButtonProps {

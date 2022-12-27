@@ -3,21 +3,17 @@ import {
   useContext,
   useState,
   useEffect,
-  ContextType,
 } from "react";
 import {
   sendEmailVerification,
-  updateProfile,
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   User,
   Unsubscribe,
 } from "firebase/auth";
-import { auth, db } from "../config/firebase";
-import { ref } from "firebase/database";
+import { auth } from "../config/firebase";
 
 interface AuthContextType {
   getCurrUser: () => User;

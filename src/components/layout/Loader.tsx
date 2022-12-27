@@ -29,11 +29,11 @@ const Loader: React.FC<{}> = () => {
               cx="50"
               cy="50"
               r="20"
-              stroke-width="6"
+              strokeWidth={6}
               stroke="#ffffff"
-              stroke-dasharray="54.97787143782138 54.97787143782138"
+              strokeDasharray="54.97787143782138 54.97787143782138"
               fill="none"
-              stroke-linecap="round"
+              strokeLinecap="round"
             >
               <animateTransform
                 attributeName="transform"

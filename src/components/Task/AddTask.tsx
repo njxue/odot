@@ -3,19 +3,23 @@ import { update } from "firebase/database";
 import ITask from "../../interface/ITask";
 import { User } from "firebase/auth";
 import { getTasksRef } from "../../helpers/refs";
-import getDatabaseKey from "../../helpers/getDatabaseKey";
+import getDatabaseKey from "../../helpers/get-db-key";
 import resetInputField from "../../helpers/resetInputField";
 import useAuth from "../../contexts/AuthContext";
 import formStyles from "../../styles/Form.module.css";
 import AddButton from "../layout/AddButton";
-import { getTimeNow, getDateString } from "../../helpers/DateTimeCalculations";
+import {
+  getTimeNow,
+  getDateString,
+} from "../../helpers/date-time-calculations";
+import { maxTaskNameLength } from "../../helpers/global-constants";
+import requireNonNull from "../../helpers/requireNonNull";
 
 interface AddTaskProps {
   todoId: string;
   todoName: string;
 }
 
-const maxTaskNameLength: number = 100;
 const AddTask: React.FC<AddTaskProps> = (props) => {
   const { todoId, todoName } = props;
   const taskRef = useRef<HTMLInputElement>(null);
@@ -25,18 +29,15 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
 
-    const taskName = taskRef.current?.value;
+    let taskName = taskRef.current?.value;
     const dueDate = dateRef.current?.value;
 
-    if (
-      taskName == undefined ||
-      taskName.trim().length == 0 ||
-      dueDate == undefined
-    ) {
-      console.log("ERRORRRR");
-    } else {
-      addManualTask(currUser, todoId, taskName, dueDate);
+    requireNonNull(taskName, dueDate);
+    taskName = taskName!.trim();
+    if (taskName.length == 0) {
+      return;
     }
+    addManualTask(currUser, todoId, taskName, dueDate!);
   }
 
   function addManualTask(
@@ -66,7 +67,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
 
   return (
     <form onSubmit={handleAdd} className={formStyles.form}>
-      <input ref={taskRef} type="text" placeholder="Task" />
+      <input ref={taskRef} type="text" placeholder="Task" required />
       <input ref={dateRef} type="date" min={getDateString(getTimeNow())} />
       <AddButton />
     </form>

@@ -12,14 +12,15 @@ import useAuth from "../../contexts/AuthContext";
 import {
   emailErrorCodes,
   passwordErrorCodes,
-} from "../../helpers/authErrorCodes";
+} from "../../helpers/auth-error-codes";
 import PreLoginForm from "../layout/PreLoginForm";
 import formStyles from "../../styles/Form.module.css";
-import { signOut } from "firebase/auth";
 
+//======================================== Error messages ========================================
 const MESSAGE_PASSWORD_MISSING = "Password is required";
 const MESSAGE_EMAIL_MISSING = "Email is required";
 const MESSAGE_EMAIL_UNVERIFIED = "Please verify your email before logging in";
+//================================================================================================
 
 const LoginForm: React.FC<{}> = () => {
   const emailRef = useRef<HTMLInputElement>(null);

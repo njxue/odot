@@ -7,20 +7,21 @@ import { Box, Flex, VStack } from "@chakra-ui/react";
 
 export const ProtectedRoute: React.FC<{}> = () => {
   let isLoggedIn: boolean | undefined = useAuth().isLoggedIn;
-
+  const navigate = useNavigate();
+  // checking login status
   if (isLoggedIn == undefined) {
     return <Loader />;
   }
 
+  // login status checked. Check if logged in
+
   if (!isLoggedIn) {
-    return <Login />; // why navigate("/login") does not work?
+    return <Login />;
   }
 
   return (
     <Flex direction="column" w="100vw" h="100vh">
-      <Box>
-        <Banner />
-      </Box>
+      <Banner />
       <Box flexGrow={1} overflow="hidden">
         <Outlet />
       </Box>

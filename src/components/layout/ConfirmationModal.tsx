@@ -9,7 +9,6 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
 
 interface ModalProps {
   actionToConfirm: string;

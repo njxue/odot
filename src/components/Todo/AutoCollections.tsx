@@ -12,7 +12,7 @@ const AutoCollections: React.FC<AutomatedTasksProps> = (props) => {
   return (
     <div className={autoStyles.container}>
       {tasks.map((task) => (
-        <Auto task={task} />
+        <Auto task={task} key={task.id} />
       ))}
     </div>
   );
