@@ -1,8 +1,8 @@
-import Todo from "../../interface/Todo";
+import ITodo from "../../interface/ITodo";
 import { TodoMenu } from "../Todo";
 import { Accordion } from "@chakra-ui/react";
 
-export const Organised: React.FC<{ todos: Todo[] }> = (props) => {
+export const Organised: React.FC<{ todos: ITodo[] }> = (props) => {
   return (
     <Accordion allowMultiple allowToggle overflow="scroll">
       {props.todos.map((todo) => (

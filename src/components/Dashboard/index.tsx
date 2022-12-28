@@ -4,7 +4,7 @@ import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import Todo from "../../interface/Todo";
+import Todo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
 import Loader from "../layout/Loader";
 import { Organised } from "./Organised";

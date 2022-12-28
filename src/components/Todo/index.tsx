@@ -6,7 +6,7 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
-import Todo from "../../interface/Todo";
+import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
 import { get, update, push } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
@@ -24,11 +24,11 @@ import Progress from "./Progress";
 import { Settings } from "./Settings";
 
 interface TodoProps {
-  todo: Todo;
+  todo: ITodo;
 }
 
 export const TodoMenu: React.FC<TodoProps> = (props) => {
-  const todo: Todo = props.todo;
+  const todo: ITodo = props.todo;
   const currUser = useAuth().getCurrUser();
 
   const tasksRef = getTasksRef(currUser.uid, todo.id);
@@ -77,7 +77,6 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     // Update next update time
     update(autosRef, batchUpdateTime);
   }
-  
 
   useEffect(() => {
     const tmpTasks: ITask[] = [];
