@@ -1,5 +1,5 @@
 import { AddModule } from "./AddModule";
-import { ref, onValue, off, Unsubscribe } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
@@ -39,14 +39,21 @@ export const Dashboard: React.FC<{}> = () => {
 
   // ================================ Filtered list of tasks ==============================================
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [importantTasks, setImportantTasks] = useState<ITask[]>([]);
-  const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
-  const [todayTasks, setTodayTasks] = useState<ITask[]>([]);
-  const [overdueTasks, setOverdueTasks] = useState<ITask[]>([]);
 
   const predicateImportant: (task: ITask) => boolean = (task: ITask) =>
-    task.isImportant && !task.isCompleted;
-
+    !task.isCompleted && task.isImportant;
+  const predicateCompleted: (task: ITask) => boolean = (task: ITask) =>
+    task.isCompleted;
+  const predicateIncomplete: (task: ITask) => boolean = (task: ITask) =>
+    !task.isCompleted;
+  const predicateToday: (task: ITask) => boolean = (task: ITask) =>
+    !task.isCompleted &&
+    task.dueDate != null &&
+    isToday(new Date(task.dueDate));
+  const predicateOverdue: (task: ITask) => boolean = (task: ITask) =>
+    !task.isCompleted &&
+    task.dueDate != null &&
+    isAfter(new Date(), new Date(task.dueDate));
   // =======================================================================================================
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -54,13 +61,10 @@ export const Dashboard: React.FC<{}> = () => {
   const w = useWindowDimensions().width;
 
   useEffect(() => {
-    const unsubscribe: Unsubscribe = onValue(todosRef, (snapshot) => {
+    onValue(todosRef, (snapshot) => {
       const tmpTodos: Todo[] = [];
       const tmpTasks: ITask[] = [];
-      const tmpImpt: ITask[] = [];
-      const tmpCompleted: ITask[] = [];
-      const tmpToday: ITask[] = [];
-      const tmpOverdue: ITask[] = [];
+
       const data = snapshot.val();
       for (const todoId in data) {
         const name: string = data[todoId].name;
@@ -76,35 +80,13 @@ export const Dashboard: React.FC<{}> = () => {
         if (tasks != undefined) {
           for (const taskId in tasks) {
             const task: ITask = tasks[taskId];
-
-            if (task.isImportant && !task.isCompleted) {
-              tmpImpt.push(task);
-            }
-
-            if (task.isCompleted) {
-              tmpCompleted.push(task);
-            } else {
-              tmpTasks.push(task);
-            }
-
-            if (task.dueDate != undefined && !task.isCompleted) {
-              if (isToday(new Date(task.dueDate))) {
-                tmpToday.push(task);
-              } else if (isAfter(new Date(), new Date(task.dueDate))) {
-                tmpOverdue.push(task);
-              }
-            }
+            tmpTasks.push(task);
           }
         }
       }
       setTodos(tmpTodos);
       setTasks(tmpTasks);
-      setImportantTasks(tmpImpt);
-      setCompletedTasks(tmpCompleted);
-      setTodayTasks(tmpToday);
-      setOverdueTasks(tmpOverdue);
       setIsLoading(false);
-      return unsubscribe;
     });
   }, []);
 
@@ -181,7 +163,7 @@ export const Dashboard: React.FC<{}> = () => {
         <TabPanel h="100%" bgColor="#D2EFED">
           <TasksBoard
             withLabel
-            tasks={tasks}
+            tasks={tasks.filter(predicateIncomplete)}
             headerText="All"
             headerLeftElement={<Icon as={tabs.All} boxSize={5} />}
             altText="Wauw you have no tasks! Try adding some from the 'Organised' tab to see them here!"
@@ -192,7 +174,7 @@ export const Dashboard: React.FC<{}> = () => {
         <TabPanel h="100%" bgColor="#F3DDBF">
           <TasksBoard
             withLabel
-            tasks={importantTasks}
+            tasks={tasks.filter(predicateImportant)}
             headerText="Important"
             headerLeftElement={<Icon as={tabs.Important} boxSize={5} />}
             altText="You have no important tasks. Try starring some tasks to see them here!"
@@ -203,7 +185,7 @@ export const Dashboard: React.FC<{}> = () => {
         <TabPanel h="100%" bgColor="#F4DFD1">
           <TasksBoard
             withLabel
-            tasks={todayTasks}
+            tasks={tasks.filter(predicateToday)}
             headerText="Today"
             headerLeftElement={<Icon as={tabs.Today} boxSize={5} />}
             altText="You have no tasks due today. Go have fun!"
@@ -214,10 +196,12 @@ export const Dashboard: React.FC<{}> = () => {
         <TabPanel h="100%" bgColor="#BFF3C3">
           <TasksBoard
             withLabel
-            tasks={completedTasks}
+            tasks={tasks.filter(predicateCompleted)}
             headerText="Completed"
             headerLeftElement={<Icon as={tabs.Completed} boxSize={5} />}
-            headerRightElement={<ClearAllTasks tasks={completedTasks} />}
+            headerRightElement={
+              <ClearAllTasks tasks={tasks.filter(predicateCompleted)} />
+            }
             altText="You have not completed any tasks!"
             altImg="shibaSad.png"
           />
@@ -226,7 +210,7 @@ export const Dashboard: React.FC<{}> = () => {
         <TabPanel h="100%" bgColor="#F9C0C0">
           <TasksBoard
             withLabel
-            tasks={overdueTasks}
+            tasks={tasks.filter(predicateOverdue)}
             headerText="Overdue"
             headerLeftElement={<Icon as={tabs.Overdue} boxSize={5} />}
             altText="Yay! You have no overdue-d tasks!"
