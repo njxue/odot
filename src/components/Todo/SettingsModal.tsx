@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import { onValue } from "firebase/database";
+import { Unsubscribe, onValue } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import React, { useEffect, useState } from "react";
 import IAuto from "../../interface/IAuto";
@@ -37,7 +37,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   const [autos, setAutos] = useState<IAuto[] | undefined>();
 
   useEffect(() => {
-    onValue(autosRef, (snapshot) => {
+    const unsubscribe: Unsubscribe = onValue(autosRef, (snapshot) => {
       const value = snapshot.val();
       const tmp: IAuto[] = [];
       for (const key in value) {
@@ -46,6 +46,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
       }
       setAutos(tmp);
     });
+    return unsubscribe;
   }, []);
 
   return autos == undefined ? (
@@ -70,7 +71,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
           </Heading>
           <Divider />
           <AutoCollections tasks={autos} />
-          <AddAuto todoId={todoId} todoName={todoName}/>
+          <AddAuto todoId={todoId} todoName={todoName} />
           <Divider h="10px" />
           <DeleteTodo todoId={todoId} />
         </ModalBody>

@@ -1,5 +1,5 @@
 import { AddModule } from "./AddModule";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, off, Unsubscribe } from "firebase/database";
 import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
@@ -43,6 +43,10 @@ export const Dashboard: React.FC<{}> = () => {
   const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
   const [todayTasks, setTodayTasks] = useState<ITask[]>([]);
   const [overdueTasks, setOverdueTasks] = useState<ITask[]>([]);
+
+  const predicateImportant: (task: ITask) => boolean = (task: ITask) =>
+    task.isImportant && !task.isCompleted;
+
   // =======================================================================================================
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -50,7 +54,7 @@ export const Dashboard: React.FC<{}> = () => {
   const w = useWindowDimensions().width;
 
   useEffect(() => {
-    onValue(todosRef, (snapshot) => {
+    const unsubscribe: Unsubscribe = onValue(todosRef, (snapshot) => {
       const tmpTodos: Todo[] = [];
       const tmpTasks: ITask[] = [];
       const tmpImpt: ITask[] = [];
@@ -100,6 +104,7 @@ export const Dashboard: React.FC<{}> = () => {
       setTodayTasks(tmpToday);
       setOverdueTasks(tmpOverdue);
       setIsLoading(false);
+      return unsubscribe;
     });
   }, []);
 
@@ -212,7 +217,7 @@ export const Dashboard: React.FC<{}> = () => {
             tasks={completedTasks}
             headerText="Completed"
             headerLeftElement={<Icon as={tabs.Completed} boxSize={5} />}
-            headerRightElement={<ClearAllTasks tasks={completedTasks}/>}
+            headerRightElement={<ClearAllTasks tasks={completedTasks} />}
             altText="You have not completed any tasks!"
             altImg="shibaSad.png"
           />
