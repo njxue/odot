@@ -118,7 +118,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
                   {todo.name}
                 </Text>
                 <HStack gap={3}>
-                  <Progress value={percentComplete} />
+                  {tasks.length > 0 && <Progress value={percentComplete} />}
                   <AccordionIcon />
                 </HStack>
               </HStack>
