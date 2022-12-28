@@ -54,7 +54,7 @@ const LoginForm: React.FC<{}> = () => {
       return;
     }
 
-    if (passwordRef.current == null) {
+    if (passwordRef.current === null) {
       setPasswordIsInvalid(true);
       setIsLoading(false);
       return;
@@ -64,17 +64,17 @@ const LoginForm: React.FC<{}> = () => {
     let password = passwordRef.current!.value;
 
     // Empty inputs
-    if (email.length == 0) {
+    if (email.length === 0) {
       setEmailIsInvalid(true);
       setEmailErrorMessage(MESSAGE_EMAIL_MISSING);
     }
 
-    if (password.length == 0) {
+    if (password.length === 0) {
       setPasswordIsInvalid(true);
       setPasswordErrorMessage(MESSAGE_PASSWORD_MISSING);
     }
 
-    if (email.length == 0 || password.length == 0) {
+    if (email.length === 0 || password.length === 0) {
       setIsLoading(false);
       return;
     }

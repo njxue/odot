@@ -61,19 +61,19 @@ const RegisterForm: React.FC<{}> = () => {
     setIsLoading(true);
 
     // Input elements do not exist
-    if (emailRef.current == null) {
+    if (emailRef.current === null) {
       setEmailIsInvalid(true);
       setIsLoading(false);
       return;
     }
 
-    if (passwordRef.current == null) {
+    if (passwordRef.current === null) {
       setPasswordIsInvalid(true);
       setIsLoading(false);
       return;
     }
 
-    if (passwordCfRef.current == null) {
+    if (passwordCfRef.current === null) {
       setPasswordCfIsInvalid(true);
       setIsLoading(false);
       return;
@@ -84,25 +84,25 @@ const RegisterForm: React.FC<{}> = () => {
     const passwordcf: string = passwordCfRef.current.value;
 
     // Empty inputs
-    if (email.length == 0) {
+    if (email.length === 0) {
       setEmailIsInvalid(true);
       setEmailErrorMessage(MESSAGE_EMAIL_MISSING);
       setIsLoading(false);
     }
 
-    if (password.length == 0) {
+    if (password.length === 0) {
       setPasswordIsInvalid(true);
       setPasswordErrorMessage(MESSAGE_PASSWORD_MISSING);
       setIsLoading(false);
     }
 
-    if (passwordcf.length == 0) {
+    if (passwordcf.length === 0) {
       setPasswordCfIsInvalid(true);
       setPasswordCfErrorMessage(MESSAGE_PASSWORD_CF_MISSING);
       setIsLoading(false);
     }
 
-    if (email.length == 0 || password.length == 0 || passwordcf.length == 0) {
+    if (email.length === 0 || password.length === 0 || passwordcf.length === 0) {
       setIsLoading(false);
       return;
     }
@@ -114,7 +114,7 @@ const RegisterForm: React.FC<{}> = () => {
       return;
     }
 
-    if (passwordcf != password) {
+    if (passwordcf !== password) {
       setPasswordCfIsInvalid(true);
       setPasswordCfErrorMessage(MESSAGE_PASSWORD_MISMATCH);
       setIsLoading(false);

@@ -1,4 +1,3 @@
-import { Divider } from "@chakra-ui/react";
 import IAuto from "../../interface/IAuto";
 import autoStyles from "../../styles/Auto.module.css";
 import Auto from "./Auto";

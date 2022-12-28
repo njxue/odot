@@ -1,7 +1,5 @@
 import useAuth from "../../contexts/AuthContext";
 import formStyles from "../../styles/Form.module.css";
-import buttonStyles from "../../styles/Button.module.css";
-import autoStyles from "../../styles/Auto.module.css";
 import React, { useRef, useState } from "react";
 import TimeInterval from "../../helpers/TimeInterval";
 import { update } from "firebase/database";
@@ -31,7 +29,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     requireNonNull(inputRef.current);
     const taskName = inputRef.current!.value.trim();
 
-    if (taskName.length == 0) {
+    if (taskName.length === 0) {
       return;
     }
 

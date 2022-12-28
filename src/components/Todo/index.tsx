@@ -38,7 +38,11 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   const [autoTasksToPush, setAutoTasksToPush] = useState<IAuto[]>([]);
   const [percentComplete, setPercentComplete] = useState<number>(0);
 
-  function loadAutos() {
+  // autos should only load once per page load because if a PUSHED auto has past its nextUpdateTime, deleting it/marking it as
+  // important will trigger another push. i.e. deleting/marking the auto should not trigger a push.
+  // Therefore, this should run once when the page is mounted and should not be placed inside the useEffect with [todo],
+  // because the useEffect with [todo] runs everytime a task is updated/deleted, triggeriing a page re-render.
+  useEffect(() => {
     get(autosRef).then((snapshot) => {
       const data = snapshot.val();
       const tmp: IAuto[] = [];
@@ -50,7 +54,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
       }
       setAutoTasksToPush(tmp);
     });
-  }
+  }, []);
 
   // Push (a copy of each) autos into the list of incomplete tasks
   function pushAutoTasks(tasks: IAuto[]): void {
@@ -73,12 +77,13 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     // Update next update time
     update(autosRef, batchUpdateTime);
   }
+  
 
   useEffect(() => {
     const tmpTasks: ITask[] = [];
     let numIncomplete = 0;
     let total = 0;
-    if (todo.tasks != undefined) {
+    if (todo.tasks != null) {
       for (const taskId in todo.tasks) {
         const task: ITask = todo.tasks[taskId];
         if (!task.isCompleted) {
@@ -89,7 +94,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
       }
     }
     setPercentComplete(
-      total == 0 ? 0 : Math.round(((total - numIncomplete) * 100) / total)
+      total === 0 ? 0 : Math.round(((total - numIncomplete) * 100) / total)
     );
     setTasks(tmpTasks);
   }, [todo]);
@@ -97,14 +102,6 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   useEffect(() => {
     pushAutoTasks(autoTasksToPush);
   }, [autoTasksToPush]);
-
-  // autos should only load once per page load because if a PUSHED auto has past its nextUpdateTime, deleting it/marking it as
-  // important will trigger another push. i.e. deleting/marking the auto should not trigger a push.
-  // Therefore, loadAutos() should run once when the page is mounted and should not be placed inside the useEffect with [todo],
-  // because the useEffect with [todo] runs everytime a task is updated/deleted, triggeriing a page re-render.
-  useEffect(() => {
-    loadAutos();
-  }, []);
 
   return (
     <AccordionItem bg="white">

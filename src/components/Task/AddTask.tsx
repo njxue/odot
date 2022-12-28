@@ -34,7 +34,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
 
     requireNonNull(taskName, dueDate);
     taskName = taskName!.trim();
-    if (taskName.length == 0) {
+    if (taskName.length === 0) {
       return;
     }
     addManualTask(currUser, todoId, taskName, dueDate!);

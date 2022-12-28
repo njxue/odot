@@ -1,4 +1,4 @@
-import { HStack, Center, Image, Box } from "@chakra-ui/react";
+import { HStack, Center, Image } from "@chakra-ui/react";
 
 const Loader: React.FC<{}> = () => {
   return (
