@@ -19,7 +19,13 @@ import {
   Icon,
   Flex,
   VStack,
+  Input,
+  Box,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
 } from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { AiOutlineUnorderedList, AiOutlineFieldTime } from "react-icons/ai";
 import { MdOutlineCalendarToday } from "react-icons/md";
@@ -31,11 +37,14 @@ import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { Settings } from "../Todo/Settings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
+import { Search } from "./Search";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
   const todosRef = ref(db, `users/${currUser.uid}/todos`);
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [index, setIndex] = useState<number>(0);
+  const [keywords, setKeywords] = useState<string>("");
 
   // ================================ Filtered list of tasks ==============================================
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -54,6 +63,8 @@ export const Dashboard: React.FC<{}> = () => {
     !task.isCompleted &&
     task.dueDate != null &&
     isAfter(new Date(), new Date(task.dueDate));
+  const predicateSubstring: (task: ITask) => boolean = (task: ITask) =>
+    task.name.toLowerCase().includes(keywords.toLowerCase());
   // =======================================================================================================
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -110,22 +121,47 @@ export const Dashboard: React.FC<{}> = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Tabs w="100%" display="flex" flexDir={w < 500 ? "column" : "row"} h="100%">
-      <TabList w="100%" paddingTop={3} flexBasis={0} minW="200px">
+    <Tabs
+      index={index}
+      onChange={(i) => setIndex(i)}
+      w="100%"
+      display="flex"
+      flexDir={w < 500 ? "column" : "row"}
+      h="100%"
+    >
+      <TabList w="100%" paddingTop={2} flexBasis={0} minW="200px">
+        <Tab display="none"></Tab>
         <Flex
           w="100%"
           direction="column"
           justifyContent="space-between"
           padding="2px"
           h="100%"
+          gap={2}
         >
+          <InputGroup>
+            <Input
+              padding={2}
+              type="text"
+              size="sm"
+              onChange={(e) => {
+                setIndex(0);
+                setKeywords(e.target.value);
+              }}
+              placeholder="Find task"
+            />
+            <InputRightElement h="100%" pointerEvents="none" children={<SearchIcon color="gray.300" />} />
+          </InputGroup>
+          <Divider borderColor="gray.400" />
           <Flex
             direction={w < 500 ? "row" : "column"}
             flexGrow={1}
             overflow="scroll"
+            minH="40px"
+            alignItems="center"
           >
             {Object.entries(tabs).map((e) => (
-              <Tab w="100%" _selected={selectedStyles} key={e[0]}>
+              <Tab w="100%" _selected={selectedStyles} key={e[0]} maxH="17%">
                 <TabContent icon={e[1]} text={e[0]} />
               </Tab>
             ))}
@@ -133,14 +169,14 @@ export const Dashboard: React.FC<{}> = () => {
           {todos.length > 0 && <Divider borderColor="gray.400" />}
           <Flex
             direction={w < 500 ? "row" : "column"}
-            marginTop="20px"
             overflow="scroll"
-            flexGrow={3}
+            flexGrow={1}
             flexBasis="50%"
             padding={0}
+            alignItems="center"
           >
             {todos.map((t) => (
-              <Tab w="100%" _selected={selectedStyles} key={t.id}>
+              <Tab w="100%" _selected={selectedStyles} key={t.id} maxH="17%">
                 <TabContent icon={AiOutlineUnorderedList} text={t.name} />
               </Tab>
             ))}
@@ -148,6 +184,17 @@ export const Dashboard: React.FC<{}> = () => {
         </Flex>
       </TabList>
       <TabPanels flexGrow={1} h="100%" overflow="hidden">
+        {/* ============================ Searched lists ============================ */}
+        <TabPanel h="100%" bgColor="#E3E9FB">
+          <TasksBoard
+            withLabel
+            tasks={tasks.filter(predicateSubstring)}
+            headerText="Search"
+            headerLeftElement={<Icon as={SearchIcon} boxSize={5} />}
+            altText="No tasks found"
+            altImg="shibaCry.png"
+          />
+        </TabPanel>
         {/* ============================ Tasks organised by list ============================ */}
         <TabPanel h="100%" bg="#F2F2F2">
           <Flex direction="column" h="100%" justifyContent="space-between">
