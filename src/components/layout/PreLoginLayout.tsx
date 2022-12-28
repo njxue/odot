@@ -11,7 +11,11 @@ const PreLoginLayout: React.FC<PreLoginLayoutProps> = (props) => {
   const { width } = useWindowDimensions();
   const { greetingComponent, formComponent } = props;
   return (
-    <Flex direction={width > 500 ? "row" : "column"} w="100vw" h="100vh">
+    <Flex
+      direction={width > 700 ? "row" : "column"}
+      w="100vw"
+      h="100vh"
+    >
       <Box flexGrow={2} h="100%">
         {greetingComponent}
       </Box>

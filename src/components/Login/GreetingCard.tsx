@@ -16,14 +16,16 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       h="100%"
       justifyContent="center"
       padding={30}
-      minH="500px"
     >
-      <Image src={require("../../assets/logo.png")} w="50%"/>
-      <Heading size="md">{text}</Heading>
+      <Image src={require("../../assets/logo.png")} w="50%" />
+      <Heading size="md" textAlign="center">
+        {text}
+      </Heading>
       <Button
         bgColor="teal"
         _hover={{ bgColor: "teal.500" }}
-        w="300px"
+        w="50%"
+        minW="200px"
         onClick={onClickButtonEvent}
       >
         {buttonText}
