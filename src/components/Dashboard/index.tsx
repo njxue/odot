@@ -102,9 +102,10 @@ export const Dashboard: React.FC<{}> = () => {
 
   // ===============================================================
   const selectedStyles = {
-    borderLeft: "solid 10px #05002A",
+    borderLeft: "solid 6px #00494c",
     fontWeight: "bold",
     bg: "#F2F2F2",
+  
   };
 
   const tabs = {
@@ -128,16 +129,9 @@ export const Dashboard: React.FC<{}> = () => {
       flexDir={w < 500 ? "column" : "row"}
       h="100%"
     >
-      <TabList w="100%" paddingTop={2} flexBasis={0} minW="200px">
+      <TabList w="100%" padding={1} flexBasis="200px" minW="200px">
         <Tab display="none"></Tab>
-        <Flex
-          w="100%"
-          direction="column"
-          justifyContent="space-between"
-          padding="2px"
-          h="100%"
-          gap={2}
-        >
+        <VStack w="100%">
           <InputGroup>
             <Input
               padding={2}
@@ -149,40 +143,47 @@ export const Dashboard: React.FC<{}> = () => {
               }}
               placeholder="Find task"
             />
-            <InputRightElement h="100%" pointerEvents="none" children={<SearchIcon color="gray.300" />} />
+            <InputRightElement
+              h="100%"
+              pointerEvents="none"
+              children={<SearchIcon color="gray.300" />}
+            />
           </InputGroup>
           <Divider borderColor="gray.400" />
           <Flex
             direction={w < 500 ? "row" : "column"}
-            flexGrow={1}
+            w="100%"
+            flexBasis="50%"
             overflow="scroll"
-            minH="40px"
-            alignItems="center"
           >
             {Object.entries(tabs).map((e) => (
-              <Tab w="100%" h="100%" _selected={selectedStyles} key={e[0]}>
+              <Tab _selected={selectedStyles} key={e[0]} marginBottom={0}>
                 <TabContent icon={e[1]} text={e[0]} />
               </Tab>
             ))}
           </Flex>
-          {todos.length > 0 && <Divider borderColor="gray.400" />}
+          {todos.length > 0 && w >= 500 && <Divider borderColor="gray.400" />}
           <Flex
             direction={w < 500 ? "row" : "column"}
             overflow="scroll"
-            flexGrow={1}
-            flexBasis="50%"
-            padding={0}
             alignItems="center"
+            w="100%"
+            flexBasis="50%"
           >
             {todos.map((t) => (
-              <Tab w="100%" _selected={selectedStyles} key={t.id}>
+              <Tab
+                w="100%"
+                _selected={selectedStyles}
+                key={t.id}
+                marginBottom={0}
+              >
                 <TabContent icon={AiOutlineUnorderedList} text={t.name} />
               </Tab>
             ))}
           </Flex>
-        </Flex>
+        </VStack>
       </TabList>
-      <TabPanels flexGrow={1} h="100%" overflow="hidden">
+      <TabPanels flexGrow={10} h="100%" overflow="hidden">
         {/* ============================ Searched lists ============================ */}
         <TabPanel h="100%" bgColor="#E3E9FB">
           <TasksBoard
