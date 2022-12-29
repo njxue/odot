@@ -27,7 +27,7 @@
   align-items: center;
   gap: 10px;
 }
- 
+
 .task .controls {
   flex-grow: 0;
   flex-basis: 0;
@@ -43,12 +43,15 @@
   align-items: center;
 }
 
+.details > .labels {
+  gap: 5px;
+}
+
 .task .dueDate {
   display: flex;
   align-items: center;
   justify-content: start;
   gap: 2px;
-  min-width: 100px;
 }
 
 .task:hover {

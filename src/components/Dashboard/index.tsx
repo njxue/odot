@@ -20,9 +20,7 @@ import {
   Flex,
   VStack,
   Input,
-  Box,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -87,7 +85,7 @@ export const Dashboard: React.FC<{}> = () => {
         };
 
         tmpTodos.push(todo);
-        if (tasks != undefined) {
+        if (tasks) {
           for (const taskId in tasks) {
             const task: ITask = tasks[taskId];
             tmpTasks.push(task);
@@ -105,7 +103,6 @@ export const Dashboard: React.FC<{}> = () => {
     borderLeft: "solid 6px #00494c",
     fontWeight: "bold",
     bg: "#F2F2F2",
-  
   };
 
   const tabs = {
@@ -155,6 +152,7 @@ export const Dashboard: React.FC<{}> = () => {
             w="100%"
             flexBasis="50%"
             overflow="scroll"
+            borderBottom="solid 1px lightGrey"
           >
             {Object.entries(tabs).map((e) => (
               <Tab _selected={selectedStyles} key={e[0]} marginBottom={0}>
@@ -162,7 +160,7 @@ export const Dashboard: React.FC<{}> = () => {
               </Tab>
             ))}
           </Flex>
-          {todos.length > 0 && w >= 500 && <Divider borderColor="gray.400" />}
+
           <Flex
             direction={w < 500 ? "row" : "column"}
             overflow="scroll"
