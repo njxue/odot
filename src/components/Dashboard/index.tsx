@@ -37,13 +37,12 @@ import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { Settings } from "../Todo/Settings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
-import { Search } from "./Search";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
   const todosRef = ref(db, `users/${currUser.uid}/todos`);
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState<number>(1);
   const [keywords, setKeywords] = useState<string>("");
 
   // ================================ Filtered list of tasks ==============================================
@@ -161,7 +160,7 @@ export const Dashboard: React.FC<{}> = () => {
             alignItems="center"
           >
             {Object.entries(tabs).map((e) => (
-              <Tab w="100%" _selected={selectedStyles} key={e[0]} maxH="17%">
+              <Tab w="100%" h="100%" _selected={selectedStyles} key={e[0]}>
                 <TabContent icon={e[1]} text={e[0]} />
               </Tab>
             ))}
@@ -176,7 +175,7 @@ export const Dashboard: React.FC<{}> = () => {
             alignItems="center"
           >
             {todos.map((t) => (
-              <Tab w="100%" _selected={selectedStyles} key={t.id} maxH="17%">
+              <Tab w="100%" _selected={selectedStyles} key={t.id}>
                 <TabContent icon={AiOutlineUnorderedList} text={t.name} />
               </Tab>
             ))}
