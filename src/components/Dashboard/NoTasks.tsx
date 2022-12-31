@@ -9,7 +9,13 @@ export const NoTasks: React.FC<{
 
   return (
     <VStack w="100%">
-      {img && <Image src={require(`../../assets/${img}`)} boxSize={20} />}
+      {img && (
+        <Image
+          src={require(`../../assets/${img}`)}
+          boxSize={20}
+          pointerEvents="none"
+        />
+      )}
       <Text maxW="80%" textAlign="center" fontSize="md">
         {text}
       </Text>
