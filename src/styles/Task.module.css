@@ -68,7 +68,7 @@
   padding: 10px 0px 10px 0px;
   max-height: 100%;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .taskList ol {

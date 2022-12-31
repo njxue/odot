@@ -151,7 +151,7 @@ export const Dashboard: React.FC<{}> = () => {
             direction={w < 500 ? "row" : "column"}
             w="100%"
             flexBasis="50%"
-            overflow="scroll"
+            overflow="auto"
             borderBottom="solid 1px lightGrey"
           >
             {Object.entries(tabs).map((e) => (
@@ -163,7 +163,7 @@ export const Dashboard: React.FC<{}> = () => {
 
           <Flex
             direction={w < 500 ? "row" : "column"}
-            overflow="scroll"
+            overflow="auto"
             alignItems="center"
             w="100%"
             flexBasis="50%"
@@ -196,7 +196,7 @@ export const Dashboard: React.FC<{}> = () => {
         {/* ============================ Tasks organised by list ============================ */}
         <TabPanel h="100%" bg="#F2F2F2">
           <Flex direction="column" h="100%" justifyContent="space-between">
-            <VStack align="stretch" overflow="scroll">
+            <VStack align="stretch" overflow="auto">
               <Heading>Welcome back!</Heading>
               <Divider marginTop={3} borderColor="gray" />
               <Organised todos={todos} />
