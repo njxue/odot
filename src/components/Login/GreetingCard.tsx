@@ -17,7 +17,11 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       justifyContent="center"
       padding={30}
     >
-      <Image src={require("../../assets/logo.png")} w="50%" />
+      <Image
+        src={require("../../assets/logo.png")}
+        w="50%"
+        pointerEvents="none"
+      />
       <Heading size="md" textAlign="center">
         {text}
       </Heading>

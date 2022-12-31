@@ -3,7 +3,6 @@ import bannerStyles from "../../styles/Banner.module.css";
 import { Icon, Image, Tooltip } from "@chakra-ui/react";
 import { AiOutlineLogout } from "react-icons/ai";
 
-
 export const Banner: React.FC<{}> = () => {
   const logout = useAuth().logout;
 
@@ -12,7 +11,7 @@ export const Banner: React.FC<{}> = () => {
   }
   return (
     <div className={bannerStyles.banner}>
-      <Image src={require("../../assets/logo.png")} />
+      <Image src={require("../../assets/logo.png")} pointerEvents="none" />
       <Tooltip label="Logout">
         <span>
           <Icon as={AiOutlineLogout} onClick={handleClick} />

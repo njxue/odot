@@ -19,6 +19,7 @@ const Loader: React.FC<{}> = () => {
           boxSize="200px"
           padding={0}
           objectFit="contain"
+          pointerEvents="none"
         />
         <Center>
           <svg
