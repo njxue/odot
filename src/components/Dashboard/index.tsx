@@ -31,10 +31,11 @@ import { TbListDetails } from "react-icons/tb";
 import { TasksBoard } from "./TasksBoard";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
 import { isAfter, isToday } from "../../helpers/date-time-calculations";
-import { TabContent } from "./TabContent";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { Settings } from "../Todo/Settings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
+import { TabNav } from "./TabNav";
+import { TaskSearch } from "./TaskSearch";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -99,12 +100,6 @@ export const Dashboard: React.FC<{}> = () => {
   }, []);
 
   // ===============================================================
-  const selectedStyles = {
-    borderLeft: "solid 6px #00494c",
-    fontWeight: "bold",
-    bg: "#F2F2F2",
-  };
-
   const tabs = {
     Organised: RiArchiveDrawerFill,
     All: TbListDetails,
@@ -126,61 +121,7 @@ export const Dashboard: React.FC<{}> = () => {
       flexDir={w < 500 ? "column" : "row"}
       h="100%"
     >
-      <TabList w="100%" padding={1} flexBasis="200px" minW="200px">
-        <Tab display="none"></Tab>
-        <VStack w="100%">
-          <InputGroup>
-            <Input
-              padding={2}
-              type="text"
-              size="sm"
-              onChange={(e) => {
-                setIndex(0);
-                setKeywords(e.target.value);
-              }}
-              placeholder="Find task"
-            />
-            <InputRightElement
-              h="100%"
-              pointerEvents="none"
-              children={<SearchIcon color="gray.300" />}
-            />
-          </InputGroup>
-          <Divider borderColor="gray.400" />
-          <Flex
-            direction={w < 500 ? "row" : "column"}
-            w="100%"
-            flexBasis="50%"
-            overflow="auto"
-            borderBottom="solid 1px lightGrey"
-          >
-            {Object.entries(tabs).map((e) => (
-              <Tab _selected={selectedStyles} key={e[0]} marginBottom={0}>
-                <TabContent icon={e[1]} text={e[0]} />
-              </Tab>
-            ))}
-          </Flex>
-
-          <Flex
-            direction={w < 500 ? "row" : "column"}
-            overflow="auto"
-            alignItems="center"
-            w="100%"
-            flexBasis="50%"
-          >
-            {todos.map((t) => (
-              <Tab
-                w="100%"
-                _selected={selectedStyles}
-                key={t.id}
-                marginBottom={0}
-              >
-                <TabContent icon={AiOutlineUnorderedList} text={t.name} />
-              </Tab>
-            ))}
-          </Flex>
-        </VStack>
-      </TabList>
+      <TabNav todos={todos} setIndex={setIndex} setKeywords={setKeywords} />
       <TabPanels flexGrow={10} h="100%" overflow="hidden">
         {/* ============================ Searched lists ============================ */}
         <TabPanel h="100%" bgColor="#E3E9FB">
