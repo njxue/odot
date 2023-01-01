@@ -1,6 +1,6 @@
 import TimeInterval from "./TimeInterval";
 
-function calculateNextUpdateTime(time: TimeInterval) {
+function calculateNextUpdateTime(time: TimeInterval): Date {
   if (time == TimeInterval.WEEK) {
     return getThisSunday();
   } else if (time == TimeInterval.DAY) {
@@ -19,8 +19,6 @@ function calculateNextUpdateTime(time: TimeInterval) {
     return getEndOfMonth();
   }
 }
-
-
 // Checks if d2 is after d1
 function isAfter(d1: Date, d2: Date): boolean {
   return new Date(d1) > new Date(d2);
@@ -38,7 +36,6 @@ function getEndOfToday(): Date {
   const today = new Date();
   return new Date(today.setHours(23, 59, 59));
 }
-
 
 function getEndOfMonth(): Date {
   const today = new Date();
@@ -67,4 +64,10 @@ function isToday(d: Date): boolean {
     d.getFullYear() == today.getFullYear()
   );
 }
-export { calculateNextUpdateTime, isAfter, getTimeNow, getDateString, isToday };
+export {
+  calculateNextUpdateTime,
+  isAfter,
+  getTimeNow,
+  getDateString,
+  isToday,
+};

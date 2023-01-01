@@ -34,8 +34,9 @@ const Auto: React.FC<AutoProps> = (props) => {
   // An alternative is to update nextUpdateTime to current time, but this will not trigger a re-render because there isn't an onValue
   // listener for Autos (it uses get, not onValue)
   function forcePush(): void {
+    const dueDate: Date = task.nextUpdate;
     update(tasksRef, {
-      [task.id]: task,
+      [task.id]: { ...task, dueDate, freq: null, nextUpdate: null },
     });
   }
 

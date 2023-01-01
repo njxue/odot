@@ -37,15 +37,14 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     const autosRef = getAutosRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);
 
-    const dueDate: Date = calculateNextUpdateTime(freq);
+    const nextUpdate: Date = calculateNextUpdateTime(freq);
 
     const auto: IAuto = {
       id: taskId,
       todoId: todoId,
       todoName: todoName,
       name: taskName.substring(0, maxTaskNameLength),
-      nextUpdate: dueDate,
-      dueDate: dueDate,
+      nextUpdate: nextUpdate,
       freq: freq,
       isCompleted: false,
       isImportant: false,

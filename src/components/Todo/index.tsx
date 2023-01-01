@@ -22,6 +22,7 @@ import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import Progress from "./Progress";
 import { Settings } from "./Settings";
+import getDatabaseKey from "../../helpers/get-db-key";
 
 interface TodoProps {
   todo: ITodo;
@@ -62,16 +63,13 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     const batchUpdateTime: { [key: string]: Date } = {};
 
     for (const k in tasks) {
-      const task: IAuto = tasks[k];
-      const newId: string | null = push(tasksRef).key;
-      if (newId == null) {
-        throw Error;
-      }
-      const newTask: IAuto = { ...task, id: newId };
-      batchUpdate[newId] = newTask;
-      batchUpdateTime[`${task.id}/nextUpdate`] = calculateNextUpdateTime(
-        task.freq
-      );
+      const auto: IAuto = tasks[k];
+      const { freq, nextUpdate, ...task } = auto;
+      const id: string = getDatabaseKey(tasksRef);
+      const dueDate: Date = calculateNextUpdateTime(auto.freq);
+      const newTask: ITask = { ...task, dueDate, id };
+      batchUpdate[id] = newTask;
+      batchUpdateTime[`${task.id}/nextUpdate`] = dueDate;
     }
     update(tasksRef, batchUpdate);
     // Update next update time
