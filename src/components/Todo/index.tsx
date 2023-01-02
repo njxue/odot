@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
-import { get, update, push } from "firebase/database";
+import { get, update } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import TaskList from "../TaskList";

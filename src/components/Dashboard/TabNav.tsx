@@ -1,11 +1,5 @@
 import { TabList, Tab, Divider, Flex, VStack } from "@chakra-ui/react";
-
-import { RiArchiveDrawerFill } from "react-icons/ri";
-import { AiOutlineUnorderedList, AiOutlineFieldTime } from "react-icons/ai";
-import { MdOutlineCalendarToday } from "react-icons/md";
-import { TbListDetails } from "react-icons/tb";
-import { CheckIcon, StarIcon } from "@chakra-ui/icons";
-
+import { AiOutlineUnorderedList } from "react-icons/ai";
 import { TabNavContent } from "./TabNavContent";
 import ITodo from "../../interface/ITodo";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
@@ -15,23 +9,15 @@ export const TabNav: React.FC<{
   todos: ITodo[];
   setIndex: (index: number) => void;
   setKeywords: (kws: string) => void;
+  tabs: { [key: string]: { icon: any; color: string } };
 }> = (props) => {
-  const { todos, setIndex, setKeywords } = props;
+  const { todos, setIndex, setKeywords, tabs } = props;
   const w = useWindowDimensions().width;
 
   const selectedStyles = {
     borderLeft: "solid 6px #00494c",
     fontWeight: "bold",
     bg: "#F2F2F2",
-  };
-
-  const tabs = {
-    Organised: RiArchiveDrawerFill,
-    All: TbListDetails,
-    Important: StarIcon,
-    Today: MdOutlineCalendarToday,
-    Completed: CheckIcon,
-    Overdue: AiOutlineFieldTime,
   };
 
   return (
@@ -49,7 +35,7 @@ export const TabNav: React.FC<{
         >
           {Object.entries(tabs).map((e) => (
             <Tab _selected={selectedStyles} key={e[0]} marginBottom={0}>
-              <TabNavContent icon={e[1]} text={e[0]} />
+              <TabNavContent icon={e[1]["icon"]} text={e[0]} />
             </Tab>
           ))}
         </Flex>
