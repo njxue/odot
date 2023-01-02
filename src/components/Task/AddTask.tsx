@@ -11,6 +11,7 @@ import AddButton from "../layout/AddButton";
 import {
   getTimeNow,
   getDateString,
+  toEndOfDay,
 } from "../../helpers/date-time-calculations";
 import { maxTaskNameLength } from "../../helpers/global-constants";
 import requireNonNull from "../../helpers/requireNonNull";
@@ -29,14 +30,16 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
 
-    let taskName = taskRef.current?.value;
-    const dueDate = dateRef.current?.value;
+    let taskName: string | undefined = taskRef.current?.value;
+    let dueDate: string | undefined = dateRef.current?.value;
 
     requireNonNull(taskName, dueDate);
+
     taskName = taskName!.trim();
     if (taskName.length === 0) {
       return;
     }
+
     addManualTask(currUser, todoId, taskName, dueDate!);
   }
 
@@ -56,7 +59,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
       name: taskName.substring(0, maxTaskNameLength),
       isCompleted: false,
       isImportant: false,
-      dueDate: new Date(dueDate),
+      dueDate: toEndOfDay(new Date(dueDate)),
     };
 
     resetInputField(taskRef);

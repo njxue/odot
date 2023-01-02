@@ -28,20 +28,20 @@ function getThisSunday(): Date {
   const today = new Date();
   const first = today.getDate() - today.getDay() + 1;
   const last = first + 6;
-  const sunday = new Date(new Date(today.setDate(last)).setHours(23, 59, 59));
+  const sunday = toEndOfDay(new Date(today.setDate(last)));
   return sunday;
 }
 
 function getEndOfToday(): Date {
   const today = new Date();
-  return new Date(today.setHours(23, 59, 59));
+  return toEndOfDay(today);
 }
 
 function getEndOfMonth(): Date {
   const today = new Date();
   const mth = today.getMonth();
   const yr = today.getFullYear();
-  return new Date(new Date(yr, mth + 1, 0).setHours(23, 59, 59));
+  return toEndOfDay(new Date(yr, mth + 1, 0));
 }
 
 function getTimeNow(): Date {
@@ -65,4 +65,16 @@ function isToday(d: Date): boolean {
     d.getFullYear() === today.getFullYear()
   );
 }
-export { calculateNextUpdateTime, isAfter, getTimeNow, getDateString, isToday };
+
+function toEndOfDay(d: Date): Date {
+  return new Date(d.setHours(23, 59, 59));
+}
+
+export {
+  calculateNextUpdateTime,
+  isAfter,
+  getTimeNow,
+  getDateString,
+  isToday,
+  toEndOfDay,
+};
