@@ -1,11 +1,11 @@
 import TimeInterval from "./TimeInterval";
 
 function calculateNextUpdateTime(time: TimeInterval): Date {
-  if (time == TimeInterval.WEEK) {
+  if (time === TimeInterval.WEEK) {
     return getThisSunday();
-  } else if (time == TimeInterval.DAY) {
+  } else if (time === TimeInterval.DAY) {
     return getEndOfToday();
-  } else if (time == TimeInterval.SECONDS) {
+  } else if (time === TimeInterval.SECONDS) {
     const today = new Date();
     const newDate = new Date(
       today.setHours(
@@ -59,9 +59,9 @@ function getDateString(d: Date): string {
 function isToday(d: Date): boolean {
   const today: Date = new Date();
   return (
-    d.getDate() == today.getDate() &&
-    d.getMonth() == today.getMonth() &&
-    d.getFullYear() == today.getFullYear()
+    d.getDate() === today.getDate() &&
+    d.getMonth() === today.getMonth() &&
+    d.getFullYear() === today.getFullYear()
   );
 }
 export {

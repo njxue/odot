@@ -21,11 +21,12 @@ export const TabNav: React.FC<{
   };
 
   return (
-    <TabList w="100%" padding={1} flexBasis="200px" minW="200px">
+    <TabList padding={1} minW="200px">
       <Tab display="none"></Tab>
       <VStack w="100%">
         <TaskSearch setIndex={setIndex} setKeywords={setKeywords} />
         <Divider borderColor="gray.400" />
+        {/* ==================== Fixed tabs ============================ */}
         <Flex
           direction={w < 500 ? "row" : "column"}
           w="100%"
@@ -35,29 +36,32 @@ export const TabNav: React.FC<{
         >
           {Object.entries(tabs).map((e) => (
             <Tab _selected={selectedStyles} key={e[0]} marginBottom={0}>
-              <TabNavContent icon={e[1]["icon"]} text={e[0]} />
+              <TabNavContent icon={e[1].icon} text={e[0]} />
             </Tab>
           ))}
         </Flex>
-
-        <Flex
-          direction={w < 500 ? "row" : "column"}
-          overflow="auto"
-          alignItems="center"
-          w="100%"
-          flexBasis="50%"
-        >
-          {todos.map((t) => (
-            <Tab
-              w="100%"
-              _selected={selectedStyles}
-              key={t.id}
-              marginBottom={0}
-            >
-              <TabNavContent icon={AiOutlineUnorderedList} text={t.name} />
-            </Tab>
-          ))}
-        </Flex>
+        {/* ==================== Created lists ============================ */}
+        {todos.length > 0 && (
+          <Flex
+            direction={w < 500 ? "row" : "column"}
+            overflow="auto"
+            alignItems="center"
+            w="100%"
+            flexBasis="50%"
+          >
+            {todos.map((t) => (
+              <Tab
+                w="100%"
+                _selected={selectedStyles}
+                key={t.id}
+                marginBottom={0}
+                whiteSpace="nowrap"
+              >
+                <TabNavContent icon={AiOutlineUnorderedList} text={t.name} />
+              </Tab>
+            ))}
+          </Flex>
+        )}
       </VStack>
     </TabList>
   );
