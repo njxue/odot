@@ -9,6 +9,7 @@ import {
   Icon,
   Flex,
   VStack,
+  Center,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { TasksBoard } from "./TasksBoard";
@@ -16,6 +17,7 @@ import { isAfter, isToday } from "../../helpers/date-time-calculations";
 import { Settings } from "../Todo/Settings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
+import { NoTasks } from "./NoTasks";
 
 export const TabWindows: React.FC<{
   tasks: ITask[];
@@ -45,7 +47,6 @@ export const TabWindows: React.FC<{
   return (
     <TabPanels flexGrow={10} h="100%" overflow="hidden">
       {/* ============================ Searched lists ============================ */}
-
       <TabPanel h="100%" bgColor="#E3E9FB">
         <TasksBoard
           withLabel
@@ -59,10 +60,16 @@ export const TabWindows: React.FC<{
       {/* ============================ Tasks organised by list ============================ */}
       <TabPanel h="100%" bgColor={tabs.Organised.color}>
         <Flex direction="column" h="100%" justifyContent="space-between">
-          <VStack align="stretch" overflow="auto">
+          <VStack align="stretch" overflow="auto" h="100%">
             <Heading>Welcome back!</Heading>
             <Divider marginTop={3} borderColor="gray" />
-            <Organised todos={todos} />
+            {todos.length > 0 ? (
+              <Organised todos={todos} />
+            ) : (
+              <Center h="100%">
+                <NoTasks text="Wow, such empty" img="shibaCalm.png" />
+              </Center>
+            )}
           </VStack>
           <AddModule />
         </Flex>
@@ -139,7 +146,7 @@ export const TabWindows: React.FC<{
             headerText={t.name}
             headerRightElement={<Settings todoId={t.id} todoName={t.name} />}
             altText={`No tasks left for ${t.name}!`}
-            altImg="shibaAmazed.png"
+            altImg="shibaHappy.png"
           />
         </TabPanel>
       ))}
