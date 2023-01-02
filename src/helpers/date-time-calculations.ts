@@ -50,10 +50,11 @@ function getTimeNow(): Date {
 
 // Returns string representation of the date in the following format: YYYY-MM-DD
 function getDateString(d: Date): string {
-  const date: number = d.getDate();
+  const date: string = d.getDate().toString().padStart(2, "0");
   const mth: number = d.getMonth() + 1;
+  const mthStr: string = mth.toString().padStart(2, "0");
   const yr: number = d.getFullYear();
-  return yr + "-" + mth + "-" + date;
+  return `${yr}-${mthStr}-${date}`;
 }
 
 function isToday(d: Date): boolean {
@@ -64,10 +65,4 @@ function isToday(d: Date): boolean {
     d.getFullYear() === today.getFullYear()
   );
 }
-export {
-  calculateNextUpdateTime,
-  isAfter,
-  getTimeNow,
-  getDateString,
-  isToday,
-};
+export { calculateNextUpdateTime, isAfter, getTimeNow, getDateString, isToday };
