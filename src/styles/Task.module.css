@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   background-color: white;
   padding: 10px;
   margin-bottom: 2px;
@@ -19,8 +19,6 @@
 
 .task > .details {
   display: flex;
-  flex-shrink: 1;
-  flex-basis: 100%;
   width: 100%;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -29,11 +27,12 @@
 }
 
 .task .controls {
-  flex-grow: 0;
-  flex-basis: 0;
+  justify-content: center;
   display: flex;
+  width: 50px;
   flex-direction: row;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .details > * {
@@ -45,6 +44,7 @@
 
 .details > .labels {
   gap: 5px;
+  flex-wrap: wrap;
 }
 
 .task .dueDate {
@@ -52,6 +52,7 @@
   align-items: center;
   justify-content: start;
   gap: 2px;
+  white-space: nowrap;
 }
 
 .task:hover {
