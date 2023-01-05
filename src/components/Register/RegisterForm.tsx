@@ -182,6 +182,7 @@ const RegisterForm: React.FC<{}> = () => {
           <Button
             type="submit"
             bgColor="teal"
+            color="white"
             _hover={{ filter: "brightness(120%)" }}
             w="100%"
             isLoading={isLoading}

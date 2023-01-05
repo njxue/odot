@@ -133,6 +133,7 @@ const LoginForm: React.FC<{}> = () => {
             w="100%"
             type="submit"
             bgColor="teal"
+            color="white"
             isLoading={isLoading}
             _hover={{ filter: "brightness(120%)" }}
           >
