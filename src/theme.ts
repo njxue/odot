@@ -10,9 +10,7 @@ const theme = extendTheme({
   config,
   components: {
     Button: {
-      baseStyle: (props: any) => ({
-        color: "white",
-      }),
+      baseStyle: (props: any) => ({}),
     },
 
     FormLabel: {
