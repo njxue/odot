@@ -21,7 +21,7 @@ import {
 import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import Progress from "./Progress";
-import { Settings } from "./Settings";
+import { Settings } from "../Settings";
 import getDatabaseKey from "../../helpers/get-db-key";
 
 interface TodoProps {

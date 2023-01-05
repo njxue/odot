@@ -14,7 +14,7 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import { TasksBoard } from "./TasksBoard";
 import { isAfter, isToday } from "../../helpers/date-time-calculations";
-import { Settings } from "../Todo/Settings";
+import { Settings } from "../Settings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";

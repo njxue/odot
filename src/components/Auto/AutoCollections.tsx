@@ -1,6 +1,6 @@
 import IAuto from "../../interface/IAuto";
 import autoStyles from "../../styles/Auto.module.css";
-import Auto from "./Auto";
+import Auto from ".";
 
 interface AutomatedTasksProps {
   tasks: IAuto[];

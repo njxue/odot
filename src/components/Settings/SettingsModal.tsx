@@ -15,9 +15,9 @@ import useAuth from "../../contexts/AuthContext";
 import React, { useEffect, useState } from "react";
 import IAuto from "../../interface/IAuto";
 import { getAutosRef } from "../../helpers/refs";
-import AddAuto from "./AddAuto";
+import AddAuto from "../Auto/AddAuto";
 import DeleteTodo from "./DeleteTodo";
-import AutoCollections from "./AutoCollections";
+import AutoCollections from "../Auto/AutoCollections";
 import Loader from "../layout/Loader";
 import { QuestionIcon } from "@chakra-ui/icons";
 

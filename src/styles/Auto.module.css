@@ -29,6 +29,7 @@
 
 .options > .select {
   width: 100%;
+  border: solid 1px;
 }
 
 .options > .optionButtonGroup {
@@ -36,10 +37,6 @@
   flex-direction: row;
   gap: 5px;
   height: 20px;
-}
-
-.select {
-  border: solid 1px;
 }
 
 .auto > p {
