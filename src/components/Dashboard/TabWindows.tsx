@@ -10,11 +10,12 @@ import {
   Flex,
   VStack,
   Center,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { TasksBoard } from "./TasksBoard";
 import { isAfter, isToday } from "../../helpers/date-time-calculations";
-import { Settings } from "../Settings";
+import { TodoSettings } from "../TodoSettings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";
@@ -43,11 +44,15 @@ export const TabWindows: React.FC<{
     isAfter(new Date(), new Date(task.dueDate));
   const predicateSubstring: (task: ITask) => boolean = (task: ITask) =>
     task.name.toLowerCase().includes(keywords.toLowerCase());
+  // =======================================================================================================
+
+  const bgSearchedLists = useColorModeValue("#E3E9FB", "#333036");
+  const bgCreatedLists = useColorModeValue("#D2EFED", "#1C2139");
 
   return (
     <TabPanels flexGrow={10} h="100%" overflow="hidden">
       {/* ============================ Searched lists ============================ */}
-      <TabPanel h="100%" bgColor="#E3E9FB">
+      <TabPanel h="100%" bgColor={bgSearchedLists}>
         <TasksBoard
           withLabel
           tasks={tasks.filter(predicateSubstring)}
@@ -134,7 +139,7 @@ export const TabWindows: React.FC<{
       </TabPanel>
       {/* ============================ Created lists ============================ */}
       {todos.map((t) => (
-        <TabPanel h="100%" bgColor="#D2EFED" key={t.id}>
+        <TabPanel h="100%" bgColor={bgCreatedLists} key={t.id}>
           <TasksBoard
             tasks={
               t.tasks == undefined
@@ -144,7 +149,9 @@ export const TabWindows: React.FC<{
                     .filter((t) => !t.isCompleted)
             }
             headerText={t.name}
-            headerRightElement={<Settings todoId={t.id} todoName={t.name} />}
+            headerRightElement={
+              <TodoSettings todoId={t.id} todoName={t.name} />
+            }
             altText={`No tasks left for ${t.name}!`}
             altImg="shibaHappy.png"
           />

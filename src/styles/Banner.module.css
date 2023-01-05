@@ -5,6 +5,7 @@
   align-items: center;
   padding: 10px;
   background-color: #00494c;
+  border-bottom: solid 1px white;
 }
 
 .banner > h1 {

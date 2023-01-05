@@ -6,7 +6,7 @@ import { User } from "firebase/auth";
 import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
 import Loader from "../layout/Loader";
-import { Tabs } from "@chakra-ui/react";
+import { Tabs, useColorModeValue } from "@chakra-ui/react";
 
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { RiArchiveDrawerFill } from "react-icons/ri";
@@ -59,12 +59,30 @@ export const Dashboard: React.FC<{}> = () => {
   }, []);
 
   const tabs = {
-    Organised: { icon: RiArchiveDrawerFill, color: "#F2F2F2" },
-    All: { icon: TbListDetails, color: "#D2EFED" },
-    Important: { icon: StarIcon, color: "#F3DDBF" },
-    Today: { icon: MdOutlineCalendarToday, color: "#F4DFD1" },
-    Completed: { icon: CheckIcon, color: "#BFF3C3" },
-    Overdue: { icon: AiOutlineFieldTime, color: "#F9C0C0" },
+    Organised: {
+      icon: RiArchiveDrawerFill,
+      color: useColorModeValue("#F2F2F2", "#415F5F"),
+    },
+    All: {
+      icon: TbListDetails,
+      color: useColorModeValue("#D2EFED", "#415F5F"),
+    },
+    Important: {
+      icon: StarIcon,
+      color: useColorModeValue("#F3DDBF", "#2F2F2E"),
+    },
+    Today: {
+      icon: MdOutlineCalendarToday,
+      color: useColorModeValue("#F4DFD1", "#2F1E31"),
+    },
+    Completed: {
+      icon: CheckIcon,
+      color: useColorModeValue("#BFF3C3", "#497863"),
+    },
+    Overdue: {
+      icon: AiOutlineFieldTime,
+      color: useColorModeValue("#F9C0C0", "#2E0000"),
+    },
   };
 
   return isLoading ? (

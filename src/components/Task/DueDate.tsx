@@ -12,8 +12,8 @@ export const DueDate: React.FC<{ dueDate: Date }> = (props) => {
 
   return (
     <div className={styles.dueDate}>
-      <Icon color={isDue ? "red" : "black"} as={AiTwotoneCalendar} />
-      <Text color={isDue ? "red" : "black"} fontSize="xs">
+      <Icon color={isDue ? "red" : "auto"} as={AiTwotoneCalendar} />
+      <Text color={isDue ? "red" : "auto"} fontSize="xs">
         {isToday(new Date(props.dueDate))
           ? "Today"
           : getDateString(new Date(props.dueDate))}

@@ -1,4 +1,11 @@
-import { TabList, Tab, Divider, Flex, VStack } from "@chakra-ui/react";
+import {
+  TabList,
+  Tab,
+  Divider,
+  Flex,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { TabNavContent } from "./TabNavContent";
 import ITodo from "../../interface/ITodo";
@@ -17,7 +24,7 @@ export const TabNav: React.FC<{
   const selectedStyles = {
     borderLeft: "solid 6px #00494c",
     fontWeight: "bold",
-    bg: "#F2F2F2",
+    bg: useColorModeValue("#E7E7E7", "#283343"),
   };
 
   return (

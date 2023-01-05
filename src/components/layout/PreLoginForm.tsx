@@ -12,7 +12,7 @@ const PreLoginForm: React.FC<PreLoginFormProps> = (props) => {
     <Center h="100%" justifyContent="center">
       <VStack w="50%" minW="250px">
         <VStack alignItems="start" w="100%">
-          <Heading>{header}</Heading>
+          <Heading color="black">{header}</Heading>
           <Divider borderColor="black" />
         </VStack>
         <p>{text}</p>

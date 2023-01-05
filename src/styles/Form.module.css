@@ -11,6 +11,7 @@
   border: solid rgb(206, 206, 206) 1px;
   border-radius: 5px;
   flex-grow: 1;
+ 
 }
 
 .form select {

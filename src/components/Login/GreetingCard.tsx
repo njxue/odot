@@ -27,7 +27,7 @@ const GreetingCard: React.FC<GreetingCardProps> = (props) => {
       </Heading>
       <Button
         bgColor="teal"
-        _hover={{ bgColor: "teal.500" }}
+        _hover={{ filter: "brightness(120%)" }}
         w="50%"
         minW="200px"
         onClick={onClickButtonEvent}

@@ -17,7 +17,8 @@
   color: #61dafb;
 }
 
-html, body {
+html,
+body {
   overflow-y: overlay;
   height: 100vh;
   width: 100vw;

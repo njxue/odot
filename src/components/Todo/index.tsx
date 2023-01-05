@@ -5,6 +5,7 @@ import {
   AccordionPanel,
   HStack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
@@ -21,8 +22,9 @@ import {
 import { getAutosRef, getTasksRef } from "../../helpers/refs";
 import IAuto from "../../interface/IAuto";
 import Progress from "./Progress";
-import { Settings } from "../Settings";
+import { TodoSettings } from "../TodoSettings";
 import getDatabaseKey from "../../helpers/get-db-key";
+import { MdBrightness1 } from "react-icons/md";
 
 interface TodoProps {
   todo: ITodo;
@@ -100,8 +102,11 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     pushAutoTasks(autoTasksToPush);
   }, [autoTasksToPush]);
 
+  const accordionBgColor = useColorModeValue("white", "transparent");
+  const panelBgColor = useColorModeValue("#E7E7E7", "transparent");
+
   return (
-    <AccordionItem bg="white">
+    <AccordionItem bgColor={accordionBgColor}>
       {({ isExpanded }) => (
         <div>
           <h2>
@@ -123,13 +128,13 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
             </AccordionButton>
           </h2>
 
-          <AccordionPanel bgColor="#E7E7E7">
+          <AccordionPanel bgColor={panelBgColor}>
             <div className={todoStyles.taskContainer}>
               {todo.tasks && <TaskList tasks={tasks} />}
             </div>
             <HStack>
               <AddTask todoId={todo.id} todoName={todo.name} />
-              <Settings todoId={todo.id} todoName={todo.name} />
+              <TodoSettings todoId={todo.id} todoName={todo.name} />
             </HStack>
           </AccordionPanel>
         </div>

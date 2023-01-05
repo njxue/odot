@@ -4,6 +4,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  LightMode,
   VStack,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
@@ -102,7 +103,11 @@ const RegisterForm: React.FC<{}> = () => {
       setIsLoading(false);
     }
 
-    if (email.length === 0 || password.length === 0 || passwordcf.length === 0) {
+    if (
+      email.length === 0 ||
+      password.length === 0 ||
+      passwordcf.length === 0
+    ) {
       setIsLoading(false);
       return;
     }
@@ -146,24 +151,38 @@ const RegisterForm: React.FC<{}> = () => {
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
           <FormControl isInvalid={emailIsInvalid}>
             <FormLabel>Email: </FormLabel>
-            <Input ref={emailRef} type="text" borderColor="gray" />
+            <Input
+              color="black"
+              ref={emailRef}
+              type="text"
+              borderColor="gray"
+            />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={passwordIsInvalid}>
             <FormLabel>Password: </FormLabel>
-            <Input ref={passwordRef} type="password" borderColor="gray" />
+            <Input
+              color="black"
+              ref={passwordRef}
+              type="password"
+              borderColor="gray"
+            />
             <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={passwordCfIsInvalid}>
             <FormLabel>Confirm Password: </FormLabel>
-            <Input ref={passwordCfRef} type="password" borderColor="gray" />
+            <Input
+              color="black"
+              ref={passwordCfRef}
+              type="password"
+              borderColor="gray"
+            />
             <FormErrorMessage>{passwordCfErrorMessage}</FormErrorMessage>
           </FormControl>
           <Button
             type="submit"
-            color="white"
             bgColor="teal"
-            _hover={{ bgColor: "teal.500" }}
+            _hover={{ filter: "brightness(120%)" }}
             w="100%"
             isLoading={isLoading}
           >

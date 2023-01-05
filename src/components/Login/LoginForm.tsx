@@ -5,6 +5,8 @@ import {
   Input,
   VStack,
   FormErrorMessage,
+  Text,
+  LightMode,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -109,20 +111,30 @@ const LoginForm: React.FC<{}> = () => {
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
           <FormControl isInvalid={emailIsInvalid || emailIsUnverified}>
             <FormLabel>Email: </FormLabel>
-            <Input ref={emailRef} type="text" borderColor="gray" />
+            <Input
+              ref={emailRef}
+              color="black"
+              type="text"
+              borderColor="gray"
+            />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={passwordIsInvalid}>
             <FormLabel>Password: </FormLabel>
-            <Input ref={passwordRef} type="password" borderColor="gray" />
+            <Input
+              ref={passwordRef}
+              color="black"
+              type="password"
+              borderColor="gray"
+            />
             <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
           </FormControl>
           <Button
             w="100%"
             type="submit"
-            colorScheme="teal"
+            bgColor="teal"
             isLoading={isLoading}
-            _hover={{ bgColor: "teal.500" }}
+            _hover={{ filter: "brightness(120%)" }}
           >
             Login
           </Button>
