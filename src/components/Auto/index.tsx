@@ -6,9 +6,6 @@ import { remove, update } from "firebase/database";
 import SelectFreq from "./SelectFreq";
 import TimeInterval, { intervalToFreq } from "../../helpers/TimeInterval";
 import { calculateNextUpdateTime } from "../../helpers/date-time-calculations";
-import { IoPush } from "react-icons/io5";
-import { DeleteIcon, Icon } from "@chakra-ui/icons";
-import { Tooltip } from "@chakra-ui/react";
 import { DeleteAuto } from "./DeleteAuto";
 import { PushAuto } from "./PushAuto";
 
