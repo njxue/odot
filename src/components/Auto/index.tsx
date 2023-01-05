@@ -9,6 +9,8 @@ import { calculateNextUpdateTime } from "../../helpers/date-time-calculations";
 import { IoPush } from "react-icons/io5";
 import { DeleteIcon, Icon } from "@chakra-ui/icons";
 import { Tooltip } from "@chakra-ui/react";
+import { DeleteAuto } from "./DeleteAuto";
+import { PushAuto } from "./PushAuto";
 
 interface AutoProps {
   task: IAuto;
@@ -49,17 +51,8 @@ const Auto: React.FC<AutoProps> = (props) => {
           defaultValue={task.freq.toString()}
         />
         <div className={autoStyles.optionButtonGroup}>
-          <DeleteIcon onClick={handleDelete} cursor="pointer" color="gray" />
-          <Tooltip label="Push to list">
-            <span>
-              <Icon
-                as={IoPush}
-                onClick={forcePush}
-                cursor="pointer"
-                boxSize={5}
-              />
-            </span>
-          </Tooltip>
+          <DeleteAuto handleDelete={handleDelete} />
+          <PushAuto forcePush={forcePush} />
         </div>
       </div>
     </div>

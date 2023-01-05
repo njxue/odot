@@ -29,7 +29,8 @@
 
 .options > .select {
   width: 100%;
-  border: solid 1px;
+  border: solid 1px gray;
+  border-radius: 5px;
 }
 
 .options > .optionButtonGroup {
