@@ -21,12 +21,6 @@ export const TabNav: React.FC<{
   const { todos, setIndex, setKeywords, tabs } = props;
   const w = useWindowDimensions().width;
 
-  const selectedStyles = {
-    borderLeft: "solid 6px #00494c",
-    fontWeight: "bold",
-    bg: useColorModeValue("#E7E7E7", "#283343"),
-  };
-
   return (
     <TabList padding={1} minW="200px">
       <Tab display="none"></Tab>
@@ -42,7 +36,7 @@ export const TabNav: React.FC<{
           borderBottom="solid 1px lightGrey"
         >
           {Object.entries(tabs).map((e) => (
-            <Tab _selected={selectedStyles} key={e[0]} marginBottom={0}>
+            <Tab key={e[0]} marginBottom={0}>
               <TabNavContent icon={e[1].icon} text={e[0]} />
             </Tab>
           ))}
@@ -57,13 +51,7 @@ export const TabNav: React.FC<{
             flexBasis="50%"
           >
             {todos.map((t) => (
-              <Tab
-                w="100%"
-                _selected={selectedStyles}
-                key={t.id}
-                marginBottom={0}
-                whiteSpace="nowrap"
-              >
+              <Tab w="100%" key={t.id} marginBottom={0} whiteSpace="nowrap">
                 <TabNavContent icon={AiOutlineUnorderedList} text={t.name} />
               </Tab>
             ))}

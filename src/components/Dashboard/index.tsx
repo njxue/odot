@@ -69,19 +69,19 @@ export const Dashboard: React.FC<{}> = () => {
     },
     Important: {
       icon: StarIcon,
-      color: useColorModeValue("#F3DDBF", "#2F2F2E"),
+      color: useColorModeValue("#F3DDBF", "#415F5F"),
     },
     Today: {
       icon: MdOutlineCalendarToday,
-      color: useColorModeValue("#F4DFD1", "#2F1E31"),
+      color: useColorModeValue("#F4DFD1", "#415F5F"),
     },
     Completed: {
       icon: CheckIcon,
-      color: useColorModeValue("#BFF3C3", "#497863"),
+      color: useColorModeValue("#BFF3C3", "#415F5F"),
     },
     Overdue: {
       icon: AiOutlineFieldTime,
-      color: useColorModeValue("#F9C0C0", "#2E0000"),
+      color: useColorModeValue("#F9C0C0", "#415F5F"),
     },
   };
 

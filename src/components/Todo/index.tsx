@@ -103,7 +103,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, [autoTasksToPush]);
 
   const accordionBgColor = useColorModeValue("white", "transparent");
-  const panelBgColor = useColorModeValue("#E7E7E7", "transparent");
+  const panelBgColor = useColorModeValue("#E7E7E7", "#00282A");
 
   return (
     <AccordionItem bgColor={accordionBgColor}>

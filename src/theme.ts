@@ -6,29 +6,46 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
-const theme = extendTheme({
-  config,
-  components: {
-    Button: {
-      baseStyle: (props: any) => ({}),
-    },
-
-    FormLabel: {
-      baseStyle: {
-        color: "black",
-      },
-    },
-    FormErrorMessage: {
-      baseStyle: {
-        color: "red",
-      },
-    },
-    Input: {
-      baseStyle: {
-        color: "black",
-      },
+const components = {
+  FormLabel: {
+    baseStyle: {
+      color: "black",
     },
   },
+  Input: {
+    baseStyle: (props: any) => ({
+      field: {
+        color: mode("black", "whiteAlpha.900")(props),
+        _autofill: {
+          border: "1px solid gray.200",
+          textFillColor: "black",
+          boxShadow: "0 0 0px 1000px white inset",
+          transition: "background-color 5000s ease-in-out 0s",
+        },
+      },
+    }),
+  },
+};
+
+const styles = {
+  global: (props: any) => ({
+    body: {
+      color: mode("gray.800", "whiteAlpha.900")(props),
+      bg: mode("white", "#00282A")(props),
+    },
+    input: {
+      bg: mode("whiteAlpha.900", "transparent")(props),
+    },
+    select: {
+      bg: mode("whiteAlpha.900", "transparent")(props),
+    },
+  }),
+};
+
+const theme = extendTheme({
+  config,
+  components,
+  styles,
 });
 
 export default theme;

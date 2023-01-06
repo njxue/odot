@@ -1,4 +1,4 @@
-import { SettingsIcon } from "@chakra-ui/icons";
+import { AiOutlineSetting } from "react-icons/ai";
 import {
   useDisclosure,
   Modal,
@@ -7,9 +7,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalHeader,
-  Button,
-  Switch,
-  Text,
+  Icon,
 } from "@chakra-ui/react";
 import { ToggleTheme } from "./ToggleTheme";
 
@@ -29,7 +27,7 @@ export const GlobalSettings: React.FC<{}> = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <SettingsIcon onClick={onOpen} />
+      <Icon as={AiOutlineSetting} onClick={onOpen} />
     </>
   );
 };

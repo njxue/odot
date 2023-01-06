@@ -15,9 +15,7 @@ export const Banner: React.FC<{}> = () => {
       <Image src={require("../../assets/logo.png")} pointerEvents="none" />
       <HStack alignItems="center">
         <GlobalSettings />
-        <Tooltip label="Logout" shouldWrapChildren>
-          <Icon as={AiOutlineLogout} onClick={handleClick} boxSize="lg" />
-        </Tooltip>
+        <Icon as={AiOutlineLogout} onClick={handleClick} boxSize="lg" />
       </HStack>
     </div>
   );

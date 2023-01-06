@@ -8,7 +8,6 @@ import AddButton from "../layout/AddButton";
 import { maxTodoNameLength } from "../../helpers/global-constants";
 import requireNonNull from "../../helpers/requireNonNull";
 import getDatabaseKey from "../../helpers/get-db-key";
-import { LightMode, Input } from "@chakra-ui/react";
 
 export const AddModule: React.FC<{}> = () => {
   const inputRef = useRef<HTMLInputElement>(null);

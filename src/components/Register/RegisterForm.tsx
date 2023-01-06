@@ -151,32 +151,17 @@ const RegisterForm: React.FC<{}> = () => {
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
           <FormControl isInvalid={emailIsInvalid}>
             <FormLabel>Email: </FormLabel>
-            <Input
-              color="black"
-              ref={emailRef}
-              type="text"
-              borderColor="gray"
-            />
+            <Input color="black" ref={emailRef} type="text" />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={passwordIsInvalid}>
             <FormLabel>Password: </FormLabel>
-            <Input
-              color="black"
-              ref={passwordRef}
-              type="password"
-              borderColor="gray"
-            />
+            <Input ref={passwordRef} type="password" />
             <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={passwordCfIsInvalid}>
             <FormLabel>Confirm Password: </FormLabel>
-            <Input
-              color="black"
-              ref={passwordCfRef}
-              type="password"
-              borderColor="gray"
-            />
+            <Input ref={passwordCfRef} type="password" borderColor="gray" />
             <FormErrorMessage>{passwordCfErrorMessage}</FormErrorMessage>
           </FormControl>
           <Button
