@@ -2,18 +2,31 @@ import ITask from "../../interface/ITask";
 import { Task } from "../Task";
 import styles from "../../styles/Task.module.css";
 
+import useUserPrefs from "../../contexts/UserPrefs";
+import { useState, useEffect } from "react";
+import { getSortedTasks } from "../../helpers/tasks-sort";
+
 interface TaskListProps {
   tasks: ITask[];
   withLabel?: boolean;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
+  const { tasks, withLabel } = props;
+  const [sortedTasks, setSortedTasks] = useState<ITask[]>(tasks);
+  console.log(tasks);
+  const { sortOrder } = useUserPrefs();
+
+  useEffect(() => {
+    setSortedTasks(getSortedTasks(tasks, sortOrder));
+  }, [sortOrder, tasks]);
+
   return (
     <div className={styles.taskList}>
       <ol>
-        {props.tasks.map((task) => (
+        {sortedTasks.map((task) => (
           <li key={task.id}>
-            <Task task={task} withLabel={props.withLabel} />
+            <Task task={task} withLabel={withLabel} />
           </li>
         ))}
       </ol>

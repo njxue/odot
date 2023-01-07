@@ -25,6 +25,7 @@ import Progress from "./Progress";
 import { TodoSettings } from "../TodoSettings";
 import getDatabaseKey from "../../helpers/get-db-key";
 import { MdBrightness1 } from "react-icons/md";
+import { UserPrefsProvider } from "../../contexts/UserPrefs";
 
 interface TodoProps {
   todo: ITodo;

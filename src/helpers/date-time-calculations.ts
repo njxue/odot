@@ -19,7 +19,7 @@ function calculateNextUpdateTime(time: TimeInterval): Date {
     return getEndOfMonth();
   }
 }
-// Checks if d2 is after d1
+// Checks if d1 is after d2
 function isAfter(d1: Date, d2: Date): boolean {
   return new Date(d1) > new Date(d2);
 }

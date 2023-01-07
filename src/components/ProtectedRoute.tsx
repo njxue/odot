@@ -4,6 +4,7 @@ import { Banner } from "./Banner";
 import Loader from "./layout/Loader";
 import { Login } from "./Login";
 import { Box, Flex, VStack } from "@chakra-ui/react";
+import { UserPrefsProvider } from "../contexts/UserPrefs";
 
 export const ProtectedRoute: React.FC<{}> = () => {
   let isLoggedIn: boolean | undefined = useAuth().isLoggedIn;
@@ -20,11 +21,13 @@ export const ProtectedRoute: React.FC<{}> = () => {
   }
 
   return (
-    <Flex direction="column" w="100vw" h="100vh">
-      <Banner />
-      <Box flexGrow={1} overflow="hidden">
-        <Outlet />
-      </Box>
-    </Flex>
+    <UserPrefsProvider>
+      <Flex direction="column" w="100vw" h="100vh">
+        <Banner />
+        <Box flexGrow={1} overflow="hidden">
+          <Outlet />
+        </Box>
+      </Flex>
+    </UserPrefsProvider>
   );
 };
