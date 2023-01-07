@@ -18,7 +18,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
   let { sortOrder } = useUserPrefs();
 
   // In case the user changes the value stored in localstorage
-  if (!(sortOrder in SORT_ORDER)) {
+  if (Object.values(SORT_ORDER).indexOf(sortOrder) === -1) {
     sortOrder = SORT_ORDER.DATE_ADDED;
   }
 
