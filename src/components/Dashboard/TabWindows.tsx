@@ -20,14 +20,14 @@ import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";
 import { SORT_ORDER } from "../../helpers/tasks-sort";
-import React, { memo } from "react";
+import React from "react";
 
 export const TabWindows: React.FC<{
   tasks: ITask[];
   todos: ITodo[];
   keywords: string;
   tabs: { [key: string]: { icon: any; color: string } };
-}> = memo((props) => {
+}> = (props) => {
   const { tasks, todos, keywords, tabs } = props;
 
   // Sort tasks
@@ -168,4 +168,4 @@ export const TabWindows: React.FC<{
       ))}
     </TabPanels>
   );
-});
+};

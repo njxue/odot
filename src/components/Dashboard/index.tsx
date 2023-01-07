@@ -1,7 +1,7 @@
 import { ref, onValue } from "firebase/database";
 import { db } from "../../config/firebase";
 import useAuth from "../../contexts/AuthContext";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
@@ -85,7 +85,6 @@ export const Dashboard: React.FC<{}> = () => {
     },
   };
 
-  const memoTabs = useMemo(() => tabs, []);
 
   return isLoading ? (
     <Loader />
@@ -103,13 +102,13 @@ export const Dashboard: React.FC<{}> = () => {
         todos={todos}
         setIndex={setIndex}
         setKeywords={setKeywords}
-        tabs={memoTabs}
+        tabs={tabs}
       />
       <TabWindows
         todos={todos}
         tasks={tasks}
         keywords={keywords}
-        tabs={memoTabs}
+        tabs={tabs}
       />
     </Tabs>
   );
