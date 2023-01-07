@@ -12,11 +12,14 @@ import {
   Text,
   HStack,
   Select,
+  Button,
+  Divider,
 } from "@chakra-ui/react";
 import { ToggleTheme } from "./ToggleTheme";
 import { ChangeEvent } from "react";
 import { SORT_ORDER } from "../../helpers/tasks-sort";
 import useUserPrefs from "../../contexts/UserPrefs";
+import { DeleteData } from "./DeleteData";
 
 export const GlobalSettings: React.FC<{}> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,10 +39,12 @@ export const GlobalSettings: React.FC<{}> = () => {
           <ModalCloseButton />
           <ModalBody>
             <VStack align="stretch">
+              {/* ========================== Toggle theme ========================== */}
               <HStack justifyContent="space-between">
                 <Text>Change theme: </Text>
                 <ToggleTheme />
               </HStack>
+              {/* ========================== Sort order ========================== */}
               <HStack justifyContent="space-between">
                 <Text>Sort Tasks By: </Text>
                 <Select
@@ -56,6 +61,9 @@ export const GlobalSettings: React.FC<{}> = () => {
                   <option>{SORT_ORDER.IMPORTANCE}</option>
                 </Select>
               </HStack>
+              {/* ========================== Delete Data ========================== */}
+              <Divider />
+              <DeleteData />
             </VStack>
           </ModalBody>
         </ModalContent>
