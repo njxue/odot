@@ -1,12 +1,5 @@
 import ITask from "../../interface/ITask";
-import {
-  Heading,
-  Divider,
-  Center,
-  Box,
-  Flex,
-  HStack,
-} from "@chakra-ui/react";
+import { Heading, Divider, Center, Box, Flex, HStack } from "@chakra-ui/react";
 import TaskList from "../TaskList";
 import { NoTasks } from "./NoTasks";
 

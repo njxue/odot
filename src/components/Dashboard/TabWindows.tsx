@@ -19,14 +19,23 @@ import { TodoSettings } from "../TodoSettings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";
+import { SORT_ORDER } from "../../helpers/tasks-sort";
+import React, { memo } from "react";
 
 export const TabWindows: React.FC<{
   tasks: ITask[];
   todos: ITodo[];
   keywords: string;
   tabs: { [key: string]: { icon: any; color: string } };
-}> = (props) => {
+}> = memo((props) => {
   const { tasks, todos, keywords, tabs } = props;
+
+  // Sort tasks
+  let sortOrder = localStorage.getItem("order");
+  if (sortOrder == null) {
+    sortOrder = SORT_ORDER.DATE_ADDED;
+  }
+
   // ================================ Filtered list of tasks ==============================================
   const predicateImportant: (task: ITask) => boolean = (task: ITask) =>
     !task.isCompleted && task.isImportant;
@@ -159,4 +168,4 @@ export const TabWindows: React.FC<{
       ))}
     </TabPanels>
   );
-};
+});
