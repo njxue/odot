@@ -4,7 +4,7 @@ import styles from "../../styles/Task.module.css";
 
 import useUserPrefs from "../../contexts/UserPrefs";
 import { useState, useEffect } from "react";
-import { getSortedTasks } from "../../helpers/tasks-sort";
+import { SORT_ORDER, getSortedTasks } from "../../helpers/tasks-sort";
 
 interface TaskListProps {
   tasks: ITask[];
@@ -14,8 +14,13 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = (props) => {
   const { tasks, withLabel } = props;
   const [sortedTasks, setSortedTasks] = useState<ITask[]>(tasks);
-  console.log(tasks);
-  const { sortOrder } = useUserPrefs();
+
+  let { sortOrder } = useUserPrefs();
+
+  // In case the user changes the value stored in localstorage
+  if (!(sortOrder in SORT_ORDER)) {
+    sortOrder = SORT_ORDER.DATE_ADDED;
+  }
 
   useEffect(() => {
     setSortedTasks(getSortedTasks(tasks, sortOrder));
