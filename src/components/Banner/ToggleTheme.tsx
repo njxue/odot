@@ -9,6 +9,9 @@ export const ToggleTheme: React.FC<{}> = () => {
       w="200px"
       onClick={toggleColorMode}
       leftIcon={<Icon as={colorMode === "light" ? CiDark : CiBrightnessDown} />}
+      borderColor="gray.400"
+      borderWidth={1}
+      variant="outline"
     >
       {colorMode === "light" ? "Dark" : "Light"} theme
     </Button>

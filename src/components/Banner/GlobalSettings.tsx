@@ -72,6 +72,7 @@ export const GlobalSettings: React.FC<{}> = () => {
                         ? SortMetric.DATE_ADDED
                         : localStorage.getItem("metric")!
                     }
+                    borderColor="gray.400"
                   >
                     <option>{SortMetric.DATE_ADDED}</option>
                     <option>{SortMetric.DUE_DATE}</option>
@@ -88,6 +89,9 @@ export const GlobalSettings: React.FC<{}> = () => {
                         )
                       }
                       onClick={handleOrderChange}
+                      borderColor="gray.400"
+                      borderWidth={1}
+                      variant="outline"
                     />
                   </Tooltip>
                 </HStack>
