@@ -42,7 +42,7 @@ export const Task: React.FC<TaskProps> = (props) => {
         </div>
 
         <div className={styles.controls}>
-          {!task.isCompleted && <ToggleImportance task={task} />}
+          <ToggleImportance task={task} disabled={task.isCompleted} />
           <RemoveTaskButton task={task} />
         </div>
       </div>
