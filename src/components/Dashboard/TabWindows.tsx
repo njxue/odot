@@ -19,7 +19,7 @@ import { TodoSettings } from "../TodoSettings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";
-import { SORT_ORDER } from "../../helpers/tasks-sort";
+import { SortMetric } from "../../helpers/tasks-sort";
 import React from "react";
 
 export const TabWindows: React.FC<{
@@ -31,9 +31,9 @@ export const TabWindows: React.FC<{
   const { tasks, todos, keywords, tabs } = props;
 
   // Sort tasks
-  let sortOrder = localStorage.getItem("order");
-  if (sortOrder == null) {
-    sortOrder = SORT_ORDER.DATE_ADDED;
+  let sortMetric = localStorage.getItem("metric");
+  if (sortMetric == null) {
+    sortMetric = SortMetric.DATE_ADDED;
   }
 
   // ================================ Filtered list of tasks ==============================================

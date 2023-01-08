@@ -1,4 +1,5 @@
 import { AiOutlineSetting } from "react-icons/ai";
+import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import {
   useDisclosure,
   Modal,
@@ -12,22 +13,38 @@ import {
   Text,
   HStack,
   Select,
-  Button,
   Divider,
+  IconButton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { ToggleTheme } from "./ToggleTheme";
 import { ChangeEvent } from "react";
-import { SORT_ORDER } from "../../helpers/tasks-sort";
+import { SortMetric, SortOrder } from "../../helpers/tasks-sort";
 import useUserPrefs from "../../contexts/UserPrefs";
 import { DeleteData } from "./DeleteData";
 
 export const GlobalSettings: React.FC<{}> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const setSortOrder: (order: SORT_ORDER) => void = useUserPrefs().setSortOrder;
 
-  function setSortingOrder(e: ChangeEvent<HTMLSelectElement>): void {
-    const order: SORT_ORDER = e.target.value as SORT_ORDER;
-    setSortOrder(order);
+  const { setSortMetric, setSortOrder, sortOrder } = useUserPrefs();
+
+  function handleMetricChange(e: ChangeEvent<HTMLSelectElement>): void {
+    let metric: SortMetric;
+    try {
+      metric = e.target.value as SortMetric;
+    } catch (err) {
+      metric = SortMetric.DATE_ADDED;
+    }
+    setSortMetric(metric);
+  }
+
+  function handleOrderChange(): void {
+    const currentOrder = sortOrder;
+    if (currentOrder === SortOrder.ASC) {
+      setSortOrder(SortOrder.DSC);
+    } else {
+      setSortOrder(SortOrder.ASC);
+    }
   }
 
   return (
@@ -44,22 +61,36 @@ export const GlobalSettings: React.FC<{}> = () => {
                 <Text>Change theme: </Text>
                 <ToggleTheme />
               </HStack>
-              {/* ========================== Sort order ========================== */}
+              {/* ========================== Sort metric ========================== */}
               <HStack justifyContent="space-between">
                 <Text>Sort Tasks By: </Text>
-                <Select
-                  w="150px"
-                  onChange={setSortingOrder}
-                  defaultValue={
-                    localStorage.getItem("order") == null
-                      ? SORT_ORDER.DATE_ADDED
-                      : localStorage.getItem("order")!
-                  }
-                >
-                  <option>{SORT_ORDER.DATE_ADDED}</option>
-                  <option>{SORT_ORDER.DUE_DATE}</option>
-                  <option>{SORT_ORDER.IMPORTANCE}</option>
-                </Select>
+                <HStack w="200px">
+                  <Select
+                    onChange={handleMetricChange}
+                    defaultValue={
+                      localStorage.getItem("metric") == null
+                        ? SortMetric.DATE_ADDED
+                        : localStorage.getItem("metric")!
+                    }
+                  >
+                    <option>{SortMetric.DATE_ADDED}</option>
+                    <option>{SortMetric.DUE_DATE}</option>
+                    <option>{SortMetric.IMPORTANCE}</option>
+                  </Select>
+                  <Tooltip label={sortOrder}>
+                    <IconButton
+                      aria-label={sortOrder}
+                      icon={
+                        sortOrder === SortOrder.ASC ? (
+                          <HiSortAscending />
+                        ) : (
+                          <HiSortDescending />
+                        )
+                      }
+                      onClick={handleOrderChange}
+                    />
+                  </Tooltip>
+                </HStack>
               </HStack>
               {/* ========================== Delete Data ========================== */}
               <Divider />

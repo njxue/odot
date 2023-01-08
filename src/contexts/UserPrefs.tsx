@@ -1,18 +1,29 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { SORT_ORDER } from "../helpers/tasks-sort";
+import { SortMetric, SortOrder } from "../helpers/tasks-sort";
 
-function getInitialSortOrder(): SORT_ORDER {
+function getInitialSortMetric(): SortMetric {
+  let metricString: string | null = localStorage.getItem("metric");
+  if (metricString == null) {
+    return SortMetric.DATE_ADDED;
+  } else {
+    return metricString as SortMetric;
+  }
+}
+
+function getInitialSortOrder(): SortOrder {
   let orderString: string | null = localStorage.getItem("order");
   if (orderString == null) {
-    return SORT_ORDER.DATE_ADDED;
+    return SortOrder.DSC;
   } else {
-    return orderString as SORT_ORDER;
+    return orderString as SortOrder;
   }
 }
 
 interface UserPrefsType {
-  sortOrder: SORT_ORDER;
-  setSortOrder: (order: SORT_ORDER) => void;
+  sortMetric: SortMetric;
+  setSortMetric: (metric: SortMetric) => void;
+  sortOrder: SortOrder;
+  setSortOrder: (metric: SortOrder) => void;
 }
 
 const UserPrefsContext = createContext<UserPrefsType | undefined>(undefined);
@@ -20,13 +31,19 @@ const UserPrefsContext = createContext<UserPrefsType | undefined>(undefined);
 export const UserPrefsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [sortOrder, setSortOrder] = useState<SORT_ORDER>(getInitialSortOrder);
- 
+  const [sortMetric, setSortMetric] =
+    useState<SortMetric>(getInitialSortMetric);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(getInitialSortOrder);
+
+  useEffect(() => {
+    localStorage.setItem("metric", sortMetric);
+  }, [sortMetric]);
+
   useEffect(() => {
     localStorage.setItem("order", sortOrder);
   }, [sortOrder]);
 
-  const value = { sortOrder, setSortOrder };
+  const value = { sortMetric, setSortMetric, sortOrder, setSortOrder };
 
   return (
     <UserPrefsContext.Provider value={value}>

@@ -1,14 +1,19 @@
 import ITask from "../interface/ITask";
 import { isAfter } from "./date-time-calculations";
 
-export enum SORT_ORDER {
+export enum SortMetric {
   DATE_ADDED = "Date Added",
   DUE_DATE = "Due Date",
   IMPORTANCE = "Importance",
 }
 
+export enum SortOrder {
+  ASC = "Ascending",
+  DSC = "Descending",
+}
+
 export function sortByDateAdded(tasks: ITask[]): void {
-  tasks.reverse()
+  tasks.reverse();
 }
 
 export function sortByDueDate(tasks: ITask[]): void {
@@ -47,22 +52,30 @@ export function sortByImportance(tasks: ITask[]): void {
   });
 }
 
-export function getSortedTasks(tasks: ITask[], order: SORT_ORDER): ITask[] {
+export function getSortedTasks(
+  tasks: ITask[],
+  metric: SortMetric,
+  order: SortOrder
+): ITask[] {
   const copy: ITask[] = [...tasks];
-  switch (order) {
-    case SORT_ORDER.DATE_ADDED: {
+  switch (metric) {
+    case SortMetric.DATE_ADDED: {
       sortByDateAdded(copy);
-      return copy;
+      break;
     }
 
-    case SORT_ORDER.DUE_DATE: {
+    case SortMetric.DUE_DATE: {
       sortByDueDate(copy);
-      return copy;
+      break;
     }
 
-    case SORT_ORDER.IMPORTANCE: {
+    case SortMetric.IMPORTANCE: {
       sortByImportance(copy);
-      return copy;
+      break;
     }
   }
+  if (order === SortOrder.ASC) {
+    copy.reverse();
+  }
+  return copy;
 }

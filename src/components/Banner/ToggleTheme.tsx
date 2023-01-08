@@ -6,7 +6,7 @@ export const ToggleTheme: React.FC<{}> = () => {
 
   return (
     <Button
-      w="150px"
+      w="200px"
       onClick={toggleColorMode}
       leftIcon={<Icon as={colorMode === "light" ? CiDark : CiBrightnessDown} />}
     >
