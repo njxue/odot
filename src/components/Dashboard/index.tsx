@@ -1,5 +1,4 @@
-import { ref, onValue } from "firebase/database";
-import { db } from "../../config/firebase";
+import { onValue } from "firebase/database";
 import useAuth from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
@@ -7,7 +6,6 @@ import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
 import Loader from "../layout/Loader";
 import { Tabs, useColorModeValue } from "@chakra-ui/react";
-
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { MdOutlineCalendarToday } from "react-icons/md";
@@ -16,10 +14,11 @@ import { useWindowDimensions } from "../../helpers/useWindowDimensions";
 import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { TabNav } from "./TabNav";
 import { TabWindows } from "./TabWindows";
+import { getTodosRef } from "../../helpers/refs";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
-  const todosRef = ref(db, `users/${currUser.uid}/todos`);
+  const todosRef = getTodosRef(currUser.uid);
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [index, setIndex] = useState<number>(1);
@@ -85,7 +84,6 @@ export const Dashboard: React.FC<{}> = () => {
     },
   };
 
-
   return isLoading ? (
     <Loader />
   ) : (
@@ -104,12 +102,7 @@ export const Dashboard: React.FC<{}> = () => {
         setKeywords={setKeywords}
         tabs={tabs}
       />
-      <TabWindows
-        todos={todos}
-        tasks={tasks}
-        keywords={keywords}
-        tabs={tabs}
-      />
+      <TabWindows todos={todos} tasks={tasks} keywords={keywords} tabs={tabs} />
     </Tabs>
   );
 };

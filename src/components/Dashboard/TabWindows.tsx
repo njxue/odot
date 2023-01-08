@@ -19,8 +19,6 @@ import { TodoSettings } from "../TodoSettings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";
-import { SortMetric } from "../../helpers/tasks-sort";
-import React from "react";
 
 export const TabWindows: React.FC<{
   tasks: ITask[];
@@ -29,12 +27,6 @@ export const TabWindows: React.FC<{
   tabs: { [key: string]: { icon: any; color: string } };
 }> = (props) => {
   const { tasks, todos, keywords, tabs } = props;
-
-  // Sort tasks
-  let sortMetric = localStorage.getItem("metric");
-  if (sortMetric == null) {
-    sortMetric = SortMetric.DATE_ADDED;
-  }
 
   // ================================ Filtered list of tasks ==============================================
   const predicateImportant: (task: ITask) => boolean = (task: ITask) =>

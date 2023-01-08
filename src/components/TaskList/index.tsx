@@ -1,7 +1,6 @@
 import ITask from "../../interface/ITask";
 import { Task } from "../Task";
 import styles from "../../styles/Task.module.css";
-
 import useUserPrefs from "../../contexts/UserPrefs";
 import { useState, useEffect } from "react";
 import {

@@ -11,7 +11,6 @@ import {
   Button,
   HStack,
   Input,
-  VStack,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import requireNonNull from "../../helpers/requireNonNull";

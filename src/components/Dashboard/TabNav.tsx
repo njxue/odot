@@ -4,7 +4,6 @@ import {
   Divider,
   Flex,
   VStack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { TabNavContent } from "./TabNavContent";

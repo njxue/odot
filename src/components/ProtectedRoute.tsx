@@ -21,13 +21,11 @@ export const ProtectedRoute: React.FC<{}> = () => {
   }
 
   return (
-    <UserPrefsProvider>
-      <Flex direction="column" w="100vw" h="100vh">
+    <Flex direction="column" w="100vw" h="100vh">
+      <UserPrefsProvider>
         <Banner />
-        <Box flexGrow={1} overflow="hidden">
-          <Outlet />
-        </Box>
-      </Flex>
-    </UserPrefsProvider>
+        <Outlet />
+      </UserPrefsProvider>
+    </Flex>
   );
 };

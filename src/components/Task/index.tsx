@@ -7,7 +7,6 @@ import { DueDate } from "./DueDate";
 import {
   Badge,
   Box,
-  LightMode,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";

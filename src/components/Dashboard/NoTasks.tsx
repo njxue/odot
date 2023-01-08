@@ -2,7 +2,6 @@ import { VStack, Image, Text } from "@chakra-ui/react";
 
 export const NoTasks: React.FC<{
   text: string;
-
   img?: string;
 }> = (props) => {
   const { text, img } = props;

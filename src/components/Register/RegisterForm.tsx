@@ -4,7 +4,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  LightMode,
   VStack,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
