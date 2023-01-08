@@ -25,7 +25,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 3px;
   height: 1px;
 }
 
@@ -34,11 +34,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(#051e3e, darkblue);
+  background-color: #00494c;
   border-radius: 25px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-image: linear-gradient(darkblue, blue);
+  background-color: teal;
   border-radius: 25px;
 }
