@@ -36,9 +36,6 @@ const styles = {
     input: {
       bg: mode("whiteAlpha.900", "transparent")(props),
     },
-    select: {
-      bg: mode("whiteAlpha.900", "transparent")(props),
-    },
   }),
 };
 
