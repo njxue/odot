@@ -24,7 +24,9 @@ export const ProtectedRoute: React.FC<{}> = () => {
     <Flex direction="column" w="100vw" h="100vh">
       <UserPrefsProvider>
         <Banner />
-        <Outlet />
+        <Box flexGrow={1} overflow="auto">
+          <Outlet />
+        </Box>
       </UserPrefsProvider>
     </Flex>
   );
