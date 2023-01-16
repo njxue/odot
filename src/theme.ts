@@ -28,15 +28,17 @@ const components = {
 };
 
 const styles = {
-  global: (props: any) => ({
-    body: {
-      color: mode("gray.800", "whiteAlpha.900")(props),
-      bg: mode("white", "#00282A")(props),
-    },
-    input: {
-      bg: mode("whiteAlpha.900", "transparent")(props),
-    },
-  }),
+  global: (props: any) => {
+    console.log(props);
+    return {
+      body: {
+        color: mode("gray.800", "whiteAlpha.900")(props),
+      },
+      input: {
+        bg: mode("whiteAlpha.900", "transparent")(props),
+      },
+    };
+  },
 };
 
 const theme = extendTheme({

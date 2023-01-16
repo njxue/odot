@@ -4,6 +4,7 @@ import {
   Divider,
   Flex,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { TabNavContent } from "./TabNavContent";
@@ -21,7 +22,11 @@ export const TabNav: React.FC<{
   const w = useWindowDimensions().width;
 
   return (
-    <TabList padding={1} minW="200px">
+    <TabList
+      padding={1}
+      minW="200px"
+      bg={useColorModeValue("white", "#00282A")}
+    >
       <Tab display="none"></Tab>
       <VStack w="100%">
         <TaskSearch setIndex={setIndex} setKeywords={setKeywords} />
