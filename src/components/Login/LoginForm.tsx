@@ -81,9 +81,9 @@ const LoginForm: React.FC<{}> = () => {
 
     auth
       .login(email, password)
-      .then(() => {
+      .then((cred) => {
         setIsLoading(false);
-        if (!auth.isLoggedIn) {
+        if (!cred.user.emailVerified) {
           setEmailIsUnverified(true);
           setEmailErrorMessage(MESSAGE_EMAIL_UNVERIFIED);
         } else {

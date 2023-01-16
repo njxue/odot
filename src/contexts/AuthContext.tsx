@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import {
   sendEmailVerification,
   createUserWithEmailAndPassword,
@@ -38,20 +33,13 @@ interface Props {
 }
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [currUser, setCurrUser] = useState<User | undefined>();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const unsubscribe: Unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (user.emailVerified) {
-          setCurrUser(user);
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
+      if (user && user.emailVerified) {
+        setIsLoggedIn(true);
       } else {
-        setCurrUser(undefined);
         setIsLoggedIn(false);
       }
     });
@@ -78,7 +66,7 @@ function login(email: string, password: string): Promise<any> {
 }
 
 function logout(): Promise<any> {
-  return signOut(auth).then((err) => console.log(err));
+  return signOut(auth).catch((err) => console.log(err));
 }
 
 function getCurrUser(): User {
