@@ -2,13 +2,13 @@ import ITask from "../../interface/ITask";
 import { Task } from "../Task";
 import styles from "../../styles/Task.module.css";
 import useUserPrefs from "../../contexts/UserPrefs";
-import { useState, useEffect } from "react";
+ 
 import {
   SortMetric,
   SortOrder,
   getSortedTasks,
 } from "../../helpers/tasks-sort";
-import Loader from "../layout/Loader";
+ 
 
 interface TaskListProps {
   tasks: ITask[];
@@ -17,8 +17,6 @@ interface TaskListProps {
 
 const TaskList: React.FC<TaskListProps> = (props) => {
   const { tasks, withLabel } = props;
-  const [sortedTasks, setSortedTasks] = useState<ITask[]>(tasks);
-  const [isLoading, setisLoading] = useState<boolean>(true);
 
   let { sortMetric, sortOrder } = useUserPrefs();
 
@@ -31,20 +29,11 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     sortOrder = SortOrder.DSC;
   }
 
-  useEffect(() => {
-    setSortedTasks(getSortedTasks(tasks, sortMetric, sortOrder));
-  }, [sortMetric, sortOrder, tasks]);
-
-  useEffect(() => {
-    setisLoading(false);
-  }, [sortedTasks]);
-
-  return isLoading ? (
-    <Loader />
-  ) : (
+   
+  return (
     <div className={styles.taskList}>
       <ol>
-        {sortedTasks.map((task) => (
+        {getSortedTasks(tasks, sortMetric, sortOrder).map((task) => (
           <li key={task.id}>
             <Task task={task} withLabel={withLabel} />
           </li>

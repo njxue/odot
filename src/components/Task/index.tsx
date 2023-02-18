@@ -4,12 +4,7 @@ import styles from "../../styles/Task.module.css";
 import RemoveTaskButton from "./RemoveTaskButton";
 import ToggleImportance from "./ToggleImportance";
 import { DueDate } from "./DueDate";
-import {
-  Badge,
-  Box,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Badge, Box, Text, useColorModeValue } from "@chakra-ui/react";
 
 interface TaskProps {
   task: ITask;
@@ -27,12 +22,14 @@ export const Task: React.FC<TaskProps> = (props) => {
     >
       <div className={styles.task}>
         <div className={styles.details}>
-          <div className={styles.name}>
+          <div>
             <ToggleCompletionStatusButton
               task={task}
               completed={task.isCompleted}
             />
-            <Text noOfLines={2}>{task.name}</Text>
+            <Text noOfLines={2}>
+              {task.name}
+            </Text>
           </div>
           <div className={styles.labels}>
             {task.dueDate && <DueDate dueDate={task.dueDate} />}

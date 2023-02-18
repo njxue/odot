@@ -15,6 +15,7 @@ import {
 } from "../../helpers/auth-error-codes";
 import PreLoginForm from "../layout/PreLoginForm";
 import formStyles from "../../styles/Form.module.css";
+import { User } from "firebase/auth";
 
 //======================================== Error messages ========================================
 const MESSAGE_PASSWORD_MISSING = "Password is required";
@@ -83,9 +84,11 @@ const LoginForm: React.FC<{}> = () => {
       .login(email, password)
       .then((cred) => {
         setIsLoading(false);
-        if (!cred.user.emailVerified) {
+        const user: User = auth.reloadedCurrUser();
+        if (!user.emailVerified) {
           setEmailIsUnverified(true);
           setEmailErrorMessage(MESSAGE_EMAIL_UNVERIFIED);
+          auth.logout();
         } else {
           navigate("/");
         }

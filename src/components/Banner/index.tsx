@@ -11,6 +11,7 @@ export const Banner: React.FC<{}> = () => {
   function handleClick(): void {
     logout();
   }
+  
   return (
     <div className={bannerStyles.banner}>
       <Image src={require("../../assets/logo.png")} pointerEvents="none" />

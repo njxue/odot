@@ -12,6 +12,7 @@ import { auth } from "../config/firebase";
 
 interface AuthContextType {
   getCurrUser: () => User;
+  reloadedCurrUser: () => User;
   register: (email: string, password: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => Promise<any>;
@@ -38,6 +39,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const unsubscribe: Unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
+        console.log("user logged in")
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -51,6 +53,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     login,
     isLoggedIn,
     logout,
+    reloadedCurrUser
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
@@ -66,6 +69,7 @@ function login(email: string, password: string): Promise<any> {
 }
 
 function logout(): Promise<any> {
+  console.log(auth.currentUser);
   return signOut(auth).catch((err) => console.log(err));
 }
 
@@ -74,4 +78,12 @@ function getCurrUser(): User {
     throw new Error("Not logged in!");
   }
   return auth.currentUser;
+}
+
+function reloadedCurrUser(): User {
+  if (auth.currentUser == null) {
+    throw new Error("Not logged in!");
+  }
+  auth.currentUser.reload();
+  return auth.currentUser
 }
