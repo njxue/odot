@@ -1,0 +1,31 @@
+{
+    "background_color": "#ffffff",
+    "description": "Automated todo list",
+    "dir": "ltr",
+    "display": "standalone",
+    "name": "Odo.t",
+    "orientation": "any",
+    "scope": "/",
+    "short_name": "Odo.t",
+    "start_url": "/",
+    "theme_color": "#00494c",
+    "categories": [
+      "education",
+      "personalization",
+      "productivity",
+      "utilities"
+    ],
+    "screenshots": [],
+    "icons": [
+      {
+        "src": "/favicon.png",
+        "type": "image/png",
+        "sizes": "132x133"
+      },
+      {
+        "src": "/favicon.ico",
+        "type": "image/x-icon"
+      }
+    ],
+    "shortcuts": []
+  }
