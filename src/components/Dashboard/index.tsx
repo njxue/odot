@@ -5,7 +5,7 @@ import { User } from "firebase/auth";
 import ITodo from "../../interface/ITodo";
 import ITask from "../../interface/ITask";
 import Loader from "../layout/Loader";
-import { Tabs, useColorModeValue } from "@chakra-ui/react";
+import { Divider, Tabs, useColorModeValue } from "@chakra-ui/react";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { MdOutlineCalendarToday } from "react-icons/md";
@@ -60,27 +60,27 @@ export const Dashboard: React.FC<{}> = () => {
   const tabs = {
     Organised: {
       icon: RiArchiveDrawerFill,
-      color: useColorModeValue("#F2F2F2", "#415F5F"),
+      color: useColorModeValue("#F2F2F2", "#00282A"),
     },
     All: {
       icon: TbListDetails,
-      color: useColorModeValue("#D2EFED", "#415F5F"),
+      color: useColorModeValue("#D2EFED", "#00282A"),
     },
     Important: {
       icon: StarIcon,
-      color: useColorModeValue("#F3DDBF", "#415F5F"),
+      color: useColorModeValue("#F3DDBF", "#00282A"),
     },
     Today: {
       icon: MdOutlineCalendarToday,
-      color: useColorModeValue("#F4DFD1", "#415F5F"),
+      color: useColorModeValue("#F4DFD1", "#00282A"),
     },
     Completed: {
       icon: CheckIcon,
-      color: useColorModeValue("#BFF3C3", "#415F5F"),
+      color: useColorModeValue("#BFF3C3", "#00282A"),
     },
     Overdue: {
       icon: AiOutlineFieldTime,
-      color: useColorModeValue("#F9C0C0", "#415F5F"),
+      color: useColorModeValue("#F9C0C0", "#00282A"),
     },
   };
 
@@ -102,6 +102,7 @@ export const Dashboard: React.FC<{}> = () => {
         setKeywords={setKeywords}
         tabs={tabs}
       />
+      <Divider orientation="vertical" borderColor="whiteAlpha.800" />
       <TabWindows todos={todos} tasks={tasks} keywords={keywords} tabs={tabs} />
     </Tabs>
   );

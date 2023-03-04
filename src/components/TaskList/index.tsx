@@ -29,7 +29,6 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     sortOrder = SortOrder.DSC;
   }
 
-   
   return (
     <div className={styles.taskList}>
       <ol>

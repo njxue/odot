@@ -29,7 +29,6 @@ const components = {
 
 const styles = {
   global: (props: any) => {
-    console.log(props);
     return {
       body: {
         color: mode("gray.800", "whiteAlpha.900")(props),

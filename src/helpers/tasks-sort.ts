@@ -58,6 +58,7 @@ export function getSortedTasks(
   order: SortOrder
 ): ITask[] {
   const copy: ITask[] = [...tasks];
+   
   switch (metric) {
     case SortMetric.DATE_ADDED: {
       sortByDateAdded(copy);

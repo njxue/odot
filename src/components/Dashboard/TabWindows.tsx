@@ -47,8 +47,8 @@ export const TabWindows: React.FC<{
     task.name.toLowerCase().includes(keywords.toLowerCase());
   // =======================================================================================================
 
-  const bgSearchedLists = useColorModeValue("#E3E9FB", "#415F5F");
-  const bgCreatedLists = useColorModeValue("#D2EFED", "#415F5F");
+  const bgSearchedLists = useColorModeValue("#E3E9FB", "#00282A");
+  const bgCreatedLists = useColorModeValue("#D2EFED", "#00282A");
 
   return (
     <TabPanels flexGrow={10} h="100%" overflow="hidden">

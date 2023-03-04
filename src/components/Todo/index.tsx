@@ -104,10 +104,14 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, [autoTasksToPush]);
 
   const accordionBgColor = useColorModeValue("white", "transparent");
-  const panelBgColor = useColorModeValue("#E7E7E7", "#00282A");
+  const accordionHoverColor = useColorModeValue("white", "#013436")
+  const panelBgColor = useColorModeValue("#E7E7E7", "#013436");
 
   return (
-    <AccordionItem bgColor={accordionBgColor}>
+    <AccordionItem
+      bgColor={accordionBgColor}
+      _hover={{ backgroundColor: accordionHoverColor }}
+    >
       {({ isExpanded }) => (
         <div>
           <h2>
