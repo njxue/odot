@@ -26,6 +26,7 @@ export const Dashboard: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const w = useWindowDimensions().width;
+  const maxWidth = 500;
 
   useEffect(() => {
     onValue(todosRef, (snapshot) => {
@@ -93,7 +94,7 @@ export const Dashboard: React.FC<{}> = () => {
       onChange={(i) => setIndex(i)}
       w="100%"
       display="flex"
-      flexDir={w < 500 ? "column" : "row"}
+      flexDir={w < maxWidth ? "column" : "row"}
       h="100%"
     >
       <TabNav
@@ -102,7 +103,10 @@ export const Dashboard: React.FC<{}> = () => {
         setKeywords={setKeywords}
         tabs={tabs}
       />
-      <Divider orientation="vertical" borderColor="whiteAlpha.800" />
+      <Divider
+        orientation={w < maxWidth ? "horizontal" : "vertical"}
+        borderColor="whiteAlpha.800"
+      />
       <TabWindows todos={todos} tasks={tasks} keywords={keywords} tabs={tabs} />
     </Tabs>
   );
