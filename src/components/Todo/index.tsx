@@ -104,7 +104,8 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
   }, [autoTasksToPush]);
 
   const accordionBgColor = useColorModeValue("white", "transparent");
-  const accordionHoverColor = useColorModeValue("white", "#013436")
+  const accordionHoverColor = useColorModeValue("white", "#013436");
+  const accordionExpandedBorderColor = useColorModeValue("white", "#00494C");
   const panelBgColor = useColorModeValue("#E7E7E7", "#013436");
 
   return (
@@ -114,24 +115,30 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     >
       {({ isExpanded }) => (
         <div>
-          <h2>
-            <AccordionButton fontSize="xl">
-              <HStack
-                justifyContent="space-between"
-                w="100%"
-                alignItems="center"
-                alignContent="start"
-              >
-                <Text fontWeight="bold" textAlign="start">
-                  {todo.name}
-                </Text>
-                <HStack gap={3}>
-                  {<Progress value={percentComplete} />}
-                  <AccordionIcon />
-                </HStack>
+          <AccordionButton
+            fontSize="xl"
+            _expanded={{
+              backgroundColor: panelBgColor,
+              borderBottom: "3px solid",
+              borderTop: "3px solid",
+              borderColor: accordionExpandedBorderColor,
+            }}
+          >
+            <HStack
+              justifyContent="space-between"
+              w="100%"
+              alignItems="center"
+              alignContent="start"
+            >
+              <Text fontWeight="bold" textAlign="start">
+                {todo.name}
+              </Text>
+              <HStack gap={3}>
+                {<Progress value={percentComplete} />}
+                <AccordionIcon />
               </HStack>
-            </AccordionButton>
-          </h2>
+            </HStack>
+          </AccordionButton>
 
           <AccordionPanel bgColor={panelBgColor}>
             <div className={todoStyles.taskContainer}>
