@@ -111,11 +111,7 @@ export const Task: React.FC<TaskProps> = (props) => {
                 defaultValue={
                   task.dueDate ? getDateString(new Date(task.dueDate)) : ""
                 }
-                min={
-                  task.dueDate
-                    ? getDateString(new Date(task.dueDate))
-                    : getDateString(getTimeNow())
-                }
+                min={getDateString(getTimeNow())}
               />
             )}
             {withLabel == true && <Badge>{task.todoName}</Badge>}
