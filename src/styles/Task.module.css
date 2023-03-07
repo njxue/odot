@@ -8,7 +8,7 @@
   max-height: 200px;
 }
 
-.task > .details {
+.details {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -18,11 +18,12 @@
 }
 
 .task .controls {
-  justify-content: center;
+  justify-content: right;
+  align-items: center;
   display: flex;
-  width: 50px;
   flex-direction: row;
   gap: 10px;
+  width: 100px;
   flex-wrap: wrap;
 }
 
@@ -36,6 +37,7 @@
 .details > .labels {
   gap: 5px;
   flex-wrap: wrap;
+  flex-grow: 0;
 }
 
 .task .dueDate {
