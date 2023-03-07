@@ -23,6 +23,7 @@ import {
   getDateString,
   getTimeNow,
 } from "../../helpers/date-time-calculations";
+import { maxTaskNameLength } from "../../helpers/global-constants";
 
 interface TaskProps {
   task: ITask;
@@ -60,7 +61,7 @@ export const Task: React.FC<TaskProps> = (props) => {
     }
 
     const taskRef = getTaskRef(uid, task.todoId, task.id);
-    update(taskRef, { name: taskName.trim(), dueDate }).then(() =>
+    update(taskRef, { name: taskName.trim().substring(0, maxTaskNameLength), dueDate }).then(() =>
       setIsEditing(false)
     );
   }
