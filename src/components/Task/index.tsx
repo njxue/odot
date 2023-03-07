@@ -69,6 +69,7 @@ export const Task: React.FC<TaskProps> = (props) => {
     <Box
       bg={bgColor}
       _hover={hoverStyles}
+      style={isEditing ? hoverStyles : {}}
       borderRadius={5}
       borderWidth={1}
       borderColor={borderColor}
@@ -92,9 +93,7 @@ export const Task: React.FC<TaskProps> = (props) => {
                     ref={inputRef}
                     type="text"
                     defaultValue={task.name}
-                    backgroundColor="#00494C"
-                    color="white"
-                    borderColor="whiteAlpha.500"
+                    backgroundColor={bgColor}
                   />
                 </form>
               ) : (
