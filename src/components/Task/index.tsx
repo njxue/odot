@@ -1,29 +1,33 @@
 import ITask from "../../interface/ITask";
 import ToggleCompletionStatusButton from "./ToggleCompletionStatusButton";
 import styles from "../../styles/Task.module.css";
-import RemoveTaskButton from "./RemoveTaskButton";
-import ToggleImportance from "./ToggleImportance";
-import { DueDate } from "./DueDate";
 import {
-  Badge,
   Box,
+  Center,
   Flex,
+  FormControl,
   Input,
+  Spinner,
   Text,
-  Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 import { getTaskRef } from "../../helpers/refs";
+
 import useAuth from "../../contexts/AuthContext";
 import { update } from "firebase/database";
+
 import {
-  getDateString,
   getDateTimeString,
   getTimeNow,
 } from "../../helpers/date-time-calculations";
+import { useWindowDimensions } from "../../helpers/useWindowDimensions";
 import { maxTaskNameLength } from "../../helpers/global-constants";
+
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+
+import { TaskControls } from "./TaskControls";
+import { TaskLabels } from "./TaskLabels";
 
 interface TaskProps {
   task: ITask;
@@ -35,7 +39,10 @@ export const Task: React.FC<TaskProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const uid = useAuth().getCurrUser().uid;
+
+  const w = useWindowDimensions().width;
 
   const bgColor = useColorModeValue("white", "transparent");
   const borderColor = useColorModeValue("transparent", "whiteAlpha.600");
@@ -46,6 +53,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 
   function handleEdit(e: React.FormEvent) {
     e.preventDefault();
+    setIsLoading(true);
     const taskName: string | undefined = inputRef.current?.value;
     if (taskName === undefined || taskName.trim().length == 0) {
       return;
@@ -64,7 +72,10 @@ export const Task: React.FC<TaskProps> = (props) => {
     update(taskRef, {
       name: taskName.trim().substring(0, maxTaskNameLength),
       dueDate,
-    }).then(() => setIsEditing(false));
+    }).then(() => {
+      setIsEditing(false);
+      setIsLoading(false);
+    });
   }
 
   return (
@@ -78,66 +89,76 @@ export const Task: React.FC<TaskProps> = (props) => {
     >
       <div className={styles.task}>
         <div className={styles.details}>
-          <Flex flexGrow={1}>
-            <Box>
-              {!isEditing && (
-                <ToggleCompletionStatusButton
-                  task={task}
-                  completed={task.isCompleted}
-                />
-              )}
-            </Box>
-            <Box flexGrow={1}>
+          <Flex flexGrow={1} maxW="100%">
+            {!isEditing && (
+              <ToggleCompletionStatusButton
+                task={task}
+                completed={task.isCompleted}
+              />
+            )}
+
+            <Box flexGrow={1} maxW="100%">
               {isEditing ? (
-                <form onSubmit={handleEdit}>
-                  <Input
-                    required
-                    ref={inputRef}
-                    type="text"
-                    defaultValue={task.name}
-                    backgroundColor={bgColor}
-                  />
-                </form>
+                <Flex flexWrap="wrap" alignItems="center" w="100%" gap={3}>
+                  <FormControl
+                    flexGrow={1}
+                    flexBasis="90%"
+                    maxW="100%"
+                    overflow="hidden"
+                  >
+                    <form onSubmit={handleEdit}>
+                      <Flex gap={1} flexWrap="wrap" w="100%">
+                        <Input
+                          required
+                          disabled={isLoading}
+                          ref={inputRef}
+                          type="text"
+                          defaultValue={task.name}
+                          backgroundColor={bgColor}
+                        />
+                        {isEditing && (
+                          <Input
+                            disabled={isLoading}
+                            flexGrow={1}
+                            fontSize="sm"
+                            flexBasis="200px"
+                            type="datetime-local"
+                            ref={dateRef}
+                            defaultValue={
+                              task.dueDate
+                                ? getDateTimeString(new Date(task.dueDate))
+                                : ""
+                            }
+                            min={getDateTimeString(getTimeNow())}
+                          />
+                        )}
+                      </Flex>
+                    </form>
+                  </FormControl>
+
+                  {isLoading ? (
+                    <Center w="50px">
+                      <Spinner />
+                    </Center>
+                  ) : (
+                    <Flex wrap="nowrap" gap={3} w="50px">
+                      <CheckIcon cursor="pointer" onClick={handleEdit} />
+                      <CloseIcon
+                        cursor="pointer"
+                        onClick={() => setIsEditing(false)}
+                      />
+                    </Flex>
+                  )}
+                </Flex>
               ) : (
                 <Text noOfLines={2}>{task.name}</Text>
               )}
             </Box>
           </Flex>
-          <div className={styles.labels}>
-            {!isEditing && task.dueDate && <DueDate dueDate={task.dueDate} />}
-            {isEditing && (
-              <Input
-                type="datetime-local"
-                ref={dateRef}
-                defaultValue={
-                  task.dueDate ? getDateTimeString(new Date(task.dueDate)) : ""
-                }
-                min={getDateTimeString(getTimeNow())}
-              />
-            )}
-            {withLabel == true && <Badge>{task.todoName}</Badge>}
-          </div>
+          {!isEditing && <TaskLabels task={task} isEditing={isEditing} />}
         </div>
 
-        <div className={styles.controls}>
-          {!isEditing && (
-            <ToggleImportance task={task} disabled={task.isCompleted} />
-          )}
-          {!isEditing && <RemoveTaskButton task={task} />}
-          {isEditing ? (
-            <Flex wrap="nowrap" gap={3}>
-              <CheckIcon cursor="pointer" onClick={handleEdit} />
-              <CloseIcon cursor="pointer" onClick={() => setIsEditing(false)} />
-            </Flex>
-          ) : (
-            <Tooltip label="Edit">
-              <EditIcon
-                cursor="pointer"
-                onClick={() => setIsEditing(!isEditing)}
-              />
-            </Tooltip>
-          )}
-        </div>
+        {!isEditing && <TaskControls task={task} setIsEditing={setIsEditing} />}
       </div>
     </Box>
   );

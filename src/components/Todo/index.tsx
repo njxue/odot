@@ -113,44 +113,40 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
       bgColor={accordionBgColor}
       _hover={{ backgroundColor: accordionHoverColor }}
     >
-      {({ isExpanded }) => (
-        <div>
-          <AccordionButton
-            fontSize="xl"
-            _expanded={{
-              backgroundColor: panelBgColor,
-              borderBottom: "3px solid",
-              borderTop: "3px solid",
-              borderColor: accordionExpandedBorderColor,
-            }}
-          >
-            <HStack
-              justifyContent="space-between"
-              w="100%"
-              alignItems="center"
-              alignContent="start"
-            >
-              <Text fontWeight="bold" textAlign="start">
-                {todo.name}
-              </Text>
-              <HStack gap={3}>
-                {<Progress value={percentComplete} />}
-                <AccordionIcon />
-              </HStack>
-            </HStack>
-          </AccordionButton>
+      <AccordionButton
+        fontSize="xl"
+        _expanded={{
+          backgroundColor: panelBgColor,
+          borderBottom: "3px solid",
+          borderTop: "3px solid",
+          borderColor: accordionExpandedBorderColor,
+        }}
+      >
+        <HStack
+          justifyContent="space-between"
+          w="100%"
+          alignItems="center"
+          alignContent="start"
+        >
+          <Text fontWeight="bold" textAlign="start">
+            {todo.name}
+          </Text>
+          <HStack gap={3}>
+            {<Progress value={percentComplete} />}
+            <AccordionIcon />
+          </HStack>
+        </HStack>
+      </AccordionButton>
 
-          <AccordionPanel bgColor={panelBgColor}>
-            <div className={todoStyles.taskContainer}>
-              {todo.tasks && <TaskList tasks={tasks} />}
-            </div>
-            <HStack>
-              <AddTask todoId={todo.id} todoName={todo.name} />
-              <TodoSettings todoId={todo.id} todoName={todo.name} />
-            </HStack>
-          </AccordionPanel>
+      <AccordionPanel bgColor={panelBgColor} maxW="100%">
+        <div className={todoStyles.taskContainer}>
+          {todo.tasks && <TaskList tasks={tasks} />}
         </div>
-      )}
+        <HStack maxW="100%">
+          <AddTask todoId={todo.id} todoName={todo.name} />
+          <TodoSettings todoId={todo.id} todoName={todo.name} />
+        </HStack>
+      </AccordionPanel>
     </AccordionItem>
   );
 };

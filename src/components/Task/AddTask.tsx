@@ -71,7 +71,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   }
 
   return (
-    <FormControl>
+    <FormControl maxW="100%">
       <form onSubmit={handleAdd}>
         <Flex w="100%" gap={1} flexWrap="wrap" alignItems="center">
           <Flex w="75%" gap={1} flexWrap="wrap" flexGrow={1}>
@@ -79,19 +79,19 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
               bg={useColorModeValue("whiteAlpha.900", "transparent")}
               ref={taskRef}
               flexGrow={1}
-              maxW="100%"
+              flexBasis="500px"
               type="text"
               placeholder="Task"
               required
             />
-            <Flex gap={1} flexGrow={1} w="20%">
+            <Flex gap={1} flexGrow={1} maxW="100%">
               <Input
+                fontSize="sm"
                 bg={useColorModeValue("whiteAlpha.900", "transparent")}
-                maxW="100%"
+                
                 ref={dateRef}
                 type="datetime-local"
                 min={getDateTimeString(getTimeNow())}
-                flexGrow={1}
               />
               <AddButton />
             </Flex>

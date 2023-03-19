@@ -18,9 +18,8 @@ export const DueDate: React.FC<{ dueDate: Date }> = (props) => {
         <Text color={isDue ? "red" : "auto"} fontSize="xs">
           {isToday(new Date(props.dueDate))
             ? "Today"
-            : getDateString(new Date(props.dueDate)) +
-              ", " +
-              getTimeString(new Date(props.dueDate))}
+            : getDateString(new Date(props.dueDate))}
+          , {getTimeString(new Date(props.dueDate))}
         </Text>
       </VStack>
     </div>
