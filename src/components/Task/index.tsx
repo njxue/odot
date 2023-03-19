@@ -156,7 +156,7 @@ export const Task: React.FC<TaskProps> = (props) => {
               )}
             </Box>
           </Flex>
-          {!isEditing && <TaskLabels task={task} isEditing={isEditing} />}
+          {!isEditing && <TaskLabels task={task} isEditing={isEditing} withLabel/>}
         </div>
 
         {!isEditing && <TaskControls task={task} setIsEditing={setIsEditing} />}
