@@ -110,28 +110,29 @@ export const Task: React.FC<TaskProps> = (props) => {
                       <Flex gap={1} flexWrap="wrap" w="100%">
                         <Input
                           required
+                          flexGrow={1}
+                          flexBasis="500px"
                           disabled={isLoading}
                           ref={inputRef}
                           type="text"
                           defaultValue={task.name}
                           backgroundColor={bgColor}
                         />
-                        {isEditing && (
-                          <Input
-                            disabled={isLoading}
-                            flexGrow={1}
-                            fontSize="sm"
-                            flexBasis="200px"
-                            type="datetime-local"
-                            ref={dateRef}
-                            defaultValue={
-                              task.dueDate
-                                ? getDateTimeString(new Date(task.dueDate))
-                                : ""
-                            }
-                            min={getDateTimeString(getTimeNow())}
-                          />
-                        )}
+
+                        <Input
+                          disabled={isLoading}
+                          flexGrow={1}
+                          fontSize="sm"
+                          flexBasis="200px"
+                          type="datetime-local"
+                          ref={dateRef}
+                          defaultValue={
+                            task.dueDate
+                              ? getDateTimeString(new Date(task.dueDate))
+                              : ""
+                          }
+                          min={getDateTimeString(getTimeNow())}
+                        />
                       </Flex>
                     </form>
                   </FormControl>
