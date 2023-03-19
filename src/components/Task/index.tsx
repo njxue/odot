@@ -7,7 +7,6 @@ import { DueDate } from "./DueDate";
 import {
   Badge,
   Box,
-  Button,
   Flex,
   Input,
   Text,
@@ -21,6 +20,7 @@ import useAuth from "../../contexts/AuthContext";
 import { update } from "firebase/database";
 import {
   getDateString,
+  getDateTimeString,
   getTimeNow,
 } from "../../helpers/date-time-calculations";
 import { maxTaskNameLength } from "../../helpers/global-constants";
@@ -61,9 +61,10 @@ export const Task: React.FC<TaskProps> = (props) => {
     }
 
     const taskRef = getTaskRef(uid, task.todoId, task.id);
-    update(taskRef, { name: taskName.trim().substring(0, maxTaskNameLength), dueDate }).then(() =>
-      setIsEditing(false)
-    );
+    update(taskRef, {
+      name: taskName.trim().substring(0, maxTaskNameLength),
+      dueDate,
+    }).then(() => setIsEditing(false));
   }
 
   return (
@@ -106,12 +107,12 @@ export const Task: React.FC<TaskProps> = (props) => {
             {!isEditing && task.dueDate && <DueDate dueDate={task.dueDate} />}
             {isEditing && (
               <Input
-                type="date"
+                type="datetime-local"
                 ref={dateRef}
                 defaultValue={
-                  task.dueDate ? getDateString(new Date(task.dueDate)) : ""
+                  task.dueDate ? getDateTimeString(new Date(task.dueDate)) : ""
                 }
-                min={getDateString(getTimeNow())}
+                min={getDateTimeString(getTimeNow())}
               />
             )}
             {withLabel == true && <Badge>{task.todoName}</Badge>}

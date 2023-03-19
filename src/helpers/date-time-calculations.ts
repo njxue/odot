@@ -54,7 +54,23 @@ function getDateString(d: Date): string {
   const mth: number = d.getMonth() + 1;
   const mthStr: string = mth.toString().padStart(2, "0");
   const yr: number = d.getFullYear();
-  return `${yr}-${mthStr}-${date}`;
+  return `${date}/${mthStr}/${yr % 2000}`;
+}
+
+function getDateTimeString(d: Date): string {
+  const date: string = d.getDate().toString().padStart(2, "0");
+  const mth: number = d.getMonth() + 1;
+  const mthStr: string = mth.toString().padStart(2, "0");
+  const yr: number = d.getFullYear();
+  const hr: number = d.getHours();
+  const min: number = d.getMinutes();
+  return `${yr}-${mthStr}-${date}T${hr}:${min}`;
+}
+
+function getTimeString(d: Date): string {
+  const hr: number = d.getHours();
+  const min: number = d.getMinutes();
+  return `${hr}:${min}`;
 }
 
 function isToday(d: Date): boolean {
@@ -75,6 +91,8 @@ export {
   isAfter,
   getTimeNow,
   getDateString,
+  getDateTimeString,
+  getTimeString,
   isToday,
   toEndOfDay,
 };

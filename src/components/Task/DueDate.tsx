@@ -1,7 +1,8 @@
-import { Icon, Text } from "@chakra-ui/react";
+import { Icon, Text, VStack } from "@chakra-ui/react";
 import { AiTwotoneCalendar } from "react-icons/ai";
 import {
   getDateString,
+  getTimeString,
   isAfter,
   isToday,
 } from "../../helpers/date-time-calculations";
@@ -13,11 +14,15 @@ export const DueDate: React.FC<{ dueDate: Date }> = (props) => {
   return (
     <div className={styles.dueDate}>
       <Icon color={isDue ? "red" : "auto"} as={AiTwotoneCalendar} />
-      <Text color={isDue ? "red" : "auto"} fontSize="xs">
-        {isToday(new Date(props.dueDate))
-          ? "Today"
-          : getDateString(new Date(props.dueDate))}
-      </Text>
+      <VStack align="start" gap={0}>
+        <Text color={isDue ? "red" : "auto"} fontSize="xs">
+          {isToday(new Date(props.dueDate))
+            ? "Today"
+            : getDateString(new Date(props.dueDate)) +
+              ", " +
+              getTimeString(new Date(props.dueDate))}
+        </Text>
+      </VStack>
     </div>
   );
 };

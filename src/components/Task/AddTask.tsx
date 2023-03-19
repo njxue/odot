@@ -6,15 +6,16 @@ import { getTasksRef } from "../../helpers/refs";
 import getDatabaseKey from "../../helpers/get-db-key";
 import resetInputField from "../../helpers/resetInputField";
 import useAuth from "../../contexts/AuthContext";
-import formStyles from "../../styles/Form.module.css";
+import { useColorModeValue } from "@chakra-ui/react";
 import AddButton from "../layout/AddButton";
 import {
   getTimeNow,
-  getDateString,
+  getDateTimeString,
   toEndOfDay,
 } from "../../helpers/date-time-calculations";
 import { maxTaskNameLength } from "../../helpers/global-constants";
 import requireNonNull from "../../helpers/requireNonNull";
+import { Flex, FormControl, Input } from "@chakra-ui/react";
 
 interface AddTaskProps {
   todoId: string;
@@ -39,7 +40,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     if (taskName.length === 0) {
       return;
     }
-
+    console.log(dueDate);
     addManualTask(currUser, todoId, taskName, dueDate!);
   }
 
@@ -49,6 +50,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     taskName: string,
     dueDate: string
   ) {
+    console.log(dueDate);
     const currUser = user;
     const tasksRef = getTasksRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);
@@ -59,7 +61,7 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
       name: taskName.substring(0, maxTaskNameLength),
       isCompleted: false,
       isImportant: false,
-      dueDate: toEndOfDay(new Date(dueDate)),
+      dueDate: new Date(dueDate),
     };
 
     resetInputField(taskRef);
@@ -69,11 +71,34 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   }
 
   return (
-    <form onSubmit={handleAdd} className={formStyles.form}>
-      <input ref={taskRef} type="text" placeholder="Task" required />
-      <input ref={dateRef} type="date" min={getDateString(getTimeNow())} />
-      <AddButton />
-    </form>
+    <FormControl>
+      <form onSubmit={handleAdd}>
+        <Flex w="100%" gap={1} flexWrap="wrap" alignItems="center">
+          <Flex w="75%" gap={1} flexWrap="wrap" flexGrow={1}>
+            <Input
+              bg={useColorModeValue("whiteAlpha.900", "transparent")}
+              ref={taskRef}
+              flexGrow={1}
+              maxW="100%"
+              type="text"
+              placeholder="Task"
+              required
+            />
+            <Flex gap={1} flexGrow={1} w="20%">
+              <Input
+                bg={useColorModeValue("whiteAlpha.900", "transparent")}
+                maxW="100%"
+                ref={dateRef}
+                type="datetime-local"
+                min={getDateTimeString(getTimeNow())}
+                flexGrow={1}
+              />
+              <AddButton />
+            </Flex>
+          </Flex>
+        </Flex>
+      </form>
+    </FormControl>
   );
 };
 
