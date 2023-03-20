@@ -19,6 +19,7 @@ import { TodoSettings } from "../TodoSettings";
 import { ClearAllTasks } from "../TaskList/ClearAllTasks";
 import ITodo from "../../interface/ITodo";
 import { NoTasks } from "./NoTasks";
+import { darkPrimary } from "../../styles/global-colours";
 
 export const TabWindows: React.FC<{
   tasks: ITask[];
@@ -47,8 +48,8 @@ export const TabWindows: React.FC<{
     task.name.toLowerCase().includes(keywords.toLowerCase());
   // =======================================================================================================
 
-  const bgSearchedLists = useColorModeValue("#E3E9FB", "#00282A");
-  const bgCreatedLists = useColorModeValue("#D2EFED", "#00282A");
+  const bgSearchedLists = useColorModeValue("#E3E9FB", darkPrimary);
+  const bgCreatedLists = useColorModeValue("#D2EFED", darkPrimary);
 
   return (
     <TabPanels flexGrow={10} h="100%" overflow="hidden">

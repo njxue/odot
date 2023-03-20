@@ -26,6 +26,11 @@ import { TodoSettings } from "../TodoSettings";
 import getDatabaseKey from "../../helpers/get-db-key";
 import { MdBrightness1 } from "react-icons/md";
 import { UserPrefsProvider } from "../../contexts/UserPrefs";
+import {
+  darkSecondary,
+  lightPrimary,
+  lightSecondary,
+} from "../../styles/global-colours";
 
 interface TodoProps {
   todo: ITodo;
@@ -103,10 +108,13 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
     pushAutoTasks(autoTasksToPush);
   }, [autoTasksToPush]);
 
-  const accordionBgColor = useColorModeValue("white", "transparent");
-  const accordionHoverColor = useColorModeValue("white", "#013436");
-  const accordionExpandedBorderColor = useColorModeValue("white", "#00494C");
-  const panelBgColor = useColorModeValue("#E7E7E7", "#013436");
+  const accordionBgColor = useColorModeValue(lightPrimary, "transparent");
+  const accordionHoverColor = useColorModeValue(lightPrimary, darkSecondary);
+  const accordionExpandedBorderColor = useColorModeValue(
+    lightPrimary,
+    darkSecondary
+  );
+  const panelBgColor = useColorModeValue(lightSecondary, darkSecondary);
 
   return (
     <AccordionItem

@@ -11,6 +11,7 @@ import { TabNavContent } from "./TabNavContent";
 import ITodo from "../../interface/ITodo";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
 import { TaskSearch } from "./TaskSearch";
+import { darkPrimary, lightPrimary } from "../../styles/global-colours";
 
 export const TabNav: React.FC<{
   todos: ITodo[];
@@ -25,7 +26,7 @@ export const TabNav: React.FC<{
     <TabList
       padding={1}
       minW="200px"
-      bg={useColorModeValue("white", "#00282A")}
+      bg={useColorModeValue(lightPrimary, darkPrimary)}
     >
       <Tab display="none"></Tab>
       <VStack w="100%">

@@ -15,6 +15,7 @@ import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 import { TabNav } from "./TabNav";
 import { TabWindows } from "./TabWindows";
 import { getTodosRef } from "../../helpers/refs";
+import { darkPrimary } from "../../styles/global-colours";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -61,27 +62,27 @@ export const Dashboard: React.FC<{}> = () => {
   const tabs = {
     Organised: {
       icon: RiArchiveDrawerFill,
-      color: useColorModeValue("#F2F2F2", "#00282A"),
+      color: useColorModeValue("#F2F2F2", darkPrimary),
     },
     All: {
       icon: TbListDetails,
-      color: useColorModeValue("#D2EFED", "#00282A"),
+      color: useColorModeValue("#D2EFED", darkPrimary),
     },
     Important: {
       icon: StarIcon,
-      color: useColorModeValue("#F3DDBF", "#00282A"),
+      color: useColorModeValue("#F3DDBF", darkPrimary),
     },
     Today: {
       icon: MdOutlineCalendarToday,
-      color: useColorModeValue("#F4DFD1", "#00282A"),
+      color: useColorModeValue("#F4DFD1", darkPrimary),
     },
     Completed: {
       icon: CheckIcon,
-      color: useColorModeValue("#BFF3C3", "#00282A"),
+      color: useColorModeValue("#BFF3C3", darkPrimary),
     },
     Overdue: {
       icon: AiOutlineFieldTime,
-      color: useColorModeValue("#F9C0C0", "#00282A"),
+      color: useColorModeValue("#F9C0C0", darkPrimary),
     },
   };
 

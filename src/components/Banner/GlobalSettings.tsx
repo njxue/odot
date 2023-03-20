@@ -16,17 +16,19 @@ import {
   Divider,
   IconButton,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { ToggleTheme } from "./ToggleTheme";
 import { ChangeEvent } from "react";
 import { SortMetric, SortOrder } from "../../helpers/tasks-sort";
 import useUserPrefs from "../../contexts/UserPrefs";
 import { DeleteData } from "./DeleteData";
+import { lightSecondary, darkSecondary } from "../../styles/global-colours";
 
 export const GlobalSettings: React.FC<{}> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { setSortMetric, setSortOrder, sortOrder } = useUserPrefs();
+  const bgColor = useColorModeValue("white", darkSecondary);
 
   function handleMetricChange(e: ChangeEvent<HTMLSelectElement>): void {
     let metric: SortMetric;
@@ -51,7 +53,7 @@ export const GlobalSettings: React.FC<{}> = () => {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={bgColor}>
           <ModalHeader>Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

@@ -11,6 +11,7 @@ import SelectFreq from "./SelectFreq";
 import AddButton from "../layout/AddButton";
 import resetInputField from "../../helpers/resetInputField";
 import requireNonNull from "../../helpers/requireNonNull";
+import { Box, Flex, FormControl, Input } from "@chakra-ui/react";
 
 interface AddAutoProps {
   todoId: string;
@@ -59,11 +60,24 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
   }
 
   return (
-    <form onSubmit={addAutomaticTask} className={formStyles.form}>
-      <input ref={inputRef} type="text" placeholder="Task name" required />
-      <SelectFreq onChange={handleChange} />
-      <AddButton />
-    </form>
+    <FormControl w="100%">
+      <form onSubmit={addAutomaticTask}>
+        <Flex gap={1} padding={1} flexWrap="wrap" w="100%">
+          <Input
+            flexGrow={1}
+            ref={inputRef}
+            type="text"
+            placeholder="Task name"
+            required
+            flexBasis="50%"
+          />
+          <Flex flexBasis="200px" flexGrow={1} gap={1} align="center">
+            <SelectFreq onChange={handleChange} />
+            <AddButton />
+          </Flex>
+        </Flex>
+      </form>
+    </FormControl>
   );
 };
 

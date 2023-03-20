@@ -8,6 +8,7 @@ import {
   Divider,
   Heading,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import { Unsubscribe, onValue } from "firebase/database";
@@ -20,6 +21,7 @@ import DeleteTodo from "./DeleteTodo";
 import AutoCollections from "../Auto/AutoCollections";
 import Loader from "../layout/Loader";
 import { QuestionIcon } from "@chakra-ui/icons";
+import { darkSecondary, lightSecondary } from "../../styles/global-colours";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -35,6 +37,8 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   const autosRef = getAutosRef(currUser.uid, todoId);
 
   const [autos, setAutos] = useState<IAuto[] | undefined>();
+
+  const bgColor = useColorModeValue("white", darkSecondary);
 
   useEffect(() => {
     const unsubscribe: Unsubscribe = onValue(autosRef, (snapshot) => {
@@ -54,7 +58,7 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   ) : (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg={bgColor}>
         <ModalCloseButton />
         <ModalBody>
           <ModalHeader>Configure</ModalHeader>

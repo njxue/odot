@@ -8,6 +8,7 @@ import TimeInterval, { intervalToFreq } from "../../helpers/TimeInterval";
 import { calculateNextUpdateTime } from "../../helpers/date-time-calculations";
 import { DeleteAuto } from "./DeleteAuto";
 import { PushAuto } from "./PushAuto";
+import { Box, Flex, HStack, Text } from "@chakra-ui/react";
 
 interface AutoProps {
   task: IAuto;
@@ -40,19 +41,20 @@ const Auto: React.FC<AutoProps> = (props) => {
   }
 
   return (
-    <div className={autoStyles.auto}>
-      <p>{task.name}</p>
-      <div className={autoStyles.options}>
+    <Flex padding={1} paddingLeft={2} align="center" flexWrap="wrap">
+      <Text flexGrow={1}>{task.name}</Text>
+      <HStack alignItems="center">
         <SelectFreq
           onChange={handleIntervalChange}
           defaultValue={task.freq.toString()}
         />
-        <div className={autoStyles.optionButtonGroup}>
+
+        <HStack alignItems="center">
           <DeleteAuto handleDelete={handleDelete} />
           <PushAuto forcePush={forcePush} />
-        </div>
-      </div>
-    </div>
+        </HStack>
+      </HStack>
+    </Flex>
   );
 };
 

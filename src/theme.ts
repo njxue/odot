@@ -35,6 +35,7 @@ const styles = {
       },
       input: {
         bg: mode("whiteAlpha.900", "transparent")(props),
+        border: "solid rgb(206, 206, 206) 1px"
       },
     };
   },

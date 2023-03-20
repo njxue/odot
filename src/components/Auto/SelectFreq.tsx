@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import TimeInterval from "../../helpers/TimeInterval";
 import autoStyles from "../../styles/Auto.module.css";
+import { Select } from "@chakra-ui/react";
 
 interface SelectFreqProps {
   defaultValue?: string;
@@ -22,17 +23,16 @@ const SelectFreq: React.FC<SelectFreqProps> = (props) => {
     onChange(interval);
   }
   return (
-    <select
+    <Select
       name="updateFreq"
       onChange={handleChange}
-      className={autoStyles.select}
       defaultValue={defaultValue}
     >
       <option value="0">Day</option>
       <option value="1">Week</option>
       <option value="2">Month</option>
       <option value="3">5 seconds</option>
-    </select>
+    </Select>
   );
 };
 
