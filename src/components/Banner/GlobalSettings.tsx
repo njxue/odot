@@ -78,22 +78,21 @@ export const GlobalSettings: React.FC<{}> = () => {
                     <option>{SortMetric.DUE_DATE}</option>
                     <option>{SortMetric.IMPORTANCE}</option>
                   </Select>
-                  <Tooltip label={sortOrder}>
-                    <IconButton
-                      aria-label={sortOrder}
-                      icon={
-                        sortOrder === SortOrder.ASC ? (
-                          <HiSortAscending />
-                        ) : (
-                          <HiSortDescending />
-                        )
-                      }
-                      onClick={handleOrderChange}
-                      borderColor="gray.400"
-                      borderWidth={1}
-                      variant="outline"
-                    />
-                  </Tooltip>
+
+                  <IconButton
+                    aria-label={sortOrder}
+                    icon={
+                      sortOrder === SortOrder.ASC ? (
+                        <HiSortDescending />
+                      ) : (
+                        <HiSortAscending />
+                      )
+                    }
+                    onClick={handleOrderChange}
+                    borderColor="gray.400"
+                    borderWidth={1}
+                    variant="outline"
+                  />
                 </HStack>
               </HStack>
               {/* ========================== Delete Data ========================== */}

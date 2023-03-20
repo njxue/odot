@@ -13,7 +13,7 @@ export const ToggleTheme: React.FC<{}> = () => {
       borderWidth={1}
       variant="outline"
     >
-      {colorMode === "light" ? "Dark" : "Light"} theme
+      {colorMode === "light" ? "Light" : "Dark"} theme
     </Button>
   );
 };
