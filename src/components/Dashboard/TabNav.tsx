@@ -39,7 +39,6 @@ export const TabNav: React.FC<{
           w="100%"
           flexBasis="50%"
           overflow="auto"
-          borderBottom="solid 1px lightGrey"
         >
           {Object.entries(tabs).map((e) => (
             <Tab key={e[0]} marginBottom={0}>
@@ -47,6 +46,7 @@ export const TabNav: React.FC<{
             </Tab>
           ))}
         </Flex>
+        <Divider orientation="horizontal" />
         {/* ==================== Created lists ============================ */}
         {todos.length > 0 && (
           <Flex
