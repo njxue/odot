@@ -23,6 +23,7 @@ const SelectFreq: React.FC<SelectFreqProps> = (props) => {
   }
   return (
     <Select
+      fontSize="sm"
       name="updateFreq"
       onChange={handleChange}
       defaultValue={defaultValue}

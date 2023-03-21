@@ -56,6 +56,8 @@ const Auto: React.FC<AutoProps> = (props) => {
           defaultValue={task.freq.toString()}
         />
         <Input
+          minW="150px"
+          fontSize="sm"
           type="time"
           defaultValue={task.timeOffset}
           onChange={(e) => handleTimeChange(e.target.value)}
