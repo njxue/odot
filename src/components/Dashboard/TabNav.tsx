@@ -46,7 +46,7 @@ export const TabNav: React.FC<{
             </Tab>
           ))}
         </Flex>
-        <Divider orientation="horizontal" />
+        {todos.length > 0 && <Divider orientation="horizontal" />}
         {/* ==================== Created lists ============================ */}
         {todos.length > 0 && (
           <Flex
