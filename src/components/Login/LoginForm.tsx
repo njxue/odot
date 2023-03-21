@@ -112,12 +112,12 @@ const LoginForm: React.FC<{}> = () => {
         <VStack alignItems="start" w="100%" h="100%" gap={3}>
           <FormControl isInvalid={emailIsInvalid || emailIsUnverified}>
             <FormLabel>Email: </FormLabel>
-            <Input ref={emailRef} type="text" />
+            <Input ref={emailRef} type="text" borderColor="gray" />
             <FormErrorMessage>{emailErrorMessage}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={passwordIsInvalid}>
             <FormLabel>Password: </FormLabel>
-            <Input ref={passwordRef} type="password" />
+            <Input ref={passwordRef} type="password" borderColor="gray" />
             <FormErrorMessage>{passwordErrorMessage}</FormErrorMessage>
           </FormControl>
           <Button
