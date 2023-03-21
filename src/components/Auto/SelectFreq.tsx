@@ -14,7 +14,6 @@ const SelectFreq: React.FC<SelectFreqProps> = (props) => {
     TimeInterval.DAY,
     TimeInterval.WEEK,
     TimeInterval.MONTH,
-    TimeInterval.SECONDS,
   ];
 
   function handleChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -31,7 +30,6 @@ const SelectFreq: React.FC<SelectFreqProps> = (props) => {
       <option value="0">Day</option>
       <option value="1">Week</option>
       <option value="2">Month</option>
-      <option value="3">5 seconds</option>
     </Select>
   );
 };

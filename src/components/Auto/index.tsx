@@ -1,14 +1,14 @@
 import IAuto from "../../interface/IAuto";
-import autoStyles from "../../styles/Auto.module.css";
 import { getAutoRef, getTasksRef } from "../../helpers/refs";
 import useAuth from "../../contexts/AuthContext";
 import { remove, update } from "firebase/database";
+import { useState } from "react";
 import SelectFreq from "./SelectFreq";
 import TimeInterval, { intervalToFreq } from "../../helpers/TimeInterval";
 import { calculateNextUpdateTime } from "../../helpers/date-time-calculations";
 import { DeleteAuto } from "./DeleteAuto";
 import { PushAuto } from "./PushAuto";
-import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import { Flex, HStack, Input, Text } from "@chakra-ui/react";
 
 interface AutoProps {
   task: IAuto;
@@ -25,8 +25,15 @@ const Auto: React.FC<AutoProps> = (props) => {
 
   function handleIntervalChange(interval: TimeInterval): void {
     update(autoRef, {
-      nextUpdate: calculateNextUpdateTime(interval),
+      nextUpdate: calculateNextUpdateTime(interval, task.timeOffset),
       freq: intervalToFreq(interval),
+    });
+  }
+
+  function handleTimeChange(time: string): void {
+    update(autoRef, {
+      nextUpdate: calculateNextUpdateTime(task.freq, task.timeOffset),
+      timeOffset: time,
     });
   }
 
@@ -47,6 +54,11 @@ const Auto: React.FC<AutoProps> = (props) => {
         <SelectFreq
           onChange={handleIntervalChange}
           defaultValue={task.freq.toString()}
+        />
+        <Input
+          type="time"
+          defaultValue={task.timeOffset}
+          onChange={(e) => handleTimeChange(e.target.value)}
         />
 
         <HStack alignItems="center">

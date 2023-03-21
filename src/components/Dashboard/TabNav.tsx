@@ -12,6 +12,7 @@ import ITodo from "../../interface/ITodo";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
 import { TaskSearch } from "./TaskSearch";
 import { darkPrimary, lightPrimary } from "../../styles/global-colours";
+import { mobileViewWidth } from "../../helpers/global-constants";
 
 export const TabNav: React.FC<{
   todos: ITodo[];
@@ -34,7 +35,7 @@ export const TabNav: React.FC<{
         <Divider borderColor="gray.400" />
         {/* ==================== Fixed tabs ============================ */}
         <Flex
-          direction={w < 500 ? "row" : "column"}
+          direction={w < mobileViewWidth ? "row" : "column"}
           w="100%"
           flexBasis="50%"
           overflow="auto"
@@ -49,7 +50,7 @@ export const TabNav: React.FC<{
         {/* ==================== Created lists ============================ */}
         {todos.length > 0 && (
           <Flex
-            direction={w < 500 ? "row" : "column"}
+            direction={w < mobileViewWidth ? "row" : "column"}
             overflow="auto"
             alignItems="center"
             w="100%"

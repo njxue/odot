@@ -1,5 +1,4 @@
 import useAuth from "../../contexts/AuthContext";
-import formStyles from "../../styles/Form.module.css";
 import React, { useRef, useState } from "react";
 import TimeInterval from "../../helpers/TimeInterval";
 import { update } from "firebase/database";
@@ -11,7 +10,7 @@ import SelectFreq from "./SelectFreq";
 import AddButton from "../layout/AddButton";
 import resetInputField from "../../helpers/resetInputField";
 import requireNonNull from "../../helpers/requireNonNull";
-import { Box, Flex, FormControl, Input } from "@chakra-ui/react";
+import { Flex, FormControl, Input } from "@chakra-ui/react";
 
 interface AddAutoProps {
   todoId: string;
@@ -24,12 +23,13 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
   const [freq, setFreq] = useState<TimeInterval>(TimeInterval.DAY);
+  const [time, setTime] = useState<string>("23:59");
 
   function addAutomaticTask(e: React.FormEvent): void {
     e.preventDefault();
     requireNonNull(inputRef.current);
     const taskName = inputRef.current!.value.trim();
-
+    console.log(time);
     if (taskName.length === 0) {
       return;
     }
@@ -38,7 +38,7 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     const autosRef = getAutosRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);
 
-    const nextUpdate: Date = calculateNextUpdateTime(freq);
+    const nextUpdate: Date = calculateNextUpdateTime(freq, time);
 
     const auto: IAuto = {
       id: taskId,
@@ -47,16 +47,13 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
       name: taskName.substring(0, maxTaskNameLength),
       nextUpdate: nextUpdate,
       freq: freq,
+      timeOffset: time,
       isCompleted: false,
       isImportant: false,
     };
 
     resetInputField(inputRef);
     update(autosRef, { [`${taskId}`]: auto });
-  }
-
-  function handleChange(interval: TimeInterval) {
-    setFreq(interval);
   }
 
   return (
@@ -71,9 +68,20 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
             required
             flexBasis="50%"
           />
-          <Flex flexBasis="200px" flexGrow={1} gap={1} align="center">
-            <SelectFreq onChange={handleChange} />
-            <AddButton />
+          <Flex flexBasis="50%" flexGrow={1} gap={1} align="center">
+            <Flex gap={1} flexGrow={1}>
+              <SelectFreq
+                onChange={(interval: TimeInterval) => {
+                  setFreq(interval);
+                }}
+              />
+              <Input
+                type="time"
+                onChange={(e) => setTime(e.target.value)}
+                defaultValue="23:59"
+              />
+              <AddButton />
+            </Flex>
           </Flex>
         </Flex>
       </form>

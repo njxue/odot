@@ -74,7 +74,7 @@ export const TodoMenu: React.FC<TodoProps> = (props) => {
       const auto: IAuto = tasks[k];
       const { freq, nextUpdate, ...task } = auto;
       const id: string = getDatabaseKey(tasksRef);
-      const dueDate: Date = calculateNextUpdateTime(auto.freq);
+      const dueDate: Date = calculateNextUpdateTime(auto.freq, auto.timeOffset);
       const newTask: ITask = { ...task, dueDate, id };
       batchUpdate[id] = newTask;
       batchUpdateTime[`${task.id}/nextUpdate`] = dueDate;

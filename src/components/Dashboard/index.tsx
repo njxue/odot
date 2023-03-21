@@ -16,6 +16,7 @@ import { TabNav } from "./TabNav";
 import { TabWindows } from "./TabWindows";
 import { getTodosRef } from "../../helpers/refs";
 import { darkPrimary } from "../../styles/global-colours";
+import { mobileViewWidth } from "../../helpers/global-constants";
 
 export const Dashboard: React.FC<{}> = () => {
   const currUser: User = useAuth().getCurrUser();
@@ -27,7 +28,6 @@ export const Dashboard: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const w = useWindowDimensions().width;
-  const maxWidth = 500;
 
   useEffect(() => {
     onValue(todosRef, (snapshot) => {
@@ -95,7 +95,7 @@ export const Dashboard: React.FC<{}> = () => {
       onChange={(i) => setIndex(i)}
       w="100%"
       display="flex"
-      flexDir={w < maxWidth ? "column" : "row"}
+      flexDir={w < mobileViewWidth ? "column" : "row"}
       h="100%"
     >
       <TabNav
@@ -105,7 +105,7 @@ export const Dashboard: React.FC<{}> = () => {
         tabs={tabs}
       />
       <Divider
-        orientation={w < maxWidth ? "horizontal" : "vertical"}
+        orientation={w < mobileViewWidth ? "horizontal" : "vertical"}
         borderColor="whiteAlpha.800"
       />
       <TabWindows todos={todos} tasks={tasks} keywords={keywords} tabs={tabs} />

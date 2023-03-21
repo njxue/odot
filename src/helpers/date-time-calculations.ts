@@ -1,11 +1,16 @@
 import TimeInterval from "./TimeInterval";
 
-function calculateNextUpdateTime(time: TimeInterval): Date {
-  if (time === TimeInterval.WEEK) {
-    return getThisSunday();
-  } else if (time === TimeInterval.DAY) {
-    return getEndOfToday();
-  } else if (time === TimeInterval.SECONDS) {
+function calculateNextUpdateTime(
+  interval: TimeInterval,
+  offset: string = ""
+): Date {
+  const o = timeToSeconds(offset);
+  if (interval === TimeInterval.WEEK) {
+    return new Date(getThisSunday().getTime() + o);
+  } else if (interval === TimeInterval.DAY) {
+    return new Date(getEndOfToday().getTime() + o);
+  } else if (interval === TimeInterval.SECONDS) {
+    // can ignore, for testing purposes only
     const today = new Date();
     const newDate = new Date(
       today.setHours(
@@ -16,7 +21,7 @@ function calculateNextUpdateTime(time: TimeInterval): Date {
     );
     return newDate;
   } else {
-    return getEndOfMonth();
+    return new Date(getEndOfMonth().getTime() + o);
   }
 }
 // Checks if d1 is after d2
@@ -70,7 +75,7 @@ function getDateTimeString(d: Date): string {
 function getTimeString(d: Date): string {
   const hr: number = d.getHours();
   const min: number = d.getMinutes();
-  return `${hr}:${min}`;
+  return `${hr}:${String(min).padStart(2, "0")}`;
 }
 
 function isToday(d: Date): boolean {
@@ -84,6 +89,14 @@ function isToday(d: Date): boolean {
 
 function toEndOfDay(d: Date): Date {
   return new Date(d.setHours(23, 59, 59));
+}
+
+function timeToSeconds(time: string): number {
+  const _ = time.split(":");
+  if (_.length < 2) {
+    return 0;
+  }
+  return parseInt(_[0], 10) * 60 * 60 * 1000 + parseInt(_[1], 10) * 60 * 1000;
 }
 
 export {

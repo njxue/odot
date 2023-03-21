@@ -15,7 +15,7 @@ import ToggleImportance from "./ToggleImportance";
 import styles from "../../styles/Task.module.css";
 import ITask from "../../interface/ITask";
 import { useWindowDimensions } from "../../helpers/useWindowDimensions";
-import { HiOutlineDotsVertical } from "react-icons/hi";
+import { mobileViewWidth } from "../../helpers/global-constants";
 
 export const TaskControls: React.FC<{
   task: ITask;
@@ -23,7 +23,7 @@ export const TaskControls: React.FC<{
 }> = (props) => {
   const { task, setIsEditing } = props;
   const { width } = useWindowDimensions();
-  return width > 500 ? (
+  return width >= mobileViewWidth ? (
     <div className={styles.controls}>
       <ToggleImportance task={task} disabled={task.isCompleted} />
       <RemoveTaskButton task={task} />
