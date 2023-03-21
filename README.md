@@ -22,9 +22,8 @@ Some screenshots:
 
 <img src="/public/snapshots/snapshotLogin.PNG"  />
 <img src="/public/snapshots/snapshotOrganised.PNG" />
-<img src="/public/snapshots/snapshotImportant.PNG" />
+ <img src="/public/snapshots/snapshotDarkTheme.PNG" />
 <img src="/public/snapshots/snapshotSettings.PNG" />
-<img src="/public/snapshots/snapshotDarkTheme.PNG" />
 
 ##### Built with
 
