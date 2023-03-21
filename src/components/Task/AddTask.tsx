@@ -50,7 +50,6 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     taskName: string,
     dueDate: string
   ) {
-    console.log(dueDate);
     const currUser = user;
     const tasksRef = getTasksRef(currUser.uid, todoId);
     const taskId = getDatabaseKey(tasksRef);

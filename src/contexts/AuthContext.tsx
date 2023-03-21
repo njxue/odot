@@ -39,7 +39,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const unsubscribe: Unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
-        console.log("user logged in")
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -69,7 +68,6 @@ function login(email: string, password: string): Promise<any> {
 }
 
 function logout(): Promise<any> {
-  console.log(auth.currentUser);
   return signOut(auth).catch((err) => console.log(err));
 }
 

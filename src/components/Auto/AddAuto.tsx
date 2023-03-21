@@ -29,7 +29,6 @@ const AddAuto: React.FC<AddAutoProps> = (props) => {
     e.preventDefault();
     requireNonNull(inputRef.current);
     const taskName = inputRef.current!.value.trim();
-    console.log(time);
     if (taskName.length === 0) {
       return;
     }
