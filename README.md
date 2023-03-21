@@ -20,10 +20,10 @@ A todo-list only works if you _remember_ to add the tasks into your todo-list. F
 
 Some screenshots:
 
-<img src="/public/snapshots/snapshotLogin.PNG"  />
-<img src="/public/snapshots/snapshotOrganised.PNG" />
- <img src="/public/snapshots/snapshotDarkTheme.PNG" />
-<img src="/public/snapshots/snapshotSettings.PNG" />
+<img src="/public/snapshots/snapshotLogin.PNG"  width="600px"/>
+<img src="/public/snapshots/snapshotOrganised.PNG" width="600px"/>
+ <img src="/public/snapshots/snapshotDarkTheme.PNG" width="600px"/>
+<img src="/public/snapshots/snapshotSettings.PNG"  width="600px"  />
 
 ##### Built with
 
