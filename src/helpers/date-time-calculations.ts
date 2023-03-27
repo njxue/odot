@@ -8,7 +8,7 @@ function calculateNextUpdateTime(
   if (interval === TimeInterval.WEEK) {
     return new Date(getThisSunday().getTime() + o);
   } else if (interval === TimeInterval.DAY) {
-    return new Date(getEndOfToday().getTime() + o);
+    return new Date(getTomorrow().getTime() + o);
   } else if (interval === TimeInterval.SECONDS) {
     // can ignore, for testing purposes only
     const today = new Date();
@@ -21,7 +21,7 @@ function calculateNextUpdateTime(
     );
     return newDate;
   } else {
-    return new Date(getEndOfMonth().getTime() + o);
+    return new Date(getNextMonth().getTime() + o);
   }
 }
 // Checks if d1 is after d2
@@ -33,20 +33,20 @@ function getThisSunday(): Date {
   const today = new Date();
   const first = today.getDate() - today.getDay() + 1;
   const last = first + 6;
-  const sunday = toEndOfDay(new Date(today.setDate(last)));
+  const sunday = new Date(new Date(today.setDate(last)).setHours(0, 0, 0));
   return sunday;
 }
 
-function getEndOfToday(): Date {
-  const today = new Date();
-  return toEndOfDay(today);
+function getTomorrow(): Date {
+  const tmr = new Date();
+  return new Date(new Date(tmr.setDate(tmr.getDate() + 1)).setHours(0, 0, 0));
 }
 
-function getEndOfMonth(): Date {
+function getNextMonth(): Date {
   const today = new Date();
   const mth = today.getMonth();
   const yr = today.getFullYear();
-  return toEndOfDay(new Date(yr, mth + 1, 0));
+  return new Date(new Date(yr, mth + 1, 0).setHours(0, 0, 0));
 }
 
 function getTimeNow(): Date {
