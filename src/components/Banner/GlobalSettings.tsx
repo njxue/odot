@@ -85,9 +85,9 @@ export const GlobalSettings: React.FC<{}> = () => {
                     aria-label={sortOrder}
                     icon={
                       sortOrder === SortOrder.ASC ? (
-                        <HiSortDescending />
-                      ) : (
                         <HiSortAscending />
+                      ) : (
+                        <HiSortDescending />
                       )
                     }
                     onClick={handleOrderChange}
