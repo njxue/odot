@@ -37,8 +37,7 @@ export const TabNav: React.FC<{
         <Flex
           direction={w < mobileViewWidth ? "row" : "column"}
           w="100%"
-          flexBasis="50%"
-          overflow="auto"
+          overflow={w < mobileViewWidth ? "scroll" : "initial"}
         >
           {Object.entries(tabs).map((e) => (
             <Tab key={e[0]} marginBottom={0}>
@@ -54,7 +53,6 @@ export const TabNav: React.FC<{
             overflow="auto"
             alignItems="center"
             w="100%"
-            flexBasis="50%"
           >
             {todos.map((t) => (
               <Tab w="100%" key={t.id} marginBottom={0} whiteSpace="nowrap">
