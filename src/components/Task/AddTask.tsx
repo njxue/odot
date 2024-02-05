@@ -28,6 +28,8 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
   const dateRef = useRef<HTMLInputElement>(null);
   const currUser = useAuth().getCurrUser();
 
+  const endOfToday: string = getDateTimeString(toEndOfDay(getTimeNow()));
+
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
 
@@ -64,7 +66,9 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
     };
 
     resetInputField(taskRef);
-    resetInputField(dateRef);
+    if (dateRef.current) {
+      dateRef.current.value = endOfToday;
+    }
 
     update(tasksRef, { [`${taskId}`]: task });
   }
@@ -87,10 +91,10 @@ const AddTask: React.FC<AddTaskProps> = (props) => {
               <Input
                 fontSize="sm"
                 bg={useColorModeValue("whiteAlpha.900", "transparent")}
-                
                 ref={dateRef}
                 type="datetime-local"
                 min={getDateTimeString(getTimeNow())}
+                defaultValue={endOfToday}
               />
               <AddButton />
             </Flex>
